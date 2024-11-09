@@ -13,7 +13,7 @@ import Vistas.Dashboard;
 public class Iniciar {
 
     public static void main(String[] args) {
-        System.out.println("holi");        
+        System.out.println("holis");        
         Dashboard dashboard = new Dashboard();
         dashboard.setVisible(true);
     }
