@@ -19,7 +19,7 @@ public class Catalogos extends javax.swing.JDialog {
     public Catalogos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        this.setLocation(525, 200);
         for (int i = 0; i < cuentas.length; i++) {
             this.tipoCuenta.addItem(cuentas[i]);
         }

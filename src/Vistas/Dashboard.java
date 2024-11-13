@@ -1,5 +1,7 @@
 package vistas;
 
+import Vistas.LibroDiario;
+import controladores.ControladorCatalogo;
 import utilidades.Fondo;
 import java.awt.Color;
 import java.awt.Image;
@@ -118,6 +120,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         home.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         home.setForeground(new java.awt.Color(0, 51, 153));
+        home.setInheritsPopupMenu(false);
 
         javax.swing.GroupLayout opHomeLayout = new javax.swing.GroupLayout(opHome);
         opHome.setLayout(opHomeLayout);
@@ -758,10 +761,9 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu1Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu1Op1MousePressed
         opDefault();
         menu1Op1.setBackground(colorActivoOp);
-//       VistaConsultar consultarAutor= new VistaConsultar(new JFrame(), true, "Autores");
-////       modificado kevin
-//       ControladorConsultarAutor ctlConsultarAutor= new  ControladorConsultarAutor(consultarAutor);
-//        consultarAutor.iniciar();
+        Catalogos catalogo = new Catalogos(this, visible);
+        ControladorCatalogo ctrlCatalogo = new ControladorCatalogo(catalogo);
+        catalogo.setVisible(visible);
     }//GEN-LAST:event_menu1Op1MousePressed
 
     private void opMenu5AcercaDeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opMenu5AcercaDeMousePressed
@@ -865,6 +867,8 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu2Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu2Op1MousePressed
         opDefault();
         menu2Op2.setBackground(colorActivoOp);
+        LibroDiario libro = new LibroDiario(this, visible, "LIBRO DIARIO");
+        libro.iniciar();
     }//GEN-LAST:event_menu2Op1MousePressed
 
     private void panelOp2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelOp2MousePressed
