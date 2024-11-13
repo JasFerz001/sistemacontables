@@ -48,9 +48,9 @@ public class DaoCatalogo {
             this.accesoDB = conexion.getConexion();
             this.ps = this.accesoDB.prepareStatement(INSERTAR_CATALOGO);
 
-            this.ps.setInt(0, catalogo.getCodigo());
-            this.ps.setString(1, catalogo.getNombreCuenta());
-            this.ps.setInt(2, catalogo.getTipoCuenta());
+            this.ps.setInt(1, catalogo.getCodigo());
+            this.ps.setString(2, catalogo.getNombreCuenta());
+            this.ps.setInt(3, catalogo.getTipoCuenta());
             System.out.println("catalogo_insertar" + catalogo);
             resultado_insertar = this.ps.executeUpdate();
             this.conexion.cerrarConexiones();

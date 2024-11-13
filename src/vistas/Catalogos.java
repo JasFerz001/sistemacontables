@@ -8,19 +8,27 @@ package vistas;
  *
  * @author guill
  */
-public class Catalogo extends javax.swing.JDialog {
+public class Catalogos extends javax.swing.JDialog {
 
     /**
      * Creates new form Catalogo
      */
-    public Catalogo(java.awt.Frame parent, boolean modal) {
+    String[] cuentas = {"Activo Corriente", "Activo No Corriente", "Pasivo Corriente",
+        "Pasivo No Corriente", "Estado de Resultado", "Patrimonio"};
+
+    public Catalogos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        for (int i = 0; i < cuentas.length; i++) {
+            this.tipoCuenta.addItem(cuentas[i]);
+        }
     }
 
-    public void iniciar(){
+    public void iniciar() {
         this.setVisible(true);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,10 +46,10 @@ public class Catalogo extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         codigo = new javax.swing.JTextField();
         nombreCuenta = new javax.swing.JTextField();
-        tipoCuenta = new javax.swing.JTextField();
         registrar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
         salir = new javax.swing.JButton();
+        tipoCuenta = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(204, 181, 221));
 
@@ -103,12 +111,12 @@ public class Catalogo extends javax.swing.JDialog {
                 .addGap(49, 49, 49)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(codigo, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
                     .addComponent(nombreCuenta)
-                    .addComponent(tipoCuenta))
+                    .addComponent(tipoCuenta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(85, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -166,20 +174,20 @@ public class Catalogo extends javax.swing.JDialog {
 //                }
 //            }
 //        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Catalogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(Catalogos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Catalogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(Catalogos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Catalogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(Catalogos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Catalogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(Catalogos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        //</editor-fold>
 //
 //        /* Create and display the dialog */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                Catalogo dialog = new Catalogo(new javax.swing.JFrame(), true);
+//                Catalogos dialog = new Catalogos(new javax.swing.JFrame(), true);
 //                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 //                    @Override
 //                    public void windowClosing(java.awt.event.WindowEvent e) {
@@ -203,6 +211,6 @@ public class Catalogo extends javax.swing.JDialog {
     public javax.swing.JTextField nombreCuenta;
     public javax.swing.JButton registrar;
     public javax.swing.JButton salir;
-    public javax.swing.JTextField tipoCuenta;
+    public javax.swing.JComboBox<String> tipoCuenta;
     // End of variables declaration//GEN-END:variables
 }
