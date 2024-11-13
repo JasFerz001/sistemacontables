@@ -7,32 +7,33 @@ import java.util.ArrayList;
 import modelos.BalanceGeneral;
 import java.sql.SQLException;
 
-
 /**
  *
  * @author Luis
  */
-public class DaoBalanzaGeneral {
+public class DaoBalanceGeneral {
 
-    Conexion conexion;
+    Conexion conexion = new Conexion();
     private ArrayList<BalanceGeneral> listaBalanceGeneral;
     private ResultSet rs = null;
     private PreparedStatement ps;
     private Connection accesoDB;
 
     private static final String CONSULTAR_BALANZA = "SELECT DISTINCT catalogo.codigo,catalogo.nombrecuenta,(SELECT CAST(sum(librodiario.monto) AS NUMERIC) as total_x_cuenta FROM librodiario\n"
-            + "WHERE librodiario.codigo=catalogo.codigo AND catalogo.cuentatipo = 1) \n"
+            + "WHERE librodiario.codigo=catalogo.codigo AND catalogo.cuentatipo = ?) \n"
             + "FROM catalogo,librodiario\n"
             + "WHERE catalogo.codigo=librodiario.codigo\n"
             + "ORDER BY catalogo.codigo";
 
-    public ArrayList<BalanceGeneral> CargarBalanceGeneral() {
+    public ArrayList<BalanceGeneral> CargarBalanceGeneral(int tipo) {
 
         this.listaBalanceGeneral = new ArrayList();
 
         try {
+
             this.accesoDB = this.conexion.getConexion();
             this.ps = this.accesoDB.prepareStatement(CONSULTAR_BALANZA);
+            this.ps.setInt(1, tipo);
             this.rs = ps.executeQuery();
 
             BalanceGeneral obj = null;
