@@ -13,6 +13,7 @@ public class Catalogo {
     private String nombreCuenta;
     private int tipoCuenta;
     
+    
     public Catalogo() {
     }
 
