@@ -8,6 +8,6 @@ package Controladores;
  *
  * @author aa22088
  */
-public class Balance_General {
+public class ControladorBalanceGeneral {
     
 }
