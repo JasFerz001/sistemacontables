@@ -2,8 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Vistas;
-
+package vistas;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -17,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 /**
  *
@@ -24,6 +24,7 @@ import javax.swing.JTextField;
  */
 public class VistaSalir extends JFrame implements ActionListener {
 // atributos
+
     public JProgressBar myBarra;  // barra de progreso
     public int contador; // para contar
     JTextField nombre; // campo de texto
@@ -34,19 +35,19 @@ public class VistaSalir extends JFrame implements ActionListener {
         this.setLocationRelativeTo(this); // ubica la ventana en el centro
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);//cerrar los proceso
         this.setResizable(false); // habilita el boton de minimizar
-        Container contenedor = this.getContentPane(); 
+        this.setUndecorated(true);
+        Container contenedor = this.getContentPane();
         contenedor.setLayout(null);// null, porque quiero poner los componentes
-       
         myBarra = new JProgressBar(0, 100);
         myBarra.setStringPainted(true);
         myBarra.setBounds(10, 10, 350, 30);
         contador = 0;
-                
+
         contenedor.add(myBarra);
-        
+
         Hilo hilo = new Hilo(); //hilo es un objeto con capacidad de
-                                    //correr en forma concurrente
-            hilo.start();
+        //correr en forma concurrente
+        hilo.start();
     }
 
     @Override
@@ -54,8 +55,6 @@ public class VistaSalir extends JFrame implements ActionListener {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-  
-   
     private class Hilo extends Thread {
 
         public void run() { //constituye el cuerpo de un hilo en ejecución
