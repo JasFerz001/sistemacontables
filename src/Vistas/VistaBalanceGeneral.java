@@ -16,47 +16,14 @@ import modelos.BalanceGeneral;
  */
 public class VistaBalanceGeneral extends javax.swing.JFrame {
 
-    int activo = 0, aN = 1, pasivo = 2, pN = 3, patrimonio = 4;
-    int tamaño = 0;
-
-    DaoBalanceGeneral dao = new DaoBalanceGeneral();
-
-    DefaultTableModel dtm = new DefaultTableModel();
-    DefaultTableModel dtm2 = new DefaultTableModel();
-
-    ArrayList<BalanceGeneral> listaActivos = new ArrayList();
-    ArrayList<BalanceGeneral> lisAcNocorrientes = new ArrayList();
-    ArrayList<BalanceGeneral> listaPasivos = new ArrayList();
-    ArrayList<BalanceGeneral> listaPasivosNoCorrientes = new ArrayList();
-    ArrayList<BalanceGeneral> listaPatrimonio = new ArrayList();
     /**
      * Creates new form BalanceGeneral
      */
     public VistaBalanceGeneral() {
 
         initComponents();
-//        control.setModels();
-        //--para mostrar activos
-        dtm.addColumn("Activos");
-        dtm.addColumn("Total Activos");
-        dtm.addColumn("Total:");
-        tabla_activos.setModel(dtm);
-
-        //--para mostrar pasivos
-        dtm2.addColumn("Pasivos");
-        dtm2.addColumn("Total Pasivos");
-        dtm2.addColumn("Total:");
-        tabla_pasivos.setModel(dtm2);
-
-       listaActivos=dao.CargarBalanceGeneral(activo);
-       lisAcNocorrientes=dao.CargarBalanceGeneral(aN);
-       listaPasivos=dao.CargarBalanceGeneral(pasivo);
-       listaPasivosNoCorrientes=dao.CargarBalanceGeneral(pN);
-       listaPatrimonio=dao.CargarBalanceGeneral(patrimonio);
-
-        agregarATabla();
         this.setLocationRelativeTo(null);
-        
+
     }
 
     /**
@@ -74,12 +41,15 @@ public class VistaBalanceGeneral extends javax.swing.JFrame {
         tabla_pasivos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla_activos = new javax.swing.JTable();
-        btn_salir = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        totalPasivos = new javax.swing.JLabel();
+        totalActivos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Balance General");
+        jLabel1.setText("Total Pasivos");
 
         tabla_pasivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -101,39 +71,61 @@ public class VistaBalanceGeneral extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tabla_activos);
 
-        btn_salir.setText("Salir");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setText("Balance General");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("Total Activos");
+
+        totalPasivos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        totalActivos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addGap(329, 329, 329))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(74, 74, 74)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(totalActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(324, 324, 324))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_salir)
-                        .addGap(350, 350, 350))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(totalPasivos, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(56, 56, 56))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_salir)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totalPasivos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totalActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -193,42 +185,16 @@ public class VistaBalanceGeneral extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btn_salir;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable tabla_activos;
     public javax.swing.JTable tabla_pasivos;
+    public javax.swing.JLabel totalActivos;
+    public javax.swing.JLabel totalPasivos;
     // End of variables declaration//GEN-END:variables
 
-    private void agregarATabla() {
-                int aux = 0;
-        dtm.addRow(new Object[]{"Activo Corriente", " ", " "});
-        for (int i = 0; i < listaActivos.size(); i++) {
-
-            dtm.addRow(new Object[]{listaActivos.get(i).getCuenta(), listaActivos.get(i).getMonto(), " "});
-        }
-        dtm.addRow(new Object[]{"Activo No Corriente", " ", " "});
-        for (int i = 0; i < lisAcNocorrientes.size(); i++) {
-            dtm.addRow(new Object[]{lisAcNocorrientes.get(i).getCuenta(), lisAcNocorrientes.get(i).getMonto(), " "});
-        }
-
-        //-----añadiendo pasivos y patrimonio si esque hay
-        dtm2.addRow(new Object[]{"Pasivo Corriente", " ", " "});
-        for (int i = 0; i < listaPasivos.size(); i++) {
-            dtm2.addRow(new Object[]{listaPasivos.get(i).getCuenta(), listaPasivos.get(i).getMonto(), " "});
-        }
-        dtm2.addRow(new Object[]{"Pasivo No Corriente", " ", " "});
-        for (int i = 0; i < listaPasivosNoCorrientes.size(); i++) {
-            dtm2.addRow(new Object[]{listaPasivosNoCorrientes.get(i).getCuenta(), listaPasivosNoCorrientes.get(i).getMonto(), " "});
-        }
-        //--añadiendo cuentas de patrimonio
-        dtm2.addRow(new Object[]{"Patrimonio", " ", " "});
-        if (!listaPatrimonio.isEmpty()) {
-            for (int i = 0; i < listaPatrimonio.size(); i++) {
-                dtm2.addRow(new Object[]{listaPatrimonio.get(i).getCuenta(), listaPatrimonio.get(i).getMonto(), " "});
-            }
-        }
-    }
 }
