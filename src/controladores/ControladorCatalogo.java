@@ -14,10 +14,13 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import vistas.Catalogos;
 import modelos.Catalogo;
+import modelos.Cuentas_Mayor;
+import modelos.Cuentas_Principales;
 
 /**
  *
@@ -28,7 +31,7 @@ public class ControladorCatalogo extends MouseAdapter implements ActionListener,
 
     Catalogos frmCatalogo;
     DaoCatalogo daoCatalogo;
-    Catalogo catalogo;
+    Cuentas_Mayor mayor;
 
     public ControladorCatalogo(Catalogos frmCatalogo) {
         this.frmCatalogo = frmCatalogo;
@@ -38,17 +41,18 @@ public class ControladorCatalogo extends MouseAdapter implements ActionListener,
         daoCatalogo = new DaoCatalogo();
     }
 
-    public ControladorCatalogo(Catalogos frmCatalogo, Catalogo catalogo) {
+    public ControladorCatalogo(Catalogos frmCatalogo, Cuentas_Mayor mayor) {
         this.frmCatalogo = frmCatalogo;
         this.frmCatalogo.registrar.addActionListener(this);
         this.frmCatalogo.cancelar.addActionListener(this);
         this.frmCatalogo.salir.addActionListener(this);
-        this.catalogo = catalogo;
+        this.mayor = mayor;
         daoCatalogo = new DaoCatalogo();
 
-        this.frmCatalogo.codigo.setText(String.valueOf(this.catalogo.getCodigo()));
-        this.frmCatalogo.nombreCuenta.setText(this.catalogo.getNombreCuenta());
-        this.frmCatalogo.tipoCuenta.setSelectedIndex(this.catalogo.getTipoCuenta() - 1);
+        this.frmCatalogo.codigo.setText(this.mayor.getCod_Mayor());
+        this.frmCatalogo.nombreCuenta.setText(this.mayor.getNombre_Mayor());
+        this.frmCatalogo.naturaleza.setSelectedItem(this.mayor.getNaturaleza());
+        this.frmCatalogo.tipoCuenta.setSelectedItem(this.mayor.getCod_principal().getNombre_Principal());
     }
 
     @Override
@@ -63,32 +67,30 @@ public class ControladorCatalogo extends MouseAdapter implements ActionListener,
     }
 
     public void guardar() {
-        int codigo = Integer.parseInt(this.frmCatalogo.codigo.getText());
+        String codigo = this.frmCatalogo.codigo.getText();
         String cuenta = this.frmCatalogo.nombreCuenta.getText();
-        int tipo = (this.frmCatalogo.tipoCuenta.getSelectedIndex() + 1);
-
+        String naturaleza = (String) this.frmCatalogo.naturaleza.getSelectedItem();
+        String cod_prin = (String) this.frmCatalogo.tipoCuenta.getSelectedItem();
+        
+        Cuentas_Principales prin = daoCatalogo.select_cod_principal(cod_prin);
+        
+        
         if (!cuenta.isEmpty()) {
-            if (this.catalogo == null) {
-                try {
-                    Catalogo cat = new Catalogo(codigo, cuenta, tipo);
-                    daoCatalogo.insertarCatalogo(cat);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ControladorCatalogo.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ControladorCatalogo.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            if (this.mayor == null) {
+                Cuentas_Mayor cat = new Cuentas_Mayor(codigo, cuenta, naturaleza, prin);
+                daoCatalogo.insertMayor(cat);
             }
-        }   
+        }
     }
-    
+
     public void limpiar() {
         this.frmCatalogo.codigo.setText(" ");
         this.frmCatalogo.nombreCuenta.setText(" ");
         this.frmCatalogo.tipoCuenta.setSelectedIndex(0);
     }
-    
-    public void salir(){
-        this.frmCatalogo.dispose();
+
+    public void salir() {
+        System.exit(0);
     }
 
     @Override

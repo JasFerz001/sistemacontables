@@ -15,6 +15,6 @@ public class Iniciar {
 
         Catalogos miua= new Catalogos(new JFrame(), true);
         ControladorCatalogo ctrl = new ControladorCatalogo(miua);
-        miua.iniciar();
+        miua.iniciar(); 
     }
 }
