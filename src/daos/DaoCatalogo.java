@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import modelos.Cuenta;
 import modelos.Cuentas_Mayor;
 import modelos.Cuentas_Principales;
 import modelos.SubCuentas;
@@ -190,4 +191,117 @@ public class DaoCatalogo {
         }
         return resultado;
     }
+
+    public ArrayList<Cuenta> selectCuentasJerarquicas() {
+        ArrayList<Cuenta> listaCuentas = new ArrayList<>();
+
+        try {
+            this.accesoDB = this.conexion.getConexion();
+            this.ps = this.accesoDB.prepareStatement(
+                    "SELECT DISTINCT c.cod_catalogo AS Codigo, c.nombre AS Nombre FROM catalogo c\n"
+                    + "UNION ALL SELECT DISTINCT CONCAT(cp.cod_principal) AS Codigo, cp.nombre AS Nombre\n"
+                    + "FROM cuentas_principales cp JOIN catalogo c ON cp.cod_catalogo = c.cod_catalogo\n"
+                    + "UNION ALL SELECT DISTINCT CONCAT(cm.cod_mayor) AS Codigo, cm.nombre AS Nombre\n"
+                    + "FROM cuentas_mayor cm JOIN cuentas_principales cp ON cm.cod_principal = cp.cod_principal\n"
+                    + "JOIN catalogo c ON cp.cod_catalogo = c.cod_catalogo\n"
+                    + "UNION ALL SELECT DISTINCT CONCAT(sc.cod_subcuenta) AS Codigo, sc.nombre AS Nombre\n"
+                    + "FROM subcuentas sc JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor\n"
+                    + "JOIN cuentas_principales cp ON cm.cod_principal = cp.cod_principal\n"
+                    + "JOIN catalogo c ON cp.cod_catalogo = c.cod_catalogo\n"
+                    + "ORDER BY Codigo;"
+            );
+
+            this.rs = ps.executeQuery();
+
+            Cuenta cuenta = null;
+            while (this.rs.next()) {
+                cuenta = new Cuenta();
+                cuenta.setCodigo(rs.getString("Codigo"));
+                cuenta.setNombre(rs.getString("Nombre"));
+                listaCuentas.add(cuenta);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (this.ps != null) {
+                    this.ps.close();
+                }
+                if (this.rs != null) {
+                    this.rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            this.conexion.cerrarConexiones();
+        }
+
+        return listaCuentas;
+    }
+
+    public ArrayList<Cuenta> buscarCuentasJerarquicas(String busqueda) {
+        ArrayList<Cuenta> listaCuentas = new ArrayList<>();
+
+        try {
+            this.accesoDB = this.conexion.getConexion();
+            this.ps = this.accesoDB.prepareStatement(
+                    "SELECT DISTINCT c.cod_catalogo AS Codigo, c.nombre AS Nombre "
+                    + "FROM catalogo c "
+                    + "WHERE c.cod_catalogo LIKE ? OR c.nombre LIKE ? "
+                    + "UNION ALL "
+                    + "SELECT DISTINCT CONCAT(cp.cod_principal) AS Codigo, cp.nombre AS Nombre "
+                    + "FROM cuentas_principales cp "
+                    + "JOIN catalogo c ON cp.cod_catalogo = c.cod_catalogo "
+                    + "WHERE cp.cod_principal LIKE ? OR cp.nombre LIKE ? "
+                    + "UNION ALL "
+                    + "SELECT DISTINCT CONCAT(cm.cod_mayor) AS Codigo, cm.nombre AS Nombre "
+                    + "FROM cuentas_mayor cm "
+                    + "JOIN cuentas_principales cp ON cm.cod_principal = cp.cod_principal "
+                    + "JOIN catalogo c ON cp.cod_catalogo = c.cod_catalogo "
+                    + "WHERE cm.cod_mayor LIKE ? OR cm.nombre LIKE ? "
+                    + "UNION ALL "
+                    + "SELECT DISTINCT CONCAT(sc.cod_subcuenta) AS Codigo, sc.nombre AS Nombre "
+                    + "FROM subcuentas sc "
+                    + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor "
+                    + "JOIN cuentas_principales cp ON cm.cod_principal = cp.cod_principal "
+                    + "JOIN catalogo c ON cp.cod_catalogo = c.cod_catalogo "
+                    + "WHERE sc.cod_subcuenta LIKE ? OR sc.nombre LIKE ? "
+                    + "ORDER BY Codigo;"
+            );
+
+            String queryBusqueda = "%" + busqueda + "%";
+            for (int i = 1; i <= 8; i++) {
+                this.ps.setString(i, queryBusqueda);
+            }
+
+            this.rs = ps.executeQuery();
+
+            Cuenta cuenta;
+            while (this.rs.next()) {
+                cuenta = new Cuenta();
+                cuenta.setCodigo(rs.getString("Codigo"));
+                cuenta.setNombre(rs.getString("Nombre"));
+                listaCuentas.add(cuenta);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (this.ps != null) {
+                    this.ps.close();
+                }
+                if (this.rs != null) {
+                    this.rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            this.conexion.cerrarConexiones();
+        }
+
+        return listaCuentas;
+    }
+
 }

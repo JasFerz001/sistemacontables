@@ -57,7 +57,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel2" min="-2" pref="69" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTextField1" min="-2" pref="330" max="-2" attributes="0"/>
+                                  <Component id="buscar" min="-2" pref="330" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -92,7 +92,7 @@
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField1" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                          <Component id="buscar" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                           <Component id="agregarMayor" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                           <Component id="AgregarSub" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
@@ -172,7 +172,7 @@
             <Property name="text" type="java.lang.String" value="Buscar"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="buscar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="74" green="74" red="74" type="rgb"/>
@@ -191,6 +191,9 @@
               </Border>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>

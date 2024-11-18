@@ -174,7 +174,7 @@
                           <Component id="cod" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
                           <Component id="tipoCuenta" alignment="0" min="-2" pref="296" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="19" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

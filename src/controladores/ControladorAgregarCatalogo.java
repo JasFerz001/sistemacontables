@@ -27,27 +27,30 @@ import vistas.AgregarCatalogo;
  *
  * @author guill
  */
-public class ControladorCatalogo extends MouseAdapter implements ActionListener,
+public class ControladorAgregarCatalogo extends MouseAdapter implements ActionListener,
         MouseListener, KeyListener, ItemListener {
 
     AgregarCatalogo frmCatalogo;
+    ControladorMostrarCatalogo ctrol;
     DaoCatalogo daoCatalogo;
     Cuentas_Mayor mayor;
 
-    public ControladorCatalogo(AgregarCatalogo frmCatalogo) {
+    public ControladorAgregarCatalogo(AgregarCatalogo frmCatalogo, ControladorMostrarCatalogo ctrol) {
         this.frmCatalogo = frmCatalogo;
+        this.ctrol = ctrol;
         this.frmCatalogo.registrar.addActionListener(this);
         this.frmCatalogo.cancelar.addActionListener(this);
         this.frmCatalogo.salir.addActionListener(this);
         daoCatalogo = new DaoCatalogo();
     }
 
-    public ControladorCatalogo(AgregarCatalogo frmCatalogo, Cuentas_Mayor mayor) {
+    public ControladorAgregarCatalogo(AgregarCatalogo frmCatalogo, Cuentas_Mayor mayor, ControladorMostrarCatalogo ctrol) {
         this.frmCatalogo = frmCatalogo;
         this.frmCatalogo.registrar.addActionListener(this);
         this.frmCatalogo.cancelar.addActionListener(this);
         this.frmCatalogo.salir.addActionListener(this);
         this.mayor = mayor;
+        this.ctrol = ctrol;
         daoCatalogo = new DaoCatalogo();
 
         this.frmCatalogo.codigo.setText(this.mayor.getCod_Mayor());

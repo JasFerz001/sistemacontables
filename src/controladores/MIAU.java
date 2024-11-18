@@ -17,6 +17,7 @@ public class MIAU {
 
     public static void main(String[] args) {
         Catalogos mia = new Catalogos(new JFrame(), true);
+        ControladorMostrarCatalogo ctrl= new ControladorMostrarCatalogo(mia);
         mia.iniciar();
     }
 
