@@ -12,13 +12,10 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import vistas.Catalogos;
-import modelos.Catalogo;
+import javax.swing.table.DefaultTableModel;
 import modelos.Cuentas_Mayor;
 import modelos.Cuentas_Principales;
 import vistas.AgregarCatalogo;
@@ -31,9 +28,11 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         MouseListener, KeyListener, ItemListener {
 
     AgregarCatalogo frmCatalogo;
+    ArrayList<Cuentas_Mayor> listaMayor;
     ControladorMostrarCatalogo ctrol;
     DaoCatalogo daoCatalogo;
     Cuentas_Mayor mayor;
+    DefaultTableModel modelo;
 
     public ControladorAgregarCatalogo(AgregarCatalogo frmCatalogo, ControladorMostrarCatalogo ctrol) {
         this.frmCatalogo = frmCatalogo;
@@ -41,10 +40,14 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         this.frmCatalogo.registrar.addActionListener(this);
         this.frmCatalogo.cancelar.addActionListener(this);
         this.frmCatalogo.salir.addActionListener(this);
+        this.frmCatalogo.editar.addActionListener(this);
+        this.frmCatalogo.tablita.addMouseListener(this);
+        this.frmCatalogo.editar.setEnabled(false);
         daoCatalogo = new DaoCatalogo();
+        mostrar();
     }
 
-    public ControladorAgregarCatalogo(AgregarCatalogo frmCatalogo, Cuentas_Mayor mayor, ControladorMostrarCatalogo ctrol) {
+    public ControladorAgregarCatalogo(AgregarCatalogo frmCatalogo, ControladorMostrarCatalogo ctrol, Cuentas_Mayor mayor) {
         this.frmCatalogo = frmCatalogo;
         this.frmCatalogo.registrar.addActionListener(this);
         this.frmCatalogo.cancelar.addActionListener(this);
@@ -59,9 +62,28 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         this.frmCatalogo.tipoCuenta.setSelectedItem(this.mayor.getCod_principal().getNombre_Principal());
     }
 
+    public void mostrar() {
+        listaMayor = daoCatalogo.selectTodoMayor();
+        modelo = new DefaultTableModel();
+        String titulos[] = {"CODIGO", "NOMBRE", "NATURALEZA", "CUENTA PRINCIPAL"};
+        modelo.setColumnIdentifiers(titulos);
+        int i = 0;
+        for (Cuentas_Mayor x : listaMayor) {
+            i++;
+            Object datos[] = {x.getCod_Mayor(), x.getNombre_Mayor(), x.getNaturaleza(), x.getCod_principal().getNombre_Principal()};
+            modelo.addRow(datos);
+        }
+        this.frmCatalogo.tablita.setModel(modelo);
+        this.frmCatalogo.tablita.setDefaultEditor(Object.class, null);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.frmCatalogo.registrar) {
+            guardar();
+        }
+        if (e.getSource() == this.frmCatalogo.editar) {
+            ControladorAgregarCatalogo ctrl = new ControladorAgregarCatalogo(frmCatalogo, ctrol, mayor);
             guardar();
         } else if (e.getSource() == this.frmCatalogo.cancelar) {
             limpiar();
@@ -75,10 +97,9 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         String cuenta = this.frmCatalogo.nombreCuenta.getText();
         String naturaleza = (String) this.frmCatalogo.naturaleza.getSelectedItem();
         String cod_prin = (String) this.frmCatalogo.tipoCuenta.getSelectedItem();
-        
+
         Cuentas_Principales prin = daoCatalogo.select_cod_principal(cod_prin);
-        
-        
+
         if (!cuenta.isEmpty()) {
             if (this.mayor == null) {
                 Cuentas_Mayor cat = new Cuentas_Mayor(codigo, cuenta, naturaleza, prin);
@@ -96,25 +117,32 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
     public void salir() {
         System.exit(0);
     }
+    
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getSource() == this.frmCatalogo.tablita) {
+            int fila = this.frmCatalogo.tablita.getSelectedRow();
+            if (fila >= 0) {
+                mayor = listaMayor.get(fila);
+                this.frmCatalogo.editar.setEnabled(true);
+            }
+        }
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

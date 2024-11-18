@@ -41,7 +41,9 @@ public class DaoCatalogo {
         return selectPrincipal(SELECT_ID_PRINC, dato);
     }
 
-    private static final String SELECT_MAYOR = "SELECT * FROM cuentas_mayor;";
+    private static final String SELECT_MAYOR = "SELECT c.cod_mayor, c.nombre, c.naturaleza, p.nombre AS cuenta_principal\n"
+                                               + "FROM cuentas_mayor AS c\n"
+                                               + "INNER JOIN cuentas_principales AS p ON p.cod_principal = c.cod_principal;";
 
     private static final String INSERTAR_MAYOR = "INSERT INTO cuentas_mayor(cod_mayor,"
             + " nombre, naturaleza, cod_principal) VALUES (?,?,?,?)";
@@ -123,7 +125,7 @@ public class DaoCatalogo {
                 obj.setNombre_Mayor(rs.getString("nombre"));
                 obj.setNaturaleza(rs.getString("naturaleza"));
                 Cuentas_Principales cuentasprinc = new Cuentas_Principales();
-                cuentasprinc.setCod_Principal(rs.getString("cod_principal"));
+                cuentasprinc.setNombre_Principal(rs.getString("cuenta_principal"));
                 obj.setCod_principal((cuentasprinc));
                 this.listaMayor.add(obj);
             }
