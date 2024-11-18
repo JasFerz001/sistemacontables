@@ -5,7 +5,9 @@
 package controladores;
 
 import daos.DaoCatalogo;
+import javax.swing.JFrame;
 import modelos.Cuentas_Principales;
+import vistas.Catalogos;
 
 /**
  *
@@ -14,13 +16,8 @@ import modelos.Cuentas_Principales;
 public class MIAU {
 
     public static void main(String[] args) {
-        DaoCatalogo mi = new DaoCatalogo();
-        Cuentas_Principales cuenta = mi.select_cod_principal("ACTIVO CORRIENTE");
-        if (cuenta != null) {
-            System.out.println("Código Principal: " + cuenta.getCod_Principal());
-        } else {
-            System.out.println("No se encontró ningún resultado.");
-        }
+        Catalogos mia = new Catalogos(new JFrame(), true);
+        mia.iniciar();
     }
 
 }

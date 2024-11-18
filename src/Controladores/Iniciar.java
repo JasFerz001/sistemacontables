@@ -2,6 +2,7 @@ package controladores;
 
 import java.awt.Frame;
 import javax.swing.JFrame;
+import vistas.AgregarCatalogo;
 import vistas.Catalogos;
 import vistas.Dashboard;
 
@@ -13,7 +14,7 @@ public class Iniciar {
 
     public static void main(String[] args) {
 
-        Catalogos miua= new Catalogos(new JFrame(), true);
+        AgregarCatalogo miua= new AgregarCatalogo(new JFrame(), true);
         ControladorCatalogo ctrl = new ControladorCatalogo(miua);
         miua.iniciar(); 
     }

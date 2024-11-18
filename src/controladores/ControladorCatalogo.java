@@ -21,6 +21,7 @@ import vistas.Catalogos;
 import modelos.Catalogo;
 import modelos.Cuentas_Mayor;
 import modelos.Cuentas_Principales;
+import vistas.AgregarCatalogo;
 
 /**
  *
@@ -29,11 +30,11 @@ import modelos.Cuentas_Principales;
 public class ControladorCatalogo extends MouseAdapter implements ActionListener,
         MouseListener, KeyListener, ItemListener {
 
-    Catalogos frmCatalogo;
+    AgregarCatalogo frmCatalogo;
     DaoCatalogo daoCatalogo;
     Cuentas_Mayor mayor;
 
-    public ControladorCatalogo(Catalogos frmCatalogo) {
+    public ControladorCatalogo(AgregarCatalogo frmCatalogo) {
         this.frmCatalogo = frmCatalogo;
         this.frmCatalogo.registrar.addActionListener(this);
         this.frmCatalogo.cancelar.addActionListener(this);
@@ -41,7 +42,7 @@ public class ControladorCatalogo extends MouseAdapter implements ActionListener,
         daoCatalogo = new DaoCatalogo();
     }
 
-    public ControladorCatalogo(Catalogos frmCatalogo, Cuentas_Mayor mayor) {
+    public ControladorCatalogo(AgregarCatalogo frmCatalogo, Cuentas_Mayor mayor) {
         this.frmCatalogo = frmCatalogo;
         this.frmCatalogo.registrar.addActionListener(this);
         this.frmCatalogo.cancelar.addActionListener(this);
