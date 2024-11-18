@@ -4,7 +4,7 @@ package modelos;
 
 public class BalanzaComprobacion {
     
-    private String codigo;
+private String codigo;
     private String cuenta;
     private double debe;
     private double haber;
