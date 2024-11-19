@@ -140,6 +140,7 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         PanelFondo.add(lbTransaccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, -1, 30));
 
         cbCodigo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cbCodigo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         PanelFondo.add(cbCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 170, 30));
 
         tfCuenta.setEditable(false);

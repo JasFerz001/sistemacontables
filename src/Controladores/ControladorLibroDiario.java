@@ -75,7 +75,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             for (SubCuentas subCuenta : listaSubCuentas) {
                 if (subCuenta.getCod_subcuenta().equals(codigoSeleccionado)) {
                     frmLibro.tfCuenta.setText(subCuenta.getNombre_sub());
-                    return; 
+                    return;
                 }
             }
             frmLibro.tfCuenta.setText("");
@@ -84,11 +84,16 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
 
     public void agregarDatosTabla() {
         try {
+            if (frmLibro.tfConcepto.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "El campo Concepto no puede estar vacío.");
+                return;
+            }
             Date fechaSeleccionada = frmLibro.tfFecha.getDate();
             int codigoSubcuenta = Integer.parseInt(frmLibro.cbCodigo.getSelectedItem().toString());
             String nombreCuenta = frmLibro.tfCuenta.getText();
             double monto = Double.parseDouble(frmLibro.tfMonto.getText());
             String transaccion = frmLibro.cbTransaccion.getSelectedItem().toString();
+
             if (!frmLibro.tfConcepto.getText().isEmpty()) {
                 conceptoGlobal = frmLibro.tfConcepto.getText();
                 frmLibro.tfConcepto.setEnabled(false);
@@ -96,7 +101,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             String concepto = conceptoGlobal;
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             String fechaFormateada = formatoFecha.format(fechaSeleccionada);
-
+            
             Object[] fila = new Object[7];
             fila[0] = fechaFormateada;
             fila[1] = codigoSubcuenta;
