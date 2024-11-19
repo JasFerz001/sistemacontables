@@ -84,6 +84,10 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
 
     public void agregarDatosTabla() {
         try {
+            if (frmLibro.cbCodigo.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar un código de cuenta.");
+                return; 
+            }
             if (frmLibro.tfConcepto.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "El campo Concepto no puede estar vacío.");
                 return;
@@ -101,7 +105,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             String concepto = conceptoGlobal;
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             String fechaFormateada = formatoFecha.format(fechaSeleccionada);
-            
+
             Object[] fila = new Object[7];
             fila[0] = fechaFormateada;
             fila[1] = codigoSubcuenta;
