@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import modelos.SubCuentas;
 
 /**
  *
@@ -68,8 +69,27 @@ public class DaoLibroDiario {
 
         return resultado;
     }
+    
+    public ArrayList<SubCuentas> obtenerSubCuentas() {
+        ArrayList<SubCuentas> listaSubCuentas = new ArrayList<>();
+        String sql = "SELECT cod_subcuenta, nombre FROM subcuentas";
+        try {
+            this.accesoDB = conexion.getConexion();
+            this.ps = this.accesoDB.prepareStatement(sql); 
+            this.rs = this.ps.executeQuery();
+            while (rs.next()) {
+                SubCuentas subCuenta = new SubCuentas();
+                subCuenta.setCod_subcuenta(rs.getString("cod_subcuenta"));
+                subCuenta.setNombre_sub(rs.getString("nombre"));
+                listaSubCuentas.add(subCuenta);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Error al obtener subcuentas: " + ex.getMessage());
+        } 
+        return listaSubCuentas;
+    }
 
-    // Método para obtener el último número de partida registrado
     public int obtenerUltimaPartida() {
         int ultimaPartida = 0;
         String sql = "SELECT MAX(numero_partida) AS ultimaPartida FROM libro_diario";

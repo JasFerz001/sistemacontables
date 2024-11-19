@@ -13,6 +13,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.LibroDiario;
+import modelos.SubCuentas;
 
 public class ControladorLibroDiario extends MouseAdapter implements ActionListener,
         MouseListener {
@@ -32,6 +33,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
         daoLibro = new DaoLibroDiario();
         mostrarNumeroPartida();
         mostrarPartidaAnterior();
+        cargarSubCuentas();
     }
 
     public ControladorLibroDiario(VistaLibroDiario frmLibro, LibroDiario libro) {
@@ -59,6 +61,25 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
         } else if (e.getSource() == frmLibro.btnProcesarPartida) {
             procesarPartida();
         }
+    }
+
+    private void cargarSubCuentas() {
+        ArrayList<SubCuentas> listaSubCuentas = daoLibro.obtenerSubCuentas();
+        frmLibro.cbCodigo.removeAllItems();
+        frmLibro.cbCodigo.addItem("Seleccione código");
+        for (SubCuentas subCuenta : listaSubCuentas) {
+            frmLibro.cbCodigo.addItem(subCuenta.getCod_subcuenta());
+        }
+        frmLibro.cbCodigo.addActionListener(e -> {
+            String codigoSeleccionado = (String) frmLibro.cbCodigo.getSelectedItem();
+            for (SubCuentas subCuenta : listaSubCuentas) {
+                if (subCuenta.getCod_subcuenta().equals(codigoSeleccionado)) {
+                    frmLibro.tfCuenta.setText(subCuenta.getNombre_sub());
+                    return; 
+                }
+            }
+            frmLibro.tfCuenta.setText("");
+        });
     }
 
     public void agregarDatosTabla() {
@@ -304,7 +325,15 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                this.frmLibro.cbCodigo.setSelectedItem(codigoSubcuenta);
+                //Aqui Obtengo el codigo de la cuenta para cuando modifico me lo cargue al combobox
+                String codigoSubcuentaStr = String.valueOf(codigoSubcuenta);
+                for (int i = 0; i < this.frmLibro.cbCodigo.getItemCount(); i++) {
+                    String item = (String) this.frmLibro.cbCodigo.getItemAt(i);
+                    if (item.startsWith(codigoSubcuentaStr)) {
+                        this.frmLibro.cbCodigo.setSelectedIndex(i);
+                        break;
+                    }
+                }
                 this.frmLibro.tfCuenta.setText(nombreCuenta);
                 this.frmLibro.tfMonto.setText(!debe.isEmpty() ? debe : haber);
                 this.frmLibro.cbTransaccion.setSelectedItem(!debe.isEmpty() ? "Debe" : "Haber");

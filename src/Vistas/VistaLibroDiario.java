@@ -140,10 +140,12 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         PanelFondo.add(lbTransaccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, -1, 30));
 
         cbCodigo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        cbCodigo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11" }));
-        PanelFondo.add(cbCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 140, 30));
+        PanelFondo.add(cbCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 170, 30));
 
+        tfCuenta.setEditable(false);
+        tfCuenta.setBackground(new java.awt.Color(255, 255, 255));
         tfCuenta.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tfCuenta.setForeground(new java.awt.Color(153, 0, 0));
         PanelFondo.add(tfCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 470, 30));
 
         cbTransaccion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
