@@ -177,7 +177,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
                 JOptionPane.showMessageDialog(null, "El total del debe y el haber no son iguales. No se puede procesar.");
                 return;
             }
-            // Limpia la lista para evitar duplicados
+            // Limpia la lista (datos Anteriores en la tabla) para evitar duplicados
             listaLibroDiario.clear();
             //Recorro el ArrayList Nuevamente para obtener los datos de las filas actualizadas 
             DefaultTableModel modeloTabla = (DefaultTableModel) frmLibro.tbDatos.getModel();
