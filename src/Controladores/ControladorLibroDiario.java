@@ -160,6 +160,10 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
 
     public void procesarPartida() {
         try {
+            if (frmLibro.tbDatos.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No se puede procesar la partida. No hay registros en la tabla.");
+                return;
+            }
             // Para verificar si el debe y el haber son iguales
             double totalDebe = 0.0;
             double totalHaber = 0.0;
@@ -189,7 +193,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
                 int codigoSubcuenta = Integer.parseInt(modeloTabla.getValueAt(i, 1).toString());
                 String nombreCuenta = modeloTabla.getValueAt(i, 2).toString();
                 double monto = modeloTabla.getValueAt(i, 3).toString().isEmpty()
-                        ? Double.parseDouble(modeloTabla.getValueAt(i, 4).toString()) 
+                        ? Double.parseDouble(modeloTabla.getValueAt(i, 4).toString())
                         : Double.parseDouble(modeloTabla.getValueAt(i, 3).toString());
                 String transaccion = modeloTabla.getValueAt(i, 3).toString().isEmpty() ? "Haber" : "Debe";
                 String concepto = modeloTabla.getValueAt(i, 5).toString();
