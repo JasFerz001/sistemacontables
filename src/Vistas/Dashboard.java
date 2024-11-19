@@ -1,5 +1,8 @@
 package vistas;
 
+
+import Controladores.ControladorLibroDiario;
+import Vistas.VistaLibroDiario;
 import utilidades.Fondo;
 import java.awt.Color;
 import java.awt.Image;
@@ -9,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class Dashboard extends javax.swing.JFrame {
+
     boolean visible = false;
     Color colorDefaultModulo,
             colorActivoModulo,
@@ -21,7 +25,7 @@ public class Dashboard extends javax.swing.JFrame {
     public Dashboard() {
         initComponents();
         setImageLabel(logo, "src/img/logo.png");
-        setImageLabel(home, "src/img/cargando.gif");
+//        setImageLabel(home, "src/img/cargando.gif");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         color();
         config();
@@ -865,6 +869,9 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu2Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu2Op1MousePressed
         opDefault();
         menu2Op2.setBackground(colorActivoOp);
+        VistaLibroDiario frmLibroDiario = new VistaLibroDiario(this, visible, "Libro Diario");
+        ControladorLibroDiario ctrlLibro = new ControladorLibroDiario(frmLibroDiario);
+        frmLibroDiario.setVisible(true);
     }//GEN-LAST:event_menu2Op1MousePressed
 
     private void panelOp2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelOp2MousePressed
