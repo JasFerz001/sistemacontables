@@ -285,7 +285,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
         if (e.getSource() == this.frmLibro.tbDatos) {
             int fila = this.frmLibro.tbDatos.getSelectedRow();
             if (fila >= 0) {
-                // Cargar datos de la fila seleccionada al formulario
+                // Cargar datos de la fila seleccionada a los campos de la vista
                 DefaultTableModel modeloTabla = (DefaultTableModel) this.frmLibro.tbDatos.getModel();
                 String fecha = modeloTabla.getValueAt(fila, 0).toString();
                 int codigoSubcuenta = Integer.parseInt(modeloTabla.getValueAt(fila, 1).toString());
