@@ -42,14 +42,14 @@ public class DaoCatalogo {
     }
 
     private static final String SELECT_MAYOR = "SELECT c.cod_mayor, c.nombre, c.naturaleza, p.nombre AS cuenta_principal\n"
-                                               + "FROM cuentas_mayor AS c\n"
-                                               + "INNER JOIN cuentas_principales AS p ON p.cod_principal = c.cod_principal;";
+            + "FROM cuentas_mayor AS c\n"
+            + "INNER JOIN cuentas_principales AS p ON p.cod_principal = c.cod_principal ORDER BY c.cod_mayor;";
 
     private static final String INSERTAR_MAYOR = "INSERT INTO cuentas_mayor(cod_mayor,"
             + " nombre, naturaleza, cod_principal) VALUES (?,?,?,?)";
 
     private static final String ACTUALIZAR_MAYOR = "UPDATE cuentas_mayor SET "
-            + " cod_mayor =?, nombre =?, naturaleza =?, cod_principal WHERE cod_mayor =?";
+            + " nombre =?, naturaleza =?, cod_principal=? WHERE cod_mayor =?;";
 
     public DaoCatalogo() {
         this.conexion = new Conexion();
@@ -146,11 +146,11 @@ public class DaoCatalogo {
             this.conexion.getConexion();
             this.accesoDB = conexion.getConexion();
             this.ps = this.accesoDB.prepareStatement(INSERTAR_MAYOR);
-
             this.ps.setString(1, mayor.getCod_Mayor());
             this.ps.setString(2, mayor.getNombre_Mayor());
             this.ps.setString(3, mayor.getNaturaleza());
             this.ps.setString(4, mayor.getCod_principal().getCod_Principal());
+
             System.out.println("servicio_insertar" + mayor);
             resultado_insertar = this.ps.executeUpdate();
             this.conexion.cerrarConexiones();
@@ -175,10 +175,11 @@ public class DaoCatalogo {
             this.accesoDB = this.conexion.getConexion();
             this.ps = this.accesoDB.prepareStatement(ACTUALIZAR_MAYOR);
 
-            this.ps.setString(1, mayor.getCod_Mayor());
-            this.ps.setString(2, mayor.getNombre_Mayor());
-            this.ps.setString(3, mayor.getNaturaleza());
-            this.ps.setString(4, mayor.getCod_principal().getCod_Principal());
+            
+            this.ps.setString(1, mayor.getNombre_Mayor());
+            this.ps.setString(2, mayor.getNaturaleza());
+            this.ps.setString(3, mayor.getCod_principal().getCod_Principal());
+            this.ps.setString(4, mayor.getCod_Mayor());
             res_actualizar = this.ps.executeUpdate();
             System.out.println(res_actualizar);
 

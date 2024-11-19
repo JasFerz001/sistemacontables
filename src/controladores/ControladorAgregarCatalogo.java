@@ -81,10 +81,10 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.frmCatalogo.registrar) {
             guardar();
+            mostrar();
         }
         if (e.getSource() == this.frmCatalogo.editar) {
-            ControladorAgregarCatalogo ctrl = new ControladorAgregarCatalogo(frmCatalogo, ctrol, mayor);
-            guardar();
+            agregar();
         } else if (e.getSource() == this.frmCatalogo.cancelar) {
             limpiar();
         } else if (e.getSource() == this.frmCatalogo.salir) {
@@ -104,7 +104,27 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
             if (this.mayor == null) {
                 Cuentas_Mayor cat = new Cuentas_Mayor(codigo, cuenta, naturaleza, prin);
                 daoCatalogo.insertMayor(cat);
+            } else {
+                this.mayor.setCod_Mayor(codigo);
+                this.mayor.setNombre_Mayor(cuenta);
+                this.mayor.setNaturaleza(naturaleza);
+                this.mayor.setCod_principal(prin);
+
+                daoCatalogo.updateMayor(mayor);
             }
+            mostrar();
+            limpiar();
+            this.mayor = null;
+        }
+    }
+
+    public void agregar() {
+        if (this.mayor != null) {
+            this.frmCatalogo.codigo.setText(this.mayor.getCod_Mayor());
+            this.frmCatalogo.nombreCuenta.setText(this.mayor.getNombre_Mayor());
+            this.frmCatalogo.naturaleza.setSelectedItem(this.mayor.getNaturaleza());
+            this.frmCatalogo.tipoCuenta.setSelectedItem(this.mayor.getCod_principal().getNombre_Principal());
+            this.frmCatalogo.codigo.setEditable(false);
         }
     }
 
@@ -117,13 +137,13 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
     public void salir() {
         System.exit(0);
     }
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == this.frmCatalogo.tablita) {
             int fila = this.frmCatalogo.tablita.getSelectedRow();
             if (fila >= 0) {
-                mayor = listaMayor.get(fila);
+                this.mayor = listaMayor.get(fila);
                 this.frmCatalogo.editar.setEnabled(true);
             }
         }
