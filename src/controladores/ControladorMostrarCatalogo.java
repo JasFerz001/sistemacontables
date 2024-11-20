@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import modelos.Cuenta;
 import vistas.AgregarCatalogo;
+import vistas.AgregarSubcuenta;
 import vistas.Catalogos;
 
 /**
@@ -67,6 +68,10 @@ public class ControladorMostrarCatalogo extends MouseAdapter implements ActionLi
             AgregarCatalogo frmCat = new AgregarCatalogo(new JFrame(), true);
             ControladorAgregarCatalogo a = new ControladorAgregarCatalogo(frmCat, this);
             frmCat.iniciar();
+        }else if(e.getSource() == this.frmMostrar.AgregarSub){
+            AgregarSubcuenta frmSub = new AgregarSubcuenta(new JFrame(), true);
+            ControladorSubCuenta es = new ControladorSubCuenta(frmSub, this);
+            frmSub.iniciar();
         }
     }
 
