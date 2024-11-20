@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.Cuentas_Mayor;
 import modelos.Cuentas_Principales;
@@ -42,6 +43,7 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         this.frmCatalogo.salir.addActionListener(this);
         this.frmCatalogo.editar.addActionListener(this);
         this.frmCatalogo.tablita.addMouseListener(this);
+        this.frmCatalogo.eliminar.addActionListener(this);
         this.frmCatalogo.editar.setEnabled(false);
         daoCatalogo = new DaoCatalogo();
         mostrar();
@@ -52,6 +54,7 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         this.frmCatalogo.registrar.addActionListener(this);
         this.frmCatalogo.cancelar.addActionListener(this);
         this.frmCatalogo.salir.addActionListener(this);
+        this.frmCatalogo.eliminar.addActionListener(this);
         this.mayor = mayor;
         this.ctrol = ctrol;
         daoCatalogo = new DaoCatalogo();
@@ -87,8 +90,11 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
             agregar();
         } else if (e.getSource() == this.frmCatalogo.cancelar) {
             limpiar();
+            this.frmCatalogo.codigo.setEditable(true);
         } else if (e.getSource() == this.frmCatalogo.salir) {
             salir();
+        }else if(e.getSource() == this.frmCatalogo.eliminar){
+            eliminar();
         }
     }
 
@@ -98,24 +104,26 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         String naturaleza = (String) this.frmCatalogo.naturaleza.getSelectedItem();
         String cod_prin = (String) this.frmCatalogo.tipoCuenta.getSelectedItem();
 
+        if (codigo.isEmpty() || cuenta.isEmpty() || naturaleza == null || cod_prin == null) {
+            JOptionPane.showMessageDialog(frmCatalogo, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Cuentas_Principales prin = daoCatalogo.select_cod_principal(cod_prin);
 
-        if (!cuenta.isEmpty()) {
-            if (this.mayor == null) {
-                Cuentas_Mayor cat = new Cuentas_Mayor(codigo, cuenta, naturaleza, prin);
-                daoCatalogo.insertMayor(cat);
-            } else {
-                this.mayor.setCod_Mayor(codigo);
-                this.mayor.setNombre_Mayor(cuenta);
-                this.mayor.setNaturaleza(naturaleza);
-                this.mayor.setCod_principal(prin);
-
-                daoCatalogo.updateMayor(mayor);
-            }
-            mostrar();
-            limpiar();
-            this.mayor = null;
+        if (this.mayor == null) {
+            Cuentas_Mayor cat = new Cuentas_Mayor(codigo, cuenta, naturaleza, prin);
+            daoCatalogo.insertMayor(cat);
+        } else {
+            this.mayor.setCod_Mayor(codigo);
+            this.mayor.setNombre_Mayor(cuenta);
+            this.mayor.setNaturaleza(naturaleza);
+            this.mayor.setCod_principal(prin);
+            daoCatalogo.updateMayor(mayor);
         }
+        mostrar();
+        limpiar();
+        this.mayor = null;
+
     }
 
     public void agregar() {
@@ -132,6 +140,8 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         this.frmCatalogo.codigo.setText(" ");
         this.frmCatalogo.nombreCuenta.setText(" ");
         this.frmCatalogo.tipoCuenta.setSelectedIndex(0);
+        this.mayor = null;
+        this.frmCatalogo.editar.setEnabled(false);
     }
 
     public void salir() {
@@ -142,12 +152,31 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == this.frmCatalogo.tablita) {
             int fila = this.frmCatalogo.tablita.getSelectedRow();
-            if (fila >= 0) {
+            if (fila >= 0 && e.getClickCount() == 2) {
                 this.mayor = listaMayor.get(fila);
                 this.frmCatalogo.editar.setEnabled(true);
             }
         }
     }
+    
+    public void eliminar() {
+    if (this.mayor != null) {
+        int confirmacion = JOptionPane.showConfirmDialog(frmCatalogo,"¿Estás seguro de que deseas eliminar esta cuenta?","Confirmación",JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            boolean eliminado = daoCatalogo.deleteMayor(this.mayor.getCod_Mayor());
+            if (eliminado) {
+                JOptionPane.showMessageDialog(frmCatalogo, "Registro eliminado con éxito.");
+                mostrar(); // Actualizar la tabla
+                limpiar(); // Limpiar el formulario
+                this.mayor = null; // Reiniciar la selección
+            } else {
+                JOptionPane.showMessageDialog(frmCatalogo, "Error al eliminar el registro.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    } else {
+        JOptionPane.showMessageDialog(frmCatalogo, "No hay ninguna cuenta seleccionada para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+    }
+}
 
     @Override
     public void keyTyped(KeyEvent e) {

@@ -175,7 +175,6 @@ public class DaoCatalogo {
             this.accesoDB = this.conexion.getConexion();
             this.ps = this.accesoDB.prepareStatement(ACTUALIZAR_MAYOR);
 
-            
             this.ps.setString(1, mayor.getNombre_Mayor());
             this.ps.setString(2, mayor.getNaturaleza());
             this.ps.setString(3, mayor.getCod_principal().getCod_Principal());
@@ -305,6 +304,19 @@ public class DaoCatalogo {
         }
 
         return listaCuentas;
+    }
+
+    public boolean deleteMayor(String codMayor) {
+        String sql = "DELETE FROM cuentas_mayor WHERE cod_mayor = ?";
+        try (Connection conn = this.conexion.getConexion(); 
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, codMayor);
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0; // Retorna true si se eliminó al menos un registro
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false; // Retorna false si ocurre algún error
+        }
     }
 
 }
