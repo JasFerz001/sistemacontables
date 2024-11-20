@@ -30,14 +30,28 @@ public class ControladorLibroMayor extends MouseAdapter implements ActionListene
     DefaultTableModel modelo;
     ArrayList<LibroMayor> listaMayor;
 
-    public ControladorLibroMayor(VistaMayor frmMayor) throws SQLException, ClassNotFoundException {
+    public ControladorLibroMayor(VistaMayor frmMayor)  {
         this.frmMayor = frmMayor;
+        
         listaMayor = new ArrayList();
-        this.daoMayor = new DaoMayor();
+        daoMayor = new DaoMayor();
+        this.frmMayor.tbDatos.addMouseListener(this);
         mostrar();
     }
 
-    public void mostrar() throws SQLException, ClassNotFoundException {
+    public ControladorLibroMayor(VistaMayor frmMayor, LibroMayor mayor) {
+        this.frmMayor = frmMayor;
+        this.mayor = mayor;
+         listaMayor = new ArrayList();
+        daoMayor = new DaoMayor();
+        this.frmMayor.tbDatos.addMouseListener(this);
+    }
+    
+    
+    
+    //tonto el q lo lea :3 7u7
+
+    public void mostrar()  {
 
         listaMayor = (daoMayor.seleccionaDatos());
         modelo = new DefaultTableModel();

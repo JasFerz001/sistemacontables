@@ -50,15 +50,16 @@ public class DaoMayor {
 "ORDER BY \n" +
 "    cm.cod_mayor;";
 
-    public DaoMayor(Conexion conexion) {
+    public DaoMayor() {
         this.conexion = conexion;
     }
      
-      public ArrayList<LibroMayor> seleccionaDatos() throws SQLException, ClassNotFoundException {
+      public ArrayList<LibroMayor> seleccionaDatos()  {
 
         this.listaLibroMayor = new ArrayList();
 
         try {
+            this.conexion = new Conexion();
             this.accesoDB = this.conexion.getConexion();
             this.ps = this.accesoDB.prepareStatement(Mostar);
             this.rs = ps.executeQuery();
@@ -70,8 +71,8 @@ public class DaoMayor {
                 obj.setNombre(rs.getString("nombre_cuenta_mayor"));
                 
                 obj.setDebe(rs.getDouble("debe"));
-                obj.setDebe(rs.getDouble("haber"));
-                obj.setDebe(rs.getDouble("saldo"));
+                obj.setHaber(rs.getDouble("haber"));
+                obj.setSaldo(rs.getDouble("saldo"));
                 this.listaLibroMayor.add(obj);
             }
             this.conexion.cerrarConexiones();

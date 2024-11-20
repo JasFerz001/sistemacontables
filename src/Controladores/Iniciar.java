@@ -1,5 +1,7 @@
 package controladores;
 
+import Controladores.ControladorLibroMayor;
+import Vistas.VistaMayor;
 import java.awt.Frame;
 import javax.swing.JFrame;
 import vistas.Catalogos;
@@ -13,8 +15,8 @@ public class Iniciar {
 
     public static void main(String[] args) {
 
-        Catalogos miua= new Catalogos(new JFrame(), true);
-        ControladorCatalogo ctrl = new ControladorCatalogo(miua);
+        VistaMayor miua= new VistaMayor(new JFrame(), true);
+        ControladorLibroMayor ctr = new ControladorLibroMayor(miua);
         miua.iniciar();
     }
 }
