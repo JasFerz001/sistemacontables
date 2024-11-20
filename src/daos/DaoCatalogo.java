@@ -22,6 +22,7 @@ public class DaoCatalogo {
     private ResultSet rs = null;
     private PreparedStatement ps;
     private Connection accesoDB;
+    
     private Catalogo catalogo;
 
     private static final String INSERTAR_CATALOGO = "INSERT INTO catalogo(codigo,"

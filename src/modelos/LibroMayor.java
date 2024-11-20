@@ -12,7 +12,7 @@ public class LibroMayor {
     
     private String codigo;
     private String nombre;
-    private String concepto;
+    
     
     private Double debe;
     private Double haber;
@@ -25,12 +25,20 @@ public class LibroMayor {
         this.codigo = codigo;
     }
 
-    
-    
-    public LibroMayor(String codigo, String nombre, String concepto, Double debe, Double haber, Double saldo) {
+    public LibroMayor(String codigo, String nombre, Double debe, Double haber) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.concepto = concepto;
+        
+        this.debe = debe;
+        this.haber = haber;
+    }
+
+    
+    
+    public LibroMayor(String codigo, String nombre,  Double debe, Double haber, Double saldo) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        
         this.debe = debe;
         this.haber = haber;
         this.saldo = saldo;
@@ -50,14 +58,6 @@ public class LibroMayor {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getConcepto() {
-        return concepto;
-    }
-
-    public void setConcepto(String concepto) {
-        this.concepto = concepto;
     }
 
     public Double getDebe() {
