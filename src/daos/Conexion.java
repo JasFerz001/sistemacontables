@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package daos;
 
 import java.sql.Connection;
@@ -15,7 +11,11 @@ import java.sql.SQLException;
 public class Conexion {
 
    private Connection conexion = null;
+<<<<<<< HEAD
     private String url = "jdbc:postgresql://localhost:5432/sic";
+=======
+    private String url = "jdbc:postgresql://localhost:5432/SIC";
+>>>>>>> main
     private String usuario = "postgres";
     private String password = "root";//root
 
