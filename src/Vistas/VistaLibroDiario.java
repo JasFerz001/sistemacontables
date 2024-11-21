@@ -31,6 +31,7 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         tb.addColumn("Concepto");
         tbDatos.setModel(tb);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,7 +52,6 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         lbPartidaAnterior = new javax.swing.JLabel();
         tfPartidaAnterior = new javax.swing.JTextField();
         lbFecha = new javax.swing.JLabel();
-        tfFecha = new newscomponents.RSDateChooser();
         lbCodigo = new javax.swing.JLabel();
         lbCuenta = new javax.swing.JLabel();
         lbMonto = new javax.swing.JLabel();
@@ -72,6 +72,7 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tfMonto = new javax.swing.JTextField();
+        tfFecha = new newscomponents.RSDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -116,12 +117,6 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         lbFecha.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbFecha.setText("Fecha");
         PanelFondo.add(lbFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, -1, 30));
-
-        tfFecha.setBackground(new java.awt.Color(255, 255, 255));
-        tfFecha.setBgColor(new java.awt.Color(153, 0, 0));
-        tfFecha.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        tfFecha.setFormatDate("dd/MM/yyyy");
-        PanelFondo.add(tfFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, -1, 35));
 
         lbCodigo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbCodigo.setText("Codigo ");
@@ -243,6 +238,12 @@ public class VistaLibroDiario extends javax.swing.JDialog {
 
         tfMonto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         PanelFondo.add(tfMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 140, -1));
+
+        tfFecha.setBackground(new java.awt.Color(153, 0, 0));
+        tfFecha.setForeground(new java.awt.Color(153, 0, 0));
+        tfFecha.setBgColor(new java.awt.Color(153, 0, 0));
+        tfFecha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        PanelFondo.add(tfFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 220, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
