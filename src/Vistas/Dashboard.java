@@ -2,7 +2,9 @@ package vistas;
 
 
 import Controladores.ControladorLibroDiario;
+import Controladores.ControladorMostrarLibroDiario;
 import Vistas.VistaLibroDiario;
+import Vistas.VistaMostrarLibroDiario;
 import utilidades.Fondo;
 import java.awt.Color;
 import java.awt.Image;
@@ -890,6 +892,10 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu2Op2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu2Op2MousePressed
         opDefault();
         menu2Op1.setBackground(colorActivoOp);
+        
+        VistaMostrarLibroDiario frmMostrar = new VistaMostrarLibroDiario(this, visible, "Partidas del Libro Diario");
+        ControladorMostrarLibroDiario ctrlL = new ControladorMostrarLibroDiario(frmMostrar);
+        frmMostrar.setVisible(true);
     }//GEN-LAST:event_menu2Op2MousePressed
 
     private void opHomeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opHomeMousePressed
