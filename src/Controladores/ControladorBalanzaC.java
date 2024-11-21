@@ -50,16 +50,15 @@ public class ControladorBalanzaC extends MouseAdapter implements ActionListener,
             totalDeudor += x.getSaldoDeudor();
             totalAcreedor += x.getSaldoAcreedor();
         }
+        
         this.vista.Tbalanza.setModel(modelo);
-        vista.tfDebe.setText(String.valueOf(totalDebe));
-        vista.tfHaber.setText(String.valueOf(totalHaber));
-        vista.tfDeudor.setText(String.valueOf(totalDeudor));
-        vista.tfAcreedor.setText(String.valueOf(totalAcreedor));
+        this.vista.lbDebe.setText(String.valueOf(totalDebe));
+        this.vista.lbHaber.setText(String.valueOf(totalHaber));
+        this.vista.lbDeudor.setText(String.valueOf(totalDeudor));
+        this.vista.lbAcreedor.setText(String.valueOf(totalAcreedor));
+      //  this.vista.tfAcreedor.setText(String.valueOf(totalAcreedor));
 
-        vista.tfDebe.setEnabled(false);
-        vista.tfHaber.setEnabled(false);
-        vista.tfDeudor.setEnabled(false);
-        vista.tfAcreedor.setEnabled(false);
+        System.out.println(totalDebe);
 
     }
 
