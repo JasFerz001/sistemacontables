@@ -152,8 +152,6 @@ public class ControladorBalanceGeneral implements ActionListener {
             }
         }
 
-        System.out.println("El año es: " + anio);
-
         for (int i = 0; i < rowPasivo; i++) {
             for (int j = 0; j < columnPasivo; j++) {
                 if (vista.tabla_pasivos.getValueAt(i, j) == "Pasivo Corriente") {
@@ -173,8 +171,6 @@ public class ControladorBalanceGeneral implements ActionListener {
                 }
             }
         }
-        System.out.println("Total Activo" + totalActivo);
-        System.out.println("Total Pasivo" + totalPasivo);
 
         dao.IngresarTotalesBalanceGeneral(totalActivoCorriente, totalActivoNoCorriente, totalPasivoCorriente, totalPasivoNoCorriente, totalPatrimonio, totalActivo, totalPasivo, n);
         return true;
