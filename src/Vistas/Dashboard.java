@@ -5,6 +5,7 @@ import Controladores.ControladorLibroDiario;
 import Controladores.ControladorMostrarLibroDiario;
 import Vistas.VistaLibroDiario;
 import Vistas.VistaMostrarLibroDiario;
+import controladores.ControladorMostrarCatalogo;
 import utilidades.Fondo;
 import java.awt.Color;
 import java.awt.Image;
@@ -764,10 +765,9 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu1Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu1Op1MousePressed
         opDefault();
         menu1Op1.setBackground(colorActivoOp);
-//       VistaConsultar consultarAutor= new VistaConsultar(new JFrame(), true, "Autores");
-////       modificado kevin
-//       ControladorConsultarAutor ctlConsultarAutor= new  ControladorConsultarAutor(consultarAutor);
-//        consultarAutor.iniciar();
+        Catalogos c = new Catalogos(new JFrame(), visible);
+        ControladorMostrarCatalogo ctrl = new ControladorMostrarCatalogo(c);
+        c.iniciar();
     }//GEN-LAST:event_menu1Op1MousePressed
 
     private void opMenu5AcercaDeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opMenu5AcercaDeMousePressed
