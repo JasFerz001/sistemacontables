@@ -88,31 +88,39 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
             return;
         }
         Cuentas_Mayor sub = daoSub.select_cod_mayor(cod_mayor);
-        if(this.subcuentas == null){
+
+        if (this.subcuentas == null) {
             SubCuentas s = new SubCuentas(codigo, nombre, sub);
             daoSub.insertSubCuenta(s);
-        }else{
+        } else {
             this.subcuentas.setCod_subcuenta(codigo);
             this.subcuentas.setNombre_sub(nombre);
             this.subcuentas.setCod_mayor(sub);
             daoSub.updateSubCuenta(subcuentas);
         }
         mostrar();
-        limpiar();
-        this.subcuentas = null;   
+        limpiarFormulario();
+        this.subcuentas = null;
     }
-    
-    public void limpiar(){
-        this.frmSub.codigo.setText(" ");
-        this.frmSub.nombreCuenta.setText(" ");
+
+// Método para limpiar los campos del formulario
+    private void limpiarFormulario() {
+        this.frmSub.codigo.setText(""); 
+        this.frmSub.nombreCuenta.setText("");
+        this.frmSub.cod_mayor.setSelectedIndex(0);
+    }
+
+    public void limpiar() {
+        this.frmSub.codigo.setText("");
+        this.frmSub.nombreCuenta.setText("");
         this.frmSub.tipoCuenta.setSelectedIndex(0);
         this.frmSub.cod_mayor.setSelectedIndex(0);
         this.subcuentas = null;
         this.frmSub.editar.setEnabled(false);
-        
+
     }
-    
-    public void agregar(){
+
+    public void agregar() {
         if (this.subcuentas != null) {
             this.frmSub.codigo.setText(this.subcuentas.getCod_subcuenta());
             this.frmSub.nombreCuenta.setText(this.subcuentas.getNombre_sub());
@@ -120,10 +128,10 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
             this.frmSub.codigo.setEditable(false);
         }
     }
-    
-    public void eliminar(){
-        if(this.subcuentas != null){
-            int confirmacion = JOptionPane.showConfirmDialog(frmSub,"¿Estás seguro de que deseas eliminar esta cuenta?","Confirmación",JOptionPane.YES_NO_OPTION);
+
+    public void eliminar() {
+        if (this.subcuentas != null) {
+            int confirmacion = JOptionPane.showConfirmDialog(frmSub, "¿Estás seguro de que deseas eliminar esta cuenta?", "Confirmación", JOptionPane.YES_NO_OPTION);
             if (confirmacion == JOptionPane.YES_OPTION) {
                 boolean eliminado = daoSub.deleteSub(this.subcuentas.getCod_subcuenta());
                 if (eliminado) {
@@ -131,16 +139,16 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
                     mostrar();
                     limpiar();
                     this.subcuentas = null;
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(frmSub, "Error al eliminar el registro.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(frmSub, "No hay ninguna cuenta seleccionada para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
-    public void salir(){
+
+    public void salir() {
         System.exit(0);
     }
 
@@ -152,18 +160,18 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
             this.frmSub.codigo.setEnabled(true);
             this.subcuentas = null;
         }
-        if(e.getSource()== this.frmSub.editar){
+        if (e.getSource() == this.frmSub.editar) {
             agregar();
-        }else if (e.getSource() == this.frmSub.cancelar) {
+        } else if (e.getSource() == this.frmSub.cancelar) {
             limpiar();
             this.frmSub.codigo.setEditable(true);
         } else if (e.getSource() == this.frmSub.salir) {
             salir();
-        }else if(e.getSource() == this.frmSub.eliminar){
+        } else if (e.getSource() == this.frmSub.eliminar) {
             eliminar();
         }
     }
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == this.frmSub.tablita) {

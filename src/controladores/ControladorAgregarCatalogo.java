@@ -137,8 +137,8 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
     }
 
     public void limpiar() {
-        this.frmCatalogo.codigo.setText(" ");
-        this.frmCatalogo.nombreCuenta.setText(" ");
+        this.frmCatalogo.codigo.setText("");
+        this.frmCatalogo.nombreCuenta.setText("");
         this.frmCatalogo.tipoCuenta.setSelectedIndex(0);
         this.mayor = null;
         this.frmCatalogo.editar.setEnabled(false);
