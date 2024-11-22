@@ -33,7 +33,7 @@ public class ControladorBalanceGeneral implements ActionListener {
     ArrayList<BalanceGeneral> listaPasivosNoCorrientes = new ArrayList();
     ArrayList<BalanceGeneral> listaPatrimonio = new ArrayList();
 
-    float ResEjercicio = (float) 5.90;
+    float ResEjercicio = (float) 0;
 
     Conexion con = new Conexion();
 
