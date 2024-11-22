@@ -267,6 +267,7 @@ public class AgregarSubcuenta extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cod_mayorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cod_mayorActionPerformed

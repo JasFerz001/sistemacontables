@@ -293,6 +293,7 @@ public class AgregarCatalogo extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tipoCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tipoCuentaMouseClicked
