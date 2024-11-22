@@ -1,8 +1,10 @@
 package vistas;
 
+import Controladores.ControladorBalanceGeneral;
 import Controladores.ControladorBalanzaC;
 import Controladores.ControladorLibroDiario;
 import Controladores.ControladorMostrarLibroDiario;
+import Vistas.VistaBalanceGeneral;
 import Vistas.VistaBalanzaComprobacion;
 import Vistas.VistaLibroDiario;
 import Vistas.VistaMostrarLibroDiario;
@@ -266,7 +268,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menu3Op2.setForeground(new java.awt.Color(255, 255, 255));
         menu3Op2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
-        menu3Op2.setText("Report2");
+        menu3Op2.setText("Balance General");
         menu3Op2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu3Op2.setOpaque(true);
         menu3Op2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -782,7 +784,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op1.setBackground(colorActivoOp);
         VistaBalanzaComprobacion vista = new VistaBalanzaComprobacion(new JFrame(), true);
         ControladorBalanzaC crt = new ControladorBalanzaC(vista);
-        vista.setVisible(true);
+       
 
     }//GEN-LAST:event_menu3Op1MousePressed
 
@@ -791,6 +793,10 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_panelOp3MousePressed
 
     private void menu3Op2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op2MousePressed
+        VistaBalanceGeneral frm = new VistaBalanceGeneral();
+        ControladorBalanceGeneral ctrl = new ControladorBalanceGeneral(frm);
+        ctrl.setModels();
+        
         opDefault();
         menu3Op2.setBackground(colorActivoOp);
     }//GEN-LAST:event_menu3Op2MousePressed

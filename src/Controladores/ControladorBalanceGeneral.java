@@ -18,7 +18,7 @@ public class ControladorBalanceGeneral implements ActionListener {
     Calendar calendario = Calendar.getInstance();
     int anio = calendario.get(Calendar.YEAR);
 
-    String activo = "Activo Corriente", aN = "Activo No Corriente", pasivo = "Pasivo Corriente", pN = "Pasivo No Corriente", patrimonio = "Capital Contable";
+    String activo = "ACTIVO CORRIENTE", aN = "ACTIVO NO CORRIENTE", pasivo = "PASIVO CORRIENTE", pN = "PASIVO NO CORRIENTE", patrimonio = "CAPITAL CONTABLE";
     int tamaño = 0 ;
 
     VistaBalanceGeneral vista = new VistaBalanceGeneral();
@@ -72,7 +72,7 @@ public class ControladorBalanceGeneral implements ActionListener {
         //CONSULTAR EL TOTAL DE ACTIVOS CORRIENTES
         float total_AC = dao.GetTotalCuentasActivo(activo, anio);
         //CONSULTAR CADA CUENTA DE ACTIVOS CORRIENTES
-        dtm.addRow(new Object[]{"Activo Corriente", " ", total_AC});
+        dtm.addRow(new Object[]{"ACTIVO CORRIENTE", " ", total_AC});
         for (int i = 0; i < listaActivos.size(); i++) {
             dtm.addRow(new Object[]{listaActivos.get(i).getCuenta(), listaActivos.get(i).getMonto(), " "});
         }
@@ -80,7 +80,7 @@ public class ControladorBalanceGeneral implements ActionListener {
         //CONSULTAR EL TOTAL DE ACTIVOS NO CORRIENTES
         float total_ANC = dao.GetTotalCuentasActivo(aN, anio);
         //CONSULTAR CADA CUENTA DE ACTIVOS NO CORRIENTES
-        dtm.addRow(new Object[]{"Activo No Corriente", " ", total_ANC});
+        dtm.addRow(new Object[]{"ACTIVO NO CORRIENTE", " ", total_ANC});
         for (int i = 0; i < lisAcNocorrientes.size(); i++) {
             dtm.addRow(new Object[]{lisAcNocorrientes.get(i).getCuenta(), lisAcNocorrientes.get(i).getMonto(), " "});
         }
@@ -88,7 +88,7 @@ public class ControladorBalanceGeneral implements ActionListener {
         //CONSULTAR EL TOTAL DE PASIVOS CORRIENTES
         float total_PC = dao.GetTotalCuentasPasivo(pasivo, anio);
         //CONSULTAR CADA CUENTA DE PASIVOS CORRIENTES
-        dtm2.addRow(new Object[]{"Pasivo Corriente", " ", total_PC});
+        dtm2.addRow(new Object[]{"PASIVO CORRIENTE", " ", total_PC});
         for (int i = 0; i < listaPasivos.size(); i++) {
             dtm2.addRow(new Object[]{listaPasivos.get(i).getCuenta(), listaPasivos.get(i).getMonto(), " "});
         }
@@ -96,7 +96,7 @@ public class ControladorBalanceGeneral implements ActionListener {
         //CONSULTAR EL TOTAL DE PASIVOS NO CORRIENTES
         float total_PNC = dao.GetTotalCuentasPasivo(pN, anio);
         //CONSULTAR CADA CUENTA DE PASIVOS CORRIENTES
-        dtm2.addRow(new Object[]{"Pasivo No Corriente", " ", total_PNC});
+        dtm2.addRow(new Object[]{"PASIVO NO CORRIENTE", " ", total_PNC});
         for (int i = 0; i < listaPasivosNoCorrientes.size(); i++) {
             dtm2.addRow(new Object[]{listaPasivosNoCorrientes.get(i).getCuenta(), listaPasivosNoCorrientes.get(i).getMonto(), " "});
         }
@@ -104,7 +104,7 @@ public class ControladorBalanceGeneral implements ActionListener {
         //CONSULTAR EL TOTAL DE CAPITAL
         float total_CAP = dao.GetTotalCuentasPasivo(patrimonio, anio);
         //CONSULTAR CADA CUENTA DE TOTAL DE CAPITAL
-        dtm2.addRow(new Object[]{"Patrimonio", " ", total_CAP});
+        dtm2.addRow(new Object[]{"CAPITAL CONTABLE", " ", total_CAP});
         if (!listaPatrimonio.isEmpty()) {
             for (int i = 0; i < listaPatrimonio.size(); i++) {
                 dtm2.addRow(new Object[]{listaPatrimonio.get(i).getCuenta(), listaPatrimonio.get(i).getMonto(), " "});
