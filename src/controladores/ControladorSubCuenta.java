@@ -150,6 +150,7 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
             guardar();
             mostrar();
             this.frmSub.codigo.setEnabled(true);
+            this.subcuentas = null;
         }
         if(e.getSource()== this.frmSub.editar){
             agregar();
