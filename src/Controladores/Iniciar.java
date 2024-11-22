@@ -13,8 +13,9 @@ public class Iniciar {
 
     public static void main(String[] args) {
 
-        Catalogos miua= new Catalogos(new JFrame(), true);
-        ControladorCatalogo ctrl = new ControladorCatalogo(miua);
-        miua.iniciar();
+       // Catalogos miua= new Catalogos(new JFrame(), true);
+        Dashboard d = new Dashboard();
+       // ControladorCatalogo ctrl = new ControladorCatalogo(miua);
+        d.iniciar();
     }
 }

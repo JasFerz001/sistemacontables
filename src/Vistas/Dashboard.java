@@ -1,5 +1,7 @@
 package vistas;
 
+import Controladores.ControladorBalanzaC;
+import Vistas.VistaBalanzaComprobacion;
 import utilidades.Fondo;
 import java.awt.Color;
 import java.awt.Image;
@@ -773,6 +775,9 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu3Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op1MousePressed
         opDefault();
         menu3Op1.setBackground(colorActivoOp);
+        VistaBalanzaComprobacion vista = new VistaBalanzaComprobacion(new JFrame(), true);
+       ControladorBalanzaC crt = new ControladorBalanzaC(vista);
+       vista.setVisible(true);
 
     }//GEN-LAST:event_menu3Op1MousePressed
 
