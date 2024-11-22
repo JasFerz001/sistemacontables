@@ -26,17 +26,17 @@ public class DaoMayor {
      private static final String Mostar = "SELECT \n" +
 "    cm.cod_mayor AS codigo_cuenta_mayor,\n" +
 "    cm.nombre AS nombre_cuenta_mayor,\n" +
-"    SUM(CASE WHEN ld.transaccion = 'debe' THEN CAST(ld.monto AS NUMERIC) ELSE 0 END) AS debe,\n" +
-"    SUM(CASE WHEN ld.transaccion = 'haber' THEN CAST(ld.monto AS NUMERIC) ELSE 0 END) AS haber,\n" +
+"    SUM(CASE WHEN ld.transaccion = 'Debe' THEN CAST(ld.monto AS NUMERIC) ELSE 0 END) AS debe,\n" +
+"    SUM(CASE WHEN ld.transaccion = 'Haber' THEN CAST(ld.monto AS NUMERIC) ELSE 0 END) AS haber,\n" +
 "    CASE \n" +
 "        WHEN cm.naturaleza = 'DEUDOR' THEN \n" +
-"            SUM(CASE WHEN ld.transaccion = 'debe' THEN CAST(ld.monto AS NUMERIC) ELSE 0 END) \n" +
+"            SUM(CASE WHEN ld.transaccion = 'Debe' THEN CAST(ld.monto AS NUMERIC) ELSE 0 END) \n" +
 "            - \n" +
-"            SUM(CASE WHEN ld.transaccion = 'haber' THEN CAST(ld.monto AS NUMERIC) ELSE 0 END)\n" +
+"            SUM(CASE WHEN ld.transaccion = 'Haber' THEN CAST(ld.monto AS NUMERIC) ELSE 0 END)\n" +
 "        WHEN cm.naturaleza = 'ACREEDOR' THEN \n" +
-"            SUM(CASE WHEN ld.transaccion = 'haber' THEN CAST(ld.monto AS NUMERIC) ELSE 0 END) \n" +
+"            SUM(CASE WHEN ld.transaccion = 'Haber' THEN CAST(ld.monto AS NUMERIC) ELSE 0 END) \n" +
 "            - \n" +
-"            SUM(CASE WHEN ld.transaccion = 'debe' THEN CAST(ld.monto AS NUMERIC) ELSE 0 END)\n" +
+"            SUM(CASE WHEN ld.transaccion = 'Debe' THEN CAST(ld.monto AS NUMERIC) ELSE 0 END)\n" +
 "        ELSE 0\n" +
 "    END AS saldo\n" +
 "FROM \n" +
