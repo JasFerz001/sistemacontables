@@ -1,16 +1,5 @@
+
 package controladores;
-
-
-import Controladores.ControladorBalanceGeneral;
-import Vistas.VistaBalanceGeneral;
-import Vistas.Vista_BalanceGeneral;
-import daos.Conexion;
-
-import java.awt.Frame;
-import javax.swing.JFrame;
-
-import vistas.AgregarCatalogo;
-import vistas.Catalogos;
 
 import vistas.Dashboard;
 

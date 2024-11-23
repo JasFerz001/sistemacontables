@@ -66,7 +66,7 @@ public class DaoLibroDiario {
 
     public ArrayList<SubCuentas> obtenerSubCuentas() {
         ArrayList<SubCuentas> listaSubCuentas = new ArrayList<>();
-        String sql = "SELECT cod_subcuenta, nombre FROM subcuentas";
+        String sql = "SELECT cod_subcuenta, nombre FROM subcuentas ORDER BY cod_subcuenta";
         try {
             this.accesoDB = conexion.getConexion();
             this.ps = this.accesoDB.prepareStatement(sql);
