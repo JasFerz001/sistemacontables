@@ -10,7 +10,10 @@ import java.sql.SQLException;
  */
 public class Conexion {
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
    private Connection conexion = null;
 
     private String url = "jdbc:postgresql://localhost:5432/SIC";
