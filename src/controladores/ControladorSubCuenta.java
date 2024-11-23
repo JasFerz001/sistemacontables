@@ -107,14 +107,11 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
     private void limpiarFormulario() {
         this.frmSub.codigo.setText(""); 
         this.frmSub.nombreCuenta.setText("");
-        this.frmSub.cod_mayor.setSelectedIndex(0);
     }
 
     public void limpiar() {
         this.frmSub.codigo.setText("");
         this.frmSub.nombreCuenta.setText("");
-        this.frmSub.tipoCuenta.setSelectedIndex(0);
-        this.frmSub.cod_mayor.setSelectedIndex(0);
         this.subcuentas = null;
         this.frmSub.editar.setEnabled(false);
 
