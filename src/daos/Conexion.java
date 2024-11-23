@@ -10,16 +10,16 @@ import java.sql.SQLException;
  */
 public class Conexion {
 
-   private Connection conexion = null;
+    private Connection conexion;
 
-    private String url = "jdbc:postgresql://localhost:5432/SIC";
-    private String usuario = "postgres";
-    private String password = "root";//root
+    private String url = "jdbc:mysql://localhost:3306/sic";
+    private String usuario = "root";
+    private String password = "";//root
 
     public Connection getConexion() {
 
         try {
-            Class.forName("org.postgresql.Driver").newInstance();
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             this.conexion = DriverManager.getConnection(url, usuario, password);
             System.out.println("conectando a la BD");
         } catch (SQLException ex) {
@@ -30,10 +30,12 @@ public class Conexion {
     }
 
     public void cerrarConexiones() {
-        try {
-            this.conexion.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (conexion != null) {
+            try {
+                this.conexion.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

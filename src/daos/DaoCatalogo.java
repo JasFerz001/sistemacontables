@@ -198,6 +198,7 @@ public class DaoCatalogo {
         ArrayList<Cuenta> listaCuentas = new ArrayList<>();
 
         try {
+            this.conexion = new Conexion();
             this.accesoDB = this.conexion.getConexion();
             this.ps = this.accesoDB.prepareStatement(
                     "SELECT DISTINCT c.cod_catalogo AS Codigo, c.nombre AS Nombre FROM catalogo c\n"
