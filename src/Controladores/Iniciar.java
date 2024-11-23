@@ -1,10 +1,15 @@
 package controladores;
 
+
 import Controladores.ControladorBalanceGeneral;
 import Vistas.VistaBalanceGeneral;
 import Vistas.Vista_BalanceGeneral;
 import daos.Conexion;
 import daos.DaoBalanceGeneral;
+
+import java.awt.Frame;
+import javax.swing.JFrame;
+
 import vistas.Dashboard;
 
 /**
@@ -15,6 +20,7 @@ public class Iniciar {
 
     public static void main(String[] args) {
 
+
         DaoBalanceGeneral dao = new DaoBalanceGeneral();
         VistaBalanceGeneral vista = new VistaBalanceGeneral();
         vista.setVisible(true);
@@ -23,5 +29,9 @@ public class Iniciar {
 
           ControladorBalanceGeneral control = new ControladorBalanceGeneral(vista);
           control.setModels();
+
+        Dashboard principal = new Dashboard();
+        principal.setVisible(true);
+
     }
 }
