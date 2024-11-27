@@ -1,8 +1,10 @@
 package vistas;
 
 
+import Controladores.ControladorBalanzaC;
 import Controladores.ControladorLibroDiario;
 import Controladores.ControladorMostrarLibroDiario;
+import Vistas.VistaBalanzaComprobacion;
 import Vistas.VistaLibroDiario;
 import Vistas.VistaMostrarLibroDiario;
 import utilidades.Fondo;
@@ -92,8 +94,8 @@ public class Dashboard extends javax.swing.JFrame {
         escritorio = new javax.swing.JDesktopPane();
         panelCopyR = new javax.swing.JPanel();
         lbCopyR = new javax.swing.JLabel();
-        rSLabelHora1 = new rojeru_san.RSLabelHora();
-        rSLabelFecha1 = new rojeru_san.RSLabelFecha();
+        rSLabelFecha2 = new rojeru_san.RSLabelFecha();
+        rSLabelHora2 = new rojeru_san.RSLabelHora();
         jLabel3 = new javax.swing.JLabel();
         panelSalir = new javax.swing.JPanel();
         opSalir = new javax.swing.JLabel();
@@ -585,7 +587,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 977, Short.MAX_VALUE)
         );
 
         panelCopyR.setBackground(new java.awt.Color(255, 255, 255));
@@ -610,12 +612,6 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(lbCopyR, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        rSLabelHora1.setForeground(new java.awt.Color(153, 0, 0));
-        rSLabelHora1.setFont(new java.awt.Font("Roboto Bold", 1, 24)); // NOI18N
-
-        rSLabelFecha1.setForeground(new java.awt.Color(153, 0, 0));
-        rSLabelFecha1.setFont(new java.awt.Font("Roboto Bold", 1, 24)); // NOI18N
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -623,24 +619,23 @@ public class Dashboard extends javax.swing.JFrame {
             .addComponent(panelCopyR, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(rSLabelFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8))
-                    .addComponent(escritorio))
+                .addComponent(escritorio)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rSLabelFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rSLabelHora2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
+                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSLabelFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSLabelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(rSLabelFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rSLabelHora2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(escritorio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelCopyR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -779,6 +774,9 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu3Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op1MousePressed
         opDefault();
         menu3Op1.setBackground(colorActivoOp);
+        VistaBalanzaComprobacion vista = new VistaBalanzaComprobacion(new JFrame(), true);
+       ControladorBalanzaC crt = new ControladorBalanzaC(vista);
+       vista.setVisible(true);
 
     }//GEN-LAST:event_menu3Op1MousePressed
 
@@ -942,8 +940,8 @@ public class Dashboard extends javax.swing.JFrame {
     public javax.swing.JPanel panelOp6;
     private javax.swing.JPanel panelSalir;
     private javax.swing.JPanel panelTop;
-    private rojeru_san.RSLabelFecha rSLabelFecha1;
-    private rojeru_san.RSLabelHora rSLabelHora1;
+    private rojeru_san.RSLabelFecha rSLabelFecha2;
+    private rojeru_san.RSLabelHora rSLabelHora2;
     // End of variables declaration//GEN-END:variables
  public void colorDefault() {
         menuLateral.setBackground(colorMenuLateral);
