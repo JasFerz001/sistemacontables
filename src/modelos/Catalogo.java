@@ -4,51 +4,59 @@
  */
 package modelos;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author guill
  */
 public class Catalogo {
-    private int codigo;
-    private String nombreCuenta;
-    private int tipoCuenta;
-    
+    private String cod_catalogo;
+    private String nombre;
+    private ArrayList<Cuentas_Principales> listaPrincipal;
     
     public Catalogo() {
     }
 
-    public Catalogo(int codigo) {
-        this.codigo = codigo;
+    public Catalogo(String cod_catalogo) {
+        this.cod_catalogo = cod_catalogo;
     }
 
-    public Catalogo(int codigo, String nombreCuenta, int tipoCuenta) {
-        this.codigo = codigo;
-        this.nombreCuenta = nombreCuenta;
-        this.tipoCuenta = tipoCuenta;
+    public Catalogo(String cod_catalogo, String nombre) {
+        this.cod_catalogo = cod_catalogo;
+        this.nombre = nombre;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public Catalogo(String cod_catalogo, String nombre, ArrayList<Cuentas_Principales> listaPrincipal) {
+        this.cod_catalogo = cod_catalogo;
+        this.nombre = nombre;
+        this.listaPrincipal = listaPrincipal;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public String getCod_catalogo() {
+        return cod_catalogo;
     }
 
-    public String getNombreCuenta() {
-        return nombreCuenta;
+    public void setCod_catalogo(String cod_catalogo) {
+        this.cod_catalogo = cod_catalogo;
     }
 
-    public void setNombreCuenta(String nombreCuenta) {
-        this.nombreCuenta = nombreCuenta;
+    public String getNombre() {
+        return nombre;
     }
 
-    public int getTipoCuenta() {
-        return tipoCuenta;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setTipoCuenta(int tipoCuenta) {
-        this.tipoCuenta = tipoCuenta;
+    public ArrayList<Cuentas_Principales> getListaPrincipal() {
+        return listaPrincipal;
     }
+
+    public void setListaPrincipal(ArrayList<Cuentas_Principales> listaPrincipal) {
+        this.listaPrincipal = listaPrincipal;
+    }
+
+
     
 }
