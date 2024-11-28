@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.LibroDiario;
@@ -28,6 +29,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
         this.frmLibro = vista;
         this.frmLibro.btnAgregar.addActionListener(this);
         this.frmLibro.btnModificar.addActionListener(this);
+        this.frmLibro.btnEliminar.addActionListener(this);
         this.frmLibro.btnProcesarPartida.addActionListener(this);
         this.frmLibro.tbDatos.addMouseListener(this);
         daoLibro = new DaoLibroDiario();
@@ -40,12 +42,12 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
         this.frmLibro = frmLibro;
         this.frmLibro.btnAgregar.addActionListener(this);
         this.frmLibro.btnModificar.addActionListener(this);
+        this.frmLibro.btnEliminar.addActionListener(this);
         this.frmLibro.btnProcesarPartida.addActionListener(this);
         this.libro = libro;
         daoLibro = new DaoLibroDiario();
-
         this.frmLibro.tfFecha.setDate(this.libro.getFecha());
-        this.frmLibro.cbCodigo.setSelectedIndex(this.libro.getCodSubcuenta());
+        this.frmLibro.tfCodigo.setText(String.valueOf(this.libro.getCodSubcuenta()));
         this.frmLibro.tfCuenta.setText(this.libro.getNombreCuenta());
         this.frmLibro.tfMonto.setText(Double.toString(this.libro.getMonto()));
         this.frmLibro.cbTransaccion.setSelectedIndex(Integer.parseInt(this.libro.getTransaccion()));
@@ -58,46 +60,79 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             agregarDatosTabla();
         } else if (e.getSource() == frmLibro.btnModificar) {
             modificarFilaSeleccionada();
+        } else if (e.getSource() == frmLibro.btnEliminar) {
+            eliminarFilaSeleccionada();
         } else if (e.getSource() == frmLibro.btnProcesarPartida) {
             procesarPartida();
         }
     }
 
     private void cargarSubCuentas() {
-        ArrayList<SubCuentas> listaSubCuentas = daoLibro.obtenerSubCuentas();
-        frmLibro.cbCodigo.removeAllItems();
-        frmLibro.cbCodigo.addItem("Seleccione código");
-        for (SubCuentas subCuenta : listaSubCuentas) {
-            frmLibro.cbCodigo.addItem(subCuenta.getCod_subcuenta());
-        }
-        frmLibro.cbCodigo.addActionListener(e -> {
-            String codigoSeleccionado = (String) frmLibro.cbCodigo.getSelectedItem();
+        Runnable buscarSubCuenta = () -> {
+            String codigoIngresado = frmLibro.tfCodigo.getText().trim();
+            if (codigoIngresado.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        frmLibro,
+                        "El código de cuenta está vacío. Ingrese un código para realizar la búsqueda.",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+            SubCuentas subCuentaEncontrada = null;
+            ArrayList<SubCuentas> listaSubCuentas = daoLibro.obtenerSubCuentas();
             for (SubCuentas subCuenta : listaSubCuentas) {
-                if (subCuenta.getCod_subcuenta().equals(codigoSeleccionado)) {
-                    frmLibro.tfCuenta.setText(subCuenta.getNombre_sub());
-                    return;
+                if (subCuenta.getCod_subcuenta().equals(codigoIngresado)) {
+                    subCuentaEncontrada = subCuenta;
+                    break;
                 }
             }
-            frmLibro.tfCuenta.setText("");
+            if (subCuentaEncontrada != null) {
+                frmLibro.tfCuenta.setText(subCuentaEncontrada.getNombre_sub());
+            } else {
+                JOptionPane.showMessageDialog(
+                        frmLibro,
+                        "El código de cuenta ingresado no existe en la base de datos.",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE
+                );
+                frmLibro.tfCuenta.setText("");
+            }
+        };
+        //Para usar la tecla Enter
+        frmLibro.tfCodigo.addActionListener(e -> buscarSubCuenta.run());
+        //Para dar click en el icono de busqueda
+        frmLibro.lbBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                buscarSubCuenta.run();
+            }
         });
     }
 
     public void agregarDatosTabla() {
         try {
-            if (frmLibro.cbCodigo.getSelectedIndex() == 0) {
-                JOptionPane.showMessageDialog(null, "Debe seleccionar un código de cuenta.");
-                return; 
+            if (frmLibro.tfCodigo.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Debe ingresar un código de cuenta.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
             }
             if (frmLibro.tfConcepto.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "El campo Concepto no puede estar vacío.");
                 return;
             }
             Date fechaSeleccionada = frmLibro.tfFecha.getDate();
-            int codigoSubcuenta = Integer.parseInt(frmLibro.cbCodigo.getSelectedItem().toString());
+            int codigoSubcuenta = Integer.parseInt(frmLibro.tfCodigo.getText());
             String nombreCuenta = frmLibro.tfCuenta.getText();
             double monto = Double.parseDouble(frmLibro.tfMonto.getText());
             String transaccion = frmLibro.cbTransaccion.getSelectedItem().toString();
-
+            double montoConIVA = monto;
+            if (frmLibro.rbAgregarIVA.isSelected()) {
+                double iva = monto * 0.13;
+                montoConIVA = iva;
+            } else if (frmLibro.rbExtraerIVA.isSelected()) {
+                double ivaExtraido = (monto / 1.13) * 0.13;
+                montoConIVA = ivaExtraido;
+            }
             if (!frmLibro.tfConcepto.getText().isEmpty()) {
                 conceptoGlobal = frmLibro.tfConcepto.getText();
                 frmLibro.tfConcepto.setEnabled(false);
@@ -105,24 +140,21 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             String concepto = conceptoGlobal;
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             String fechaFormateada = formatoFecha.format(fechaSeleccionada);
-
             Object[] fila = new Object[7];
             fila[0] = fechaFormateada;
             fila[1] = codigoSubcuenta;
             fila[2] = nombreCuenta;
             fila[5] = concepto;
-
             double montoDebe = 0;
             double montoHaber = 0;
-
             if ("Debe".equals(transaccion)) {
-                montoDebe = monto;
-                fila[3] = monto;
+                montoDebe = montoConIVA;
+                fila[3] = String.format("%.2f", montoConIVA);
                 fila[4] = "";
             } else if ("Haber".equals(transaccion)) {
-                montoHaber = monto;
+                montoHaber = montoConIVA;
                 fila[3] = "";
-                fila[4] = monto;
+                fila[4] = String.format("%.2f", montoConIVA);
             }
             DefaultTableModel modeloTabla = (DefaultTableModel) frmLibro.tbDatos.getModel();
             modeloTabla.addRow(fila);
@@ -131,12 +163,16 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
                     fechaSeleccionada,
                     codigoSubcuenta,
                     nombreCuenta,
-                    monto,
+                    montoConIVA, 
                     transaccion,
                     concepto
             ));
             actualizarSumas();
-            frmLibro.cbCodigo.setSelectedIndex(0);
+            ButtonGroup group = new ButtonGroup();
+            group.add(frmLibro.rbAgregarIVA);
+            group.add(frmLibro.rbExtraerIVA);
+            group.clearSelection();
+            frmLibro.tfCodigo.setText("");
             frmLibro.tfMonto.setText("");
             frmLibro.cbTransaccion.setSelectedIndex(0);
             frmLibro.tfCuenta.setText("");
@@ -151,7 +187,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
         try {
             int filaSeleccionada = (int) frmLibro.tbDatos.getClientProperty("filaSeleccionada");
             Date fechaSeleccionada = frmLibro.tfFecha.getDate();
-            int codigoSubcuenta = Integer.parseInt(frmLibro.cbCodigo.getSelectedItem().toString());
+            int codigoSubcuenta = Integer.parseInt(frmLibro.tfCodigo.getText());
             String nombreCuenta = frmLibro.tfCuenta.getText();
             double monto = Double.parseDouble(frmLibro.tfMonto.getText());
             String transaccion = frmLibro.cbTransaccion.getSelectedItem().toString();
@@ -176,7 +212,11 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             libro.setConcepto(concepto);
             JOptionPane.showMessageDialog(null, "Fila modificada correctamente.");
             actualizarSumas();
-            frmLibro.cbCodigo.setSelectedIndex(0);
+            ButtonGroup group = new ButtonGroup();
+            group.add(frmLibro.rbAgregarIVA);
+            group.add(frmLibro.rbExtraerIVA);
+            group.clearSelection();
+            frmLibro.tfCodigo.setText("");
             frmLibro.tfCuenta.setText("");
             frmLibro.tfMonto.setText("");
             frmLibro.cbTransaccion.setSelectedIndex(0);
@@ -185,6 +225,43 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al modificar la fila: " + ex.getMessage());
+        }
+    }
+
+    private void eliminarFilaSeleccionada() {
+        try {
+            int filaSeleccionada = frmLibro.tbDatos.getSelectedRow();
+            if (filaSeleccionada >= 0) {
+                int confirmacion = JOptionPane.showConfirmDialog(
+                        frmLibro,
+                        "¿Estás seguro de que deseas eliminar esta fila?",
+                        "Confirmación",
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (confirmacion == JOptionPane.YES_OPTION) {
+                    DefaultTableModel modeloTabla = (DefaultTableModel) frmLibro.tbDatos.getModel();
+                    modeloTabla.removeRow(filaSeleccionada);
+                    listaLibroDiario.remove(filaSeleccionada);
+                    JOptionPane.showMessageDialog(frmLibro, "Fila eliminada correctamente.");
+                    actualizarSumas();
+                    ButtonGroup group = new ButtonGroup();
+                    group.add(frmLibro.rbAgregarIVA);
+                    group.add(frmLibro.rbExtraerIVA);
+                    group.clearSelection();
+                    frmLibro.tfCodigo.setText("");
+                    frmLibro.tfCuenta.setText("");
+                    frmLibro.tfMonto.setText("");
+                    frmLibro.cbTransaccion.setSelectedIndex(0);
+                    frmLibro.btnEliminar.setEnabled(false);
+                    frmLibro.btnModificar.setEnabled(false);
+                    frmLibro.btnAgregar.setEnabled(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(frmLibro, "Por favor, selecciona una fila para eliminar.");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(frmLibro, "Error al eliminar la fila: " + ex.getMessage());
         }
     }
 
@@ -264,7 +341,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
     }
 
     public void limpiarCampos() {
-        frmLibro.cbCodigo.setSelectedIndex(0);
+        frmLibro.tfCodigo.setText("");
         frmLibro.tfCuenta.setText("");
         frmLibro.tfMonto.setText("");
         frmLibro.cbTransaccion.setSelectedIndex(0);
@@ -334,20 +411,15 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                //Aqui Obtengo el codigo de la cuenta para cuando modifico me lo cargue al combobox
+                // Aquí obtengo el código de la cuenta para cargarlo en el JTextField al modificar
                 String codigoSubcuentaStr = String.valueOf(codigoSubcuenta);
-                for (int i = 0; i < this.frmLibro.cbCodigo.getItemCount(); i++) {
-                    String item = (String) this.frmLibro.cbCodigo.getItemAt(i);
-                    if (item.startsWith(codigoSubcuentaStr)) {
-                        this.frmLibro.cbCodigo.setSelectedIndex(i);
-                        break;
-                    }
-                }
+                this.frmLibro.tfCodigo.setText(codigoSubcuentaStr);
                 this.frmLibro.tfCuenta.setText(nombreCuenta);
                 this.frmLibro.tfMonto.setText(!debe.isEmpty() ? debe : haber);
                 this.frmLibro.cbTransaccion.setSelectedItem(!debe.isEmpty() ? "Debe" : "Haber");
                 this.frmLibro.tfConcepto.setText(concepto);
                 this.frmLibro.btnModificar.setEnabled(true);
+                this.frmLibro.btnEliminar.setEnabled(true);
                 this.frmLibro.btnAgregar.setEnabled(false);
                 this.frmLibro.tbDatos.putClientProperty("filaSeleccionada", fila);
             }
