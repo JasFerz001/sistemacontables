@@ -15,11 +15,12 @@ import modelos.BalanceGeneral;
  * @author Luis
  */
 public class ControladorBalanceGeneral implements ActionListener {
+
     Calendar calendario = Calendar.getInstance();
     int anio = calendario.get(Calendar.YEAR);
 
     String activo = "ACTIVO CORRIENTE", aN = "ACTIVO NO CORRIENTE", pasivo = "PASIVO CORRIENTE", pN = "PASIVO NO CORRIENTE", patrimonio = "CAPITAL CONTABLE";
-    int tamaño = 0 ;
+    int tamaño = 0;
 
     VistaBalanceGeneral vista = new VistaBalanceGeneral();
     DaoBalanceGeneral dao = new DaoBalanceGeneral();
@@ -135,18 +136,24 @@ public class ControladorBalanceGeneral implements ActionListener {
                 totalPasivoCorriente = 0, totalPasivoNoCorriente = 0,
                 totalPatrimonio = 0, totalActivo = Float.parseFloat(vista.totalActivos.getText()), totalPasivo = Float.parseFloat(vista.totalPasivos.getText());
 
+        int tipo_cuenta = 0;
+
         for (int i = 0; i < rowActivo; i++) {
             for (int j = 0; j < columnActivo; j++) {
-                if (vista.tabla_activos.getValueAt(i, j) == "Activo Corriente") {
+                if (vista.tabla_activos.getValueAt(i, j) == "ACTIVO CORRIENTE") {
                     totalActivoCorriente = Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 2)));
                     j = j + 2;
-                } else if (vista.tabla_activos.getValueAt(i, j) == "Activo No Corriente") {
+                    tipo_cuenta = 1;
+                } else if (vista.tabla_activos.getValueAt(i, j) == "ACTIVO NO CORRIENTE") {
                     totalActivoNoCorriente = Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 2)));
                     j = j + 2;
+                    tipo_cuenta = 2;
                 } else {
                     if (vista.tabla_activos.getValueAt(i, j) != " ") {
-                        dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_activos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 1))), n);
-                        j = j + 1;
+                        if (tipo_cuenta > 0) {
+                            dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_activos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 1))), n, tipo_cuenta);
+                            j = j + 1;
+                        }
                     }
                 }
             }
@@ -154,19 +161,24 @@ public class ControladorBalanceGeneral implements ActionListener {
 
         for (int i = 0; i < rowPasivo; i++) {
             for (int j = 0; j < columnPasivo; j++) {
-                if (vista.tabla_pasivos.getValueAt(i, j) == "Pasivo Corriente") {
+                if (vista.tabla_pasivos.getValueAt(i, j) == "PASIVO CORRIENTE") {
                     totalPasivoCorriente = Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 2)));
                     j = j + 2;
-                } else if (vista.tabla_pasivos.getValueAt(i, j) == "Pasivo No Corriente") {
+                    tipo_cuenta = 3;
+                } else if (vista.tabla_pasivos.getValueAt(i, j) == "PASIVO NO CORRIENTE") {
                     totalPasivoNoCorriente = Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 2)));
                     j = j + 2;
-                } else if (vista.tabla_pasivos.getValueAt(i, j) == "Patrimonio") {
+                    tipo_cuenta = 4;
+                } else if (vista.tabla_pasivos.getValueAt(i, j) == "CAPITAL CONTABLE") {
                     totalPatrimonio = Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 2)));
                     j = j + 2;
+                    tipo_cuenta = 5;
                 } else {
                     if (vista.tabla_pasivos.getValueAt(i, j) != " ") {
-                        dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_pasivos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 1))), n);
-                        j = j + 1;
+                        if (tipo_cuenta > 2) {
+                            dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_pasivos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 1))), n, tipo_cuenta);
+                            j = j + 1;
+                        }
                     }
                 }
             }
