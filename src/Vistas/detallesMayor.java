@@ -17,6 +17,10 @@ public class detallesMayor extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
+    
+    public void iniciar() {
+        this.setVisible(true);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -4,6 +4,8 @@
  */
 package Vistas;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author Mac
@@ -35,7 +37,7 @@ public class VistaMayor extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbDatos = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnDetalles = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -61,7 +63,12 @@ public class VistaMayor extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tbDatos);
 
-        jButton1.setText("Detalles");
+        btnDetalles.setText("Detalles");
+        btnDetalles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnDetallesMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -74,7 +81,7 @@ public class VistaMayor extends javax.swing.JDialog {
             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnDetalles)
                 .addGap(187, 187, 187))
         );
         jPanel1Layout.setVerticalGroup(
@@ -83,7 +90,7 @@ public class VistaMayor extends javax.swing.JDialog {
                 .addGap(37, 37, 37)
                 .addComponent(jLabel2)
                 .addGap(33, 33, 33)
-                .addComponent(jButton1)
+                .addComponent(btnDetalles)
                 .addGap(52, 52, 52)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -104,6 +111,14 @@ public class VistaMayor extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDetallesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDetallesMousePressed
+        // TODO add your handling code here:
+        
+        detallesMayor frm = new detallesMayor(new JFrame(),true);
+        frm.iniciar();
+        
+    }//GEN-LAST:event_btnDetallesMousePressed
 
     /**
      * @param args the command line arguments
@@ -148,7 +163,7 @@ public class VistaMayor extends javax.swing.JDialog {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    public javax.swing.JButton btnDetalles;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
