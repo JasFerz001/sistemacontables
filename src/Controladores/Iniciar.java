@@ -1,16 +1,11 @@
 package controladores;
 
-
-import Controladores.ControladorBalanceGeneral;
-import Vistas.VistaBalanceGeneral;
-import Vistas.Vista_BalanceGeneral;
-import daos.Conexion;
-import daos.DaoBalanceGeneral;
-
-import java.awt.Frame;
+import Controladores.ControladorLibroMayor;
+import Vistas.VistaMayor;
 import javax.swing.JFrame;
-
 import vistas.Dashboard;
+
+
 
 /**
  *
@@ -19,6 +14,10 @@ import vistas.Dashboard;
 public class Iniciar {
 
     public static void main(String[] args) {
+      Dashboard frmD = new Dashboard();
         
+        frmD.iniciar();
+     
+     
     }
 }

@@ -2,9 +2,11 @@ package vistas;
 
 
 import Controladores.ControladorLibroDiario;
+import Controladores.ControladorLibroMayor;
 import Controladores.ControladorMostrarLibroDiario;
 import Vistas.VistaLibroDiario;
 import Vistas.VistaMostrarLibroDiario;
+import Vistas.VistaMayor;
 import utilidades.Fondo;
 import java.awt.Color;
 import java.awt.Image;
@@ -779,6 +781,10 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu3Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op1MousePressed
         opDefault();
         menu3Op1.setBackground(colorActivoOp);
+         VistaMayor frmLibroMayor = new VistaMayor(new JFrame(), true);
+        ControladorLibroMayor ctrl = new ControladorLibroMayor(frmLibroMayor);
+        frmLibroMayor.iniciar();
+     
 
     }//GEN-LAST:event_menu3Op1MousePressed
 

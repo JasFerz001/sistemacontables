@@ -4,10 +4,7 @@
  */
 package modelos;
 
-/**
- *
- * @author Mac
- */
+
 public class LibroMayor {
     
     private String codigo;
