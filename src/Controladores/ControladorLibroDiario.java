@@ -116,8 +116,28 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
                 JOptionPane.showMessageDialog(null, "Debe ingresar un código de cuenta.", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+            if (frmLibro.tfCuenta.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Debe buscar la cuenta antes de continuar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            String tfmont = frmLibro.tfMonto.getText().trim();
+            double mont = 0;
+            if (tfmont.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "El campo monto no puede estar vacío.");
+                return;
+            }
+            try {
+                mont = Double.parseDouble(tfmont);
+                if (mont <= 0) {
+                    JOptionPane.showMessageDialog(null, "El monto debe ser un número positivo.");
+                    return;
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese un número válido para el monto.");
+                return;
+            }
             if (frmLibro.tfConcepto.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "El campo Concepto no puede estar vacío.");
+                JOptionPane.showMessageDialog(null, "El campo concepto no puede estar vacío.");
                 return;
             }
             Date fechaSeleccionada = frmLibro.tfFecha.getDate();
@@ -163,7 +183,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
                     fechaSeleccionada,
                     codigoSubcuenta,
                     nombreCuenta,
-                    montoConIVA, 
+                    montoConIVA,
                     transaccion,
                     concepto
             ));
@@ -185,6 +205,26 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
 
     private void modificarFilaSeleccionada() {
         try {
+            if (frmLibro.tfCodigo.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Debe ingresar un código de cuenta.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            String tfmont = frmLibro.tfMonto.getText().trim();
+            double mont = 0;
+            if (tfmont.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "El campo monto no puede estar vacío.");
+                return;
+            }
+            try {
+                mont = Double.parseDouble(tfmont);
+                if (mont <= 0) {
+                    JOptionPane.showMessageDialog(null, "El monto debe ser un número positivo.");
+                    return;
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese un número válido para el monto.");
+                return;
+            }
             int filaSeleccionada = (int) frmLibro.tbDatos.getClientProperty("filaSeleccionada");
             Date fechaSeleccionada = frmLibro.tfFecha.getDate();
             int codigoSubcuenta = Integer.parseInt(frmLibro.tfCodigo.getText());
@@ -192,6 +232,17 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             double monto = Double.parseDouble(frmLibro.tfMonto.getText());
             String transaccion = frmLibro.cbTransaccion.getSelectedItem().toString();
             String concepto = frmLibro.tfConcepto.getText();
+
+            // Cálculo de IVA
+            double montoConIVA = monto;
+            if (frmLibro.rbAgregarIVA.isSelected()) {
+                double iva = monto * 0.13;
+                montoConIVA = iva;
+            } else if (frmLibro.rbExtraerIVA.isSelected()) {
+                double ivaExtraido = (monto / 1.13) * 0.13;
+                montoConIVA = ivaExtraido;
+            }
+            montoConIVA = Double.parseDouble(String.format("%.2f", montoConIVA));
             // Actualizar datos en la tabla
             DefaultTableModel modeloTabla = (DefaultTableModel) frmLibro.tbDatos.getModel();
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -199,15 +250,15 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             modeloTabla.setValueAt(fechaFormateada, filaSeleccionada, 0);
             modeloTabla.setValueAt(codigoSubcuenta, filaSeleccionada, 1);
             modeloTabla.setValueAt(nombreCuenta, filaSeleccionada, 2);
-            modeloTabla.setValueAt("Debe".equals(transaccion) ? monto : "", filaSeleccionada, 3);
-            modeloTabla.setValueAt("Haber".equals(transaccion) ? monto : "", filaSeleccionada, 4);
+            modeloTabla.setValueAt("Debe".equals(transaccion) ? montoConIVA : "", filaSeleccionada, 3);
+            modeloTabla.setValueAt("Haber".equals(transaccion) ? montoConIVA : "", filaSeleccionada, 4);
             modeloTabla.setValueAt(concepto, filaSeleccionada, 5);
             // Actualizar datos en el ArrayList
             LibroDiario libro = listaLibroDiario.get(filaSeleccionada);
             libro.setFecha(fechaSeleccionada);
             libro.setCodSubcuenta(codigoSubcuenta);
             libro.setNombreCuenta(nombreCuenta);
-            libro.setMonto(monto);
+            libro.setMonto(montoConIVA);
             libro.setTransaccion(transaccion);
             libro.setConcepto(concepto);
             JOptionPane.showMessageDialog(null, "Fila modificada correctamente.");
