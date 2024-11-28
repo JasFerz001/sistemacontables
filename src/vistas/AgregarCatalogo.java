@@ -71,7 +71,6 @@ public class AgregarCatalogo extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablita = new javax.swing.JTable();
         editar = new javax.swing.JButton();
-        eliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -182,10 +181,6 @@ public class AgregarCatalogo extends javax.swing.JDialog {
         editar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         editar.setText("EDITAR");
 
-        eliminar.setBackground(new java.awt.Color(255, 153, 153));
-        eliminar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        eliminar.setText("ELIMINAR");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -224,14 +219,11 @@ public class AgregarCatalogo extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(registrar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(editar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(registrar))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(eliminar)
+                                        .addComponent(editar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(naturaleza, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -273,8 +265,7 @@ public class AgregarCatalogo extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(registrar)
                             .addComponent(cancelar)
-                            .addComponent(editar)
-                            .addComponent(eliminar)))
+                            .addComponent(editar)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(27, 27, 27)
                 .addComponent(salir)
@@ -355,7 +346,6 @@ public class AgregarCatalogo extends javax.swing.JDialog {
     public javax.swing.JLabel cod;
     public javax.swing.JTextField codigo;
     public javax.swing.JButton editar;
-    public javax.swing.JButton eliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
