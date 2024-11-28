@@ -221,6 +221,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             frmLibro.tfMonto.setText("");
             frmLibro.cbTransaccion.setSelectedIndex(0);
             frmLibro.btnModificar.setEnabled(false);
+            frmLibro.btnEliminar.setEnabled(false);
             frmLibro.btnAgregar.setEnabled(true);
         } catch (Exception ex) {
             ex.printStackTrace();
