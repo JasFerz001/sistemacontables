@@ -12,10 +12,9 @@ public class Conexion {
 
     private Connection conexion;
 
-    private String url = "jdbc:postgresql://localhost:5432/sic";
-    private String usuario = "postgres";
-    private String password = "root";//root
-
+    private String url = "jdbc:mysql://localhost:3306/sic";
+    private String usuario = "root";
+    private String password = "";//root
 
     public Connection getConexion() {
 
