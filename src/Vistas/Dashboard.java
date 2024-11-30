@@ -1,12 +1,19 @@
 package vistas;
 
-
+import Controladores.ControladorBalanceGeneral;
+import Controladores.ControladorBalanzaC;
 import Controladores.ControladorLibroDiario;
 import Controladores.ControladorLibroMayor;
 import Controladores.ControladorMostrarLibroDiario;
+import Vistas.VistaBalanceGeneral;
+import Vistas.VistaBalanzaComprobacion;
 import Vistas.VistaLibroDiario;
 import Vistas.VistaMostrarLibroDiario;
+
 import Vistas.VistaMayor;
+
+import controladores.ControladorMostrarCatalogo;
+
 import utilidades.Fondo;
 import java.awt.Color;
 import java.awt.Image;
@@ -254,7 +261,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menu3Op1.setForeground(new java.awt.Color(255, 255, 255));
         menu3Op1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
-        menu3Op1.setText("Report1");
+        menu3Op1.setText("Balanza Comprobacion");
         menu3Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu3Op1.setOpaque(true);
         menu3Op1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -266,7 +273,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menu3Op2.setForeground(new java.awt.Color(255, 255, 255));
         menu3Op2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
-        menu3Op2.setText("Report2");
+        menu3Op2.setText("Balance General");
         menu3Op2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu3Op2.setOpaque(true);
         menu3Op2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -750,7 +757,7 @@ public class Dashboard extends javax.swing.JFrame {
         colorDefault();
 
         opDefault();
-//        panelSalir.setBackground(colorActivoModulo);
+
         VistaSalir vista = new VistaSalir("Saliendo");
         vista.setVisible(true);
 
@@ -766,10 +773,9 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu1Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu1Op1MousePressed
         opDefault();
         menu1Op1.setBackground(colorActivoOp);
-//       VistaConsultar consultarAutor= new VistaConsultar(new JFrame(), true, "Autores");
-////       modificado kevin
-//       ControladorConsultarAutor ctlConsultarAutor= new  ControladorConsultarAutor(consultarAutor);
-//        consultarAutor.iniciar();
+        Catalogos c = new Catalogos(new JFrame(), visible);
+        ControladorMostrarCatalogo ctrl = new ControladorMostrarCatalogo(c);
+        c.iniciar();
     }//GEN-LAST:event_menu1Op1MousePressed
 
     private void opMenu5AcercaDeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opMenu5AcercaDeMousePressed
@@ -781,10 +787,13 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu3Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op1MousePressed
         opDefault();
         menu3Op1.setBackground(colorActivoOp);
-         VistaMayor frmLibroMayor = new VistaMayor(new JFrame(), true);
-        ControladorLibroMayor ctrl = new ControladorLibroMayor(frmLibroMayor);
-        frmLibroMayor.iniciar();
-     
+
+         
+
+        VistaBalanzaComprobacion vista = new VistaBalanzaComprobacion(new JFrame(), true);
+        ControladorBalanzaC crt = new ControladorBalanzaC(vista);
+       vista.setVisible(true);
+
 
     }//GEN-LAST:event_menu3Op1MousePressed
 
@@ -793,6 +802,10 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_panelOp3MousePressed
 
     private void menu3Op2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op2MousePressed
+        VistaBalanceGeneral frm = new VistaBalanceGeneral();
+        ControladorBalanceGeneral ctrl = new ControladorBalanceGeneral(frm);
+        ctrl.setModels();
+        
         opDefault();
         menu3Op2.setBackground(colorActivoOp);
     }//GEN-LAST:event_menu3Op2MousePressed
@@ -801,6 +814,9 @@ public class Dashboard extends javax.swing.JFrame {
         opDefault();
         menu3Op3.setBackground(colorActivoOp);
         //    ControladorEvaluarExpresion ctlEvaluarExpresion = new ControladorEvaluarExpresion(vista);
+        VistaMayor frmLibroMayor = new VistaMayor(new JFrame(), true);
+        ControladorLibroMayor ctrl = new ControladorLibroMayor(frmLibroMayor);
+        frmLibroMayor.iniciar();
 
     }//GEN-LAST:event_menu3Op3MousePressed
 
@@ -898,7 +914,7 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu2Op2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu2Op2MousePressed
         opDefault();
         menu2Op1.setBackground(colorActivoOp);
-        
+
         VistaMostrarLibroDiario frmMostrar = new VistaMostrarLibroDiario(this, visible, "Partidas del Libro Diario");
         ControladorMostrarLibroDiario ctrlL = new ControladorMostrarLibroDiario(frmMostrar);
         frmMostrar.setVisible(true);

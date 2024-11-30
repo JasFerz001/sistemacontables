@@ -1,8 +1,11 @@
+
 package controladores;
+
 
 import Controladores.ControladorLibroMayor;
 import Vistas.VistaMayor;
 import javax.swing.JFrame;
+
 import vistas.Dashboard;
 
 
@@ -14,10 +17,13 @@ import vistas.Dashboard;
 public class Iniciar {
 
     public static void main(String[] args) {
-      Dashboard frmD = new Dashboard();
-        
-        frmD.iniciar();
-     
-     
+
+    
+  
+        Dashboard principal = new Dashboard();
+        principal.setVisible(true);
+
+
+
     }
 }
