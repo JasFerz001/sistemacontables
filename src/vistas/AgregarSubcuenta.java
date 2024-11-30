@@ -99,8 +99,18 @@ public class AgregarSubcuenta extends javax.swing.JDialog {
         jLabel3.setText("NOMBRE DE LA CUENTA:");
 
         codigo.setBackground(new java.awt.Color(204, 255, 255));
+        codigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                codigoKeyTyped(evt);
+            }
+        });
 
         nombreCuenta.setBackground(new java.awt.Color(204, 255, 255));
+        nombreCuenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nombreCuentaKeyTyped(evt);
+            }
+        });
 
         registrar.setBackground(new java.awt.Color(204, 255, 204));
         registrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -287,6 +297,31 @@ public class AgregarSubcuenta extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_tipoCuentaActionPerformed
+
+    private void codigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoKeyTyped
+        char c = evt.getKeyChar();
+        // Verificar que sea un dígito
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Si no es un dígito, consumir el evento para evitar que se escriba
+        }
+        // Verificar la longitud máxima (6 dígitos)
+        if (codigo.getText().length() >= 6) {
+            evt.consume(); // Consumir el evento si ya hay 4 caracteres
+        }
+    }//GEN-LAST:event_codigoKeyTyped
+
+    private void nombreCuentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreCuentaKeyTyped
+        char c = evt.getKeyChar();
+        // Verificar si el carácter no es una letra
+        if (!Character.isLetter(c) && c != ' ') {
+            evt.consume(); // Consumir el evento para evitar que se escriba
+        } else {
+            // Convertir el carácter a mayúscula
+            if (Character.isLetter(c)) {
+                evt.setKeyChar(Character.toUpperCase(c));
+            }
+        }
+    }//GEN-LAST:event_nombreCuentaKeyTyped
 
     /**
      * @param args the command line arguments

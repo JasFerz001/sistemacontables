@@ -18,6 +18,7 @@ public class AgregarCatalogo extends javax.swing.JDialog {
      * Creates new form AgregarCatalogo
      */
     String[] cuentas = {"DEUDOR", "ACREEDOR"};
+
     public AgregarCatalogo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -39,7 +40,6 @@ public class AgregarCatalogo extends javax.swing.JDialog {
             this.tipoCuenta.addItem(lista.get(i).getNombre_Principal());
         }
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -108,8 +108,18 @@ public class AgregarCatalogo extends javax.swing.JDialog {
         jLabel3.setText("NOMBRE DE LA CUENTA:");
 
         codigo.setBackground(new java.awt.Color(204, 255, 255));
+        codigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                codigoKeyTyped(evt);
+            }
+        });
 
         nombreCuenta.setBackground(new java.awt.Color(204, 255, 255));
+        nombreCuenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nombreCuentaKeyTyped(evt);
+            }
+        });
 
         registrar.setBackground(new java.awt.Color(204, 255, 204));
         registrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -139,11 +149,6 @@ public class AgregarCatalogo extends javax.swing.JDialog {
         jSeparator1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 12));
 
         tipoCuenta.setBackground(new java.awt.Color(204, 255, 255));
-        tipoCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tipoCuentaMouseClicked(evt);
-            }
-        });
         tipoCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tipoCuentaActionPerformed(evt);
@@ -289,10 +294,6 @@ public class AgregarCatalogo extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tipoCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tipoCuentaMouseClicked
-
-    }//GEN-LAST:event_tipoCuentaMouseClicked
-
     private void tipoCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoCuentaActionPerformed
         DaoCatalogo daosito = new DaoCatalogo();
         String cod_prin = (String) this.tipoCuenta.getSelectedItem();
@@ -300,6 +301,31 @@ public class AgregarCatalogo extends javax.swing.JDialog {
         Cuentas_Principales prin = daosito.select_cod_principal(cod_prin);
         this.cod.setText(prin.getCod_Principal());
     }//GEN-LAST:event_tipoCuentaActionPerformed
+
+    private void codigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigoKeyTyped
+        char c = evt.getKeyChar();
+        // Verificar que sea un dígito
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Si no es un dígito, consumir el evento para evitar que se escriba
+        }
+        // Verificar la longitud máxima (4 dígitos)
+        if (codigo.getText().length() >= 4) {
+            evt.consume(); // Consumir el evento si ya hay 4 caracteres
+        }
+    }//GEN-LAST:event_codigoKeyTyped
+
+    private void nombreCuentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreCuentaKeyTyped
+        char c = evt.getKeyChar();
+        // Verificar si el carácter no es una letra
+        if (!Character.isLetter(c) && c != ' ') {
+            evt.consume(); // Consumir el evento para evitar que se escriba
+        } else {
+            // Convertir el carácter a mayúscula
+            if (Character.isLetter(c)) {
+                evt.setKeyChar(Character.toUpperCase(c));
+            }
+        }
+    }//GEN-LAST:event_nombreCuentaKeyTyped
 
     /**
      * @param args the command line arguments

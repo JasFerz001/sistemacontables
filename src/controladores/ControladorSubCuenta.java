@@ -35,7 +35,7 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
     SubCuentas subcuentas;
     DefaultTableModel modelo;
 
-    public ControladorSubCuenta(AgregarSubcuenta frmSub, ControladorMostrarCatalogo ctrol) {
+    public ControladorSubCuenta(AgregarSubcuenta frmSub) {
         this.frmSub = frmSub;
         this.ctrol = ctrol;
         this.frmSub.registrar.addActionListener(this);
@@ -144,7 +144,7 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
     }
 
     public void salir() {
-        System.exit(0);
+        this.frmSub.dispose();
     }
 
     @Override
