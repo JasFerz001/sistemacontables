@@ -784,7 +784,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op1.setBackground(colorActivoOp);
         VistaBalanzaComprobacion vista = new VistaBalanzaComprobacion(new JFrame(), true);
         ControladorBalanzaC crt = new ControladorBalanzaC(vista);
-       
+        vista.setVisible(true);
 
     }//GEN-LAST:event_menu3Op1MousePressed
 

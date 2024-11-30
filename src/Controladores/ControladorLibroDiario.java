@@ -7,9 +7,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -143,16 +147,19 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             Date fechaSeleccionada = frmLibro.tfFecha.getDate();
             int codigoSubcuenta = Integer.parseInt(frmLibro.tfCodigo.getText());
             String nombreCuenta = frmLibro.tfCuenta.getText();
-            double monto = Double.parseDouble(frmLibro.tfMonto.getText());
             String transaccion = frmLibro.cbTransaccion.getSelectedItem().toString();
-            double montoConIVA = monto;
+            BigDecimal montoBigDecimal = new BigDecimal(mont).setScale(2, RoundingMode.DOWN);
+            double montoTruncado = montoBigDecimal.doubleValue();
+            double montoConIVA = montoTruncado;
             if (frmLibro.rbAgregarIVA.isSelected()) {
-                double iva = monto * 0.13;
+                double iva = montoTruncado * 0.13;
                 montoConIVA = iva;
             } else if (frmLibro.rbExtraerIVA.isSelected()) {
-                double ivaExtraido = (monto / 1.13) * 0.13;
-                montoConIVA = ivaExtraido;
+                double ivaExtraido = (montoTruncado / 1.13) * 0.13;
+                montoConIVA = montoTruncado - ivaExtraido;
             }
+            BigDecimal montoConIVABigDecimal = new BigDecimal(montoConIVA).setScale(2, RoundingMode.HALF_UP);
+            double montoConIVATruncado = montoConIVABigDecimal.doubleValue();
             if (!frmLibro.tfConcepto.getText().isEmpty()) {
                 conceptoGlobal = frmLibro.tfConcepto.getText();
                 frmLibro.tfConcepto.setEnabled(false);
@@ -167,14 +174,15 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             fila[5] = concepto;
             double montoDebe = 0;
             double montoHaber = 0;
+
             if ("Debe".equals(transaccion)) {
-                montoDebe = montoConIVA;
-                fila[3] = String.format("%.2f", montoConIVA);
+                montoDebe = montoConIVATruncado;
+                fila[3] = String.format("%.2f", montoConIVATruncado);
                 fila[4] = "";
             } else if ("Haber".equals(transaccion)) {
-                montoHaber = montoConIVA;
+                montoHaber = montoConIVATruncado;
                 fila[3] = "";
-                fila[4] = String.format("%.2f", montoConIVA);
+                fila[4] = String.format("%.2f", montoConIVATruncado);
             }
             DefaultTableModel modeloTabla = (DefaultTableModel) frmLibro.tbDatos.getModel();
             modeloTabla.addRow(fila);
@@ -183,7 +191,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
                     fechaSeleccionada,
                     codigoSubcuenta,
                     nombreCuenta,
-                    montoConIVA,
+                    montoConIVATruncado,
                     transaccion,
                     concepto
             ));
@@ -232,17 +240,20 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             double monto = Double.parseDouble(frmLibro.tfMonto.getText());
             String transaccion = frmLibro.cbTransaccion.getSelectedItem().toString();
             String concepto = frmLibro.tfConcepto.getText();
-
-            // Cálculo de IVA
-            double montoConIVA = monto;
+            BigDecimal montoBigDecimal = new BigDecimal(monto).setScale(2, RoundingMode.DOWN);
+            double montoTruncado = montoBigDecimal.doubleValue();
+            double montoConIVA = montoTruncado;
             if (frmLibro.rbAgregarIVA.isSelected()) {
-                double iva = monto * 0.13;
+                double iva = montoTruncado * 0.13;
                 montoConIVA = iva;
             } else if (frmLibro.rbExtraerIVA.isSelected()) {
-                double ivaExtraido = (monto / 1.13) * 0.13;
-                montoConIVA = ivaExtraido;
+                double ivaExtraido = (montoTruncado / 1.13) * 0.13;
+                montoConIVA = montoTruncado - ivaExtraido;
             }
-            montoConIVA = Double.parseDouble(String.format("%.2f", montoConIVA));
+
+            BigDecimal montoConIVABigDecimal = new BigDecimal(montoConIVA).setScale(2, RoundingMode.HALF_UP);  // Redondear a 2 decimales
+            double montoConIVATruncado = montoConIVABigDecimal.doubleValue();
+
             // Actualizar datos en la tabla
             DefaultTableModel modeloTabla = (DefaultTableModel) frmLibro.tbDatos.getModel();
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -250,15 +261,15 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             modeloTabla.setValueAt(fechaFormateada, filaSeleccionada, 0);
             modeloTabla.setValueAt(codigoSubcuenta, filaSeleccionada, 1);
             modeloTabla.setValueAt(nombreCuenta, filaSeleccionada, 2);
-            modeloTabla.setValueAt("Debe".equals(transaccion) ? montoConIVA : "", filaSeleccionada, 3);
-            modeloTabla.setValueAt("Haber".equals(transaccion) ? montoConIVA : "", filaSeleccionada, 4);
+            modeloTabla.setValueAt("Debe".equals(transaccion) ? montoConIVATruncado : "", filaSeleccionada, 3);
+            modeloTabla.setValueAt("Haber".equals(transaccion) ? montoConIVATruncado : "", filaSeleccionada, 4);
             modeloTabla.setValueAt(concepto, filaSeleccionada, 5);
             // Actualizar datos en el ArrayList
             LibroDiario libro = listaLibroDiario.get(filaSeleccionada);
             libro.setFecha(fechaSeleccionada);
             libro.setCodSubcuenta(codigoSubcuenta);
             libro.setNombreCuenta(nombreCuenta);
-            libro.setMonto(montoConIVA);
+            libro.setMonto(montoConIVATruncado);
             libro.setTransaccion(transaccion);
             libro.setConcepto(concepto);
             JOptionPane.showMessageDialog(null, "Fila modificada correctamente.");
@@ -418,8 +429,11 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
                 sumaHaber += Double.parseDouble(haber);
             }
         }
-        frmLibro.tfSumaDebe.setText(String.format("%.2f", sumaDebe));
-        frmLibro.tfSumaHaber.setText(String.format("%.2f", sumaHaber));
+        NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
+        numberFormat.setMinimumFractionDigits(2);
+        numberFormat.setMaximumFractionDigits(2);
+        frmLibro.tfSumaDebe.setText(numberFormat.format(sumaDebe));
+        frmLibro.tfSumaHaber.setText(numberFormat.format(sumaHaber));
     }
 
     public void mostrarNumeroPartida() {

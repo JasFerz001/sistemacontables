@@ -6,11 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import modelos.LibroDiario;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -39,7 +41,7 @@ public class ControladorMostrarLibroDiario extends MouseAdapter implements Actio
         model.addColumn("Partida");
         model.addColumn("Fecha");
         model.addColumn("Código");
-        model.addColumn("Cuentas");
+        model.addColumn("Cuenta");
         model.addColumn("Debe");
         model.addColumn("Haber");
 
@@ -118,8 +120,11 @@ public class ControladorMostrarLibroDiario extends MouseAdapter implements Actio
                 sumaHaber += Double.parseDouble(haberObj.toString());
             }
         }
-        frmLibro.tfSumaDebe.setText(String.format("%.2f", sumaDebe));
-        frmLibro.tfSumaHaber.setText(String.format("%.2f", sumaHaber));
+        NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
+        numberFormat.setMinimumFractionDigits(2);
+        numberFormat.setMaximumFractionDigits(2);
+        frmLibro.tfSumaDebe.setText(numberFormat.format(sumaDebe));
+        frmLibro.tfSumaHaber.setText(numberFormat.format(sumaHaber));
     }
 
     @Override

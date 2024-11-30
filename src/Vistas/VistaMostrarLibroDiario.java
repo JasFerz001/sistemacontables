@@ -41,13 +41,13 @@ public class VistaMostrarLibroDiario extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         lbTitulo = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbDatos = new javax.swing.JTable();
         lbTotal = new javax.swing.JLabel();
         tfSumaDebe = new javax.swing.JTextField();
         tfSumaHaber = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbDatos = new rojerusan.RSTableMetro();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -55,61 +55,11 @@ public class VistaMostrarLibroDiario extends javax.swing.JDialog {
         PanelFondo.setPreferredSize(new java.awt.Dimension(945, 574));
         PanelFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         PanelFondo.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1100, 10));
-        PanelFondo.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 1100, 10));
+        PanelFondo.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 1100, 10));
 
         lbTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         PanelFondo.add(lbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 1100, 30));
-
-        tbDatos.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        tbDatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Fecha", "Codigo", "Cuenta", "Monto", "Debe", "Haber"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tbDatos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tbDatos.setEnabled(false);
-        jScrollPane1.setViewportView(tbDatos);
-
-        PanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 1080, 480));
 
         lbTotal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lbTotal.setText("Total");
@@ -138,6 +88,22 @@ public class VistaMostrarLibroDiario extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("$");
         PanelFondo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 530, 10, 30));
+
+        tbDatos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbDatos.setRowHeight(25);
+        jScrollPane2.setViewportView(tbDatos);
+
+        PanelFondo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 1080, 420));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -202,12 +168,12 @@ public class VistaMostrarLibroDiario extends javax.swing.JDialog {
     private javax.swing.JPanel PanelFondo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JLabel lbTitulo;
+    public javax.swing.JLabel lbTitulo;
     private javax.swing.JLabel lbTotal;
-    public javax.swing.JTable tbDatos;
+    public rojerusan.RSTableMetro tbDatos;
     public javax.swing.JTextField tfSumaDebe;
     public javax.swing.JTextField tfSumaHaber;
     // End of variables declaration//GEN-END:variables

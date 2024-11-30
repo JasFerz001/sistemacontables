@@ -63,8 +63,6 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         cbTransaccion = new javax.swing.JComboBox<>();
         lbConcepto = new javax.swing.JLabel();
         tfConcepto = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbDatos = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnProcesarPartida = new javax.swing.JButton();
@@ -80,6 +78,8 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         btnEliminar = new javax.swing.JButton();
         rbAgregarIVA = new javax.swing.JRadioButton();
         rbExtraerIVA = new javax.swing.JRadioButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbDatos = new rojerusan.RSTableMetro();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -157,31 +157,6 @@ public class VistaLibroDiario extends javax.swing.JDialog {
 
         tfConcepto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         PanelFondo.add(tfConcepto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 390, 30));
-
-        tbDatos.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        tbDatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Fecha", "Codigo", "Cuenta", "Monto", "Debe", "Haber", "Concepto"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tbDatos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jScrollPane1.setViewportView(tbDatos);
-
-        PanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 850, 260));
 
         btnAgregar.setBackground(new java.awt.Color(0, 153, 51));
         btnAgregar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -263,6 +238,7 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar Fila");
         btnEliminar.setBorder(null);
+        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminar.setEnabled(false);
         PanelFondo.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 200, 130, 30));
 
@@ -275,6 +251,22 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         rbExtraerIVA.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         rbExtraerIVA.setText("Extraer IVA");
         PanelFondo.add(rbExtraerIVA, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, -1, 30));
+
+        tbDatos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbDatos.setRowHeight(25);
+        jScrollPane2.setViewportView(tbDatos);
+
+        PanelFondo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 850, 260));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -346,7 +338,7 @@ public class VistaLibroDiario extends javax.swing.JDialog {
     public javax.swing.JComboBox<String> cbTransaccion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     public javax.swing.JLabel lbBuscar;
@@ -363,7 +355,7 @@ public class VistaLibroDiario extends javax.swing.JDialog {
     private javax.swing.JLabel lbTransaccion;
     public javax.swing.JRadioButton rbAgregarIVA;
     public javax.swing.JRadioButton rbExtraerIVA;
-    public javax.swing.JTable tbDatos;
+    public rojerusan.RSTableMetro tbDatos;
     public javax.swing.JTextField tfCodigo;
     public javax.swing.JTextField tfConcepto;
     public javax.swing.JTextField tfCuenta;
