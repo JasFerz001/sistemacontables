@@ -4,6 +4,7 @@
  */
 package Vistas;
 
+import Controladores.controladorDetallesMayor;
 import javax.swing.JFrame;
 
 /**
@@ -115,8 +116,7 @@ public class VistaMayor extends javax.swing.JDialog {
     private void btnDetallesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDetallesMousePressed
         // TODO add your handling code here:
         
-        detallesMayor frm = new detallesMayor(new JFrame(),true);
-        frm.iniciar();
+        
         
     }//GEN-LAST:event_btnDetallesMousePressed
 
