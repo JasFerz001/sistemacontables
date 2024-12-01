@@ -30,4 +30,30 @@ ORDER BY c.cod_mayor;*/
             + "ORDER BY c.cod_mayor;";
 
     private static final String costo_de_venta = "";
+    
+    /*
+    SELECT 
+    (inventario_inicial - inventario_final + compras + gastos_compras - devoluciones - rebajas) AS costo_ventas
+FROM (
+    SELECT 
+        (SELECT COALESCE(SUM(monto), 0) 
+         FROM libro_diario 
+         WHERE cod_subcuenta = '110601') AS inventario_inicial,
+        (SELECT COALESCE(SUM(monto), 0) 
+         FROM libro_diario 
+         WHERE cod_subcuenta = '110602') AS inventario_final,
+        (SELECT COALESCE(SUM(monto), 0) 
+         FROM libro_diario 
+         WHERE cod_subcuenta = '4101') AS compras,
+        (SELECT COALESCE(SUM(monto), 0) 
+         FROM libro_diario 
+         WHERE cod_subcuenta = '4102') AS gastos_compras,
+        (SELECT COALESCE(SUM(monto), 0) 
+         FROM libro_diario 
+         WHERE cod_subcuenta = '5102') AS devoluciones,
+        (SELECT COALESCE(SUM(monto), 0) 
+         FROM libro_diario 
+         WHERE cod_subcuenta = '5103') AS rebajas
+) AS calculos;
+    */
 }
