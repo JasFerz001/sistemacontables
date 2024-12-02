@@ -5,7 +5,11 @@
 package daos;
 
 import java.sql.Connection;
-
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Date;
+import modelos.EstadoResultado;
 /**
  *
  * @author guill
@@ -14,8 +18,12 @@ public class DaoEstadoResultado {
 
     Conexion conexion;
     private Connection conection;
+    private ResultSet rs = null;
+    private PreparedStatement ps;
+    private EstadoResultado estado;
 
-    private static final String ventas_totales = "SELECT \n"
+    public EstadoResultado select_ventas_totales(String fechaInicio, String fechafin){
+    String sql = "SELECT \n"
             + "    (ventas - devoluciones - rebajas) AS total_ventas\n"
             + "FROM (\n"
             + "    SELECT \n"
@@ -38,7 +46,8 @@ public class DaoEstadoResultado {
             + "         WHERE cuentas_mayor.cod_mayor = '4104'"
             + "         AND fecha BETWEEN ? AND ?) AS rebajas\n"
             + ") AS ventas_totales;";
-
+    return ventas_Totales(sql, fechaInicio, fechafin);
+    }
     private static final String costo_de_venta = "SELECT (inventario_inicial - inventario_final + compras + gastos_compras - devoluciones - rebajas) AS costo_ventas\n"
             + "FROM (SELECT (SELECT COALESCE(SUM(monto), 0) FROM libro_diario  \n"
             + "WHERE cod_subcuenta = '110601' AND fecha BETWEEN ? AND ?) AS inventario_inicial,\n"
@@ -85,4 +94,42 @@ public class DaoEstadoResultado {
             + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor \n"
             + "WHERE cm.cod_mayor = '4303' AND ld.fecha BETWEEN ? AND ?;";
 
+    
+    
+    private EstadoResultado ventas_Totales(String sql,String fecha_Inicio, String fecha_Fin){
+        EstadoResultado obj = null;
+        try {
+            this.conexion = new Conexion();
+            this.conexion.getConexion();
+            this.conection = conexion.getConexion();
+            ps = conection.prepareStatement(sql);
+            ps.setString(1, "" + fecha_Inicio + "");
+            ps.setString(2, "" + fecha_Fin + "");
+            ps.setString(3, "" + fecha_Inicio + "");
+            ps.setString(4, "" + fecha_Fin + "");
+            ps.setString(5, "" + fecha_Inicio + "");
+            ps.setString(6, "" + fecha_Fin + "");
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                obj =  new EstadoResultado();
+                obj.setVentas_Totales(rs.getString("total_ventas"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }finally{
+            try{
+                if (ps !=null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            }catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            conexion.cerrarConexiones();
+        }
+        return obj;
+    }
 }
