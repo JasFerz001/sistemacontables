@@ -4,7 +4,7 @@
  */
 package Controladores;
 
-import Vistas.detallesMayor;
+import Vistas.VistaDetallesMayor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -23,16 +23,16 @@ public class controladorDetallesMayor  extends MouseAdapter implements ActionLis
         MouseListener, KeyListener, ItemListener{
 
     
-    detallesMayor frmDetalles;
+    VistaDetallesMayor frmDetalles;
     ControladorLibroMayor ctrMayor;
     LibroMayor cuentaSeleccionada;
 
-    public controladorDetallesMayor(detallesMayor frmDetalles, ControladorLibroMayor ctrMayor) {
+    public controladorDetallesMayor(VistaDetallesMayor frmDetalles, ControladorLibroMayor ctrMayor) {
         this.frmDetalles = frmDetalles;
         this.ctrMayor = ctrMayor;
     }
 
-    public controladorDetallesMayor(detallesMayor frmDetalles, ControladorLibroMayor ctrMayor, LibroMayor cuentaSeleccionada) {
+    public controladorDetallesMayor(VistaDetallesMayor frmDetalles, ControladorLibroMayor ctrMayor, LibroMayor cuentaSeleccionada) {
         this.frmDetalles = frmDetalles;
         this.ctrMayor = ctrMayor;
         this.cuentaSeleccionada = cuentaSeleccionada;

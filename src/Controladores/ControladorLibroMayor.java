@@ -1,7 +1,7 @@
 package Controladores;
 
 import Vistas.VistaMayor;
-import Vistas.detallesMayor;
+import Vistas.VistaDetallesMayor;
 
 import daos.Conexion;
 import daos.DaoMayor;
@@ -90,7 +90,7 @@ public class ControladorLibroMayor extends MouseAdapter implements ActionListene
     public void actionPerformed(ActionEvent e) {
        
         if (e.getSource()==this.frmMayor.btnDetalles) {
-            detallesMayor frm = new detallesMayor(new JFrame(),true);
+            VistaDetallesMayor frm = new VistaDetallesMayor(new JFrame(),true);
         controladorDetallesMayor ctrMayor= new controladorDetallesMayor(frm,this,cuentaSeleccionada);
         frm.iniciar();
         }

@@ -8,12 +8,12 @@ package Vistas;
  *
  * @author Mac
  */
-public class detallesMayor extends javax.swing.JDialog {
+public class VistaDetallesMayor extends javax.swing.JDialog {
 
     /**
      * Creates new form detallesMayor
      */
-    public detallesMayor(java.awt.Frame parent, boolean modal) {
+    public VistaDetallesMayor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
