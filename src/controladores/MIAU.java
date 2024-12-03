@@ -23,8 +23,8 @@ public class MIAU {
         String fechaInicio = "2024-11-01";
         String fechafin = "2024-11-30";
         
-        est = dao.select_ventas_totales(fechaInicio, fechafin);
-        System.out.println(est.getVentas_Totales());
+        est = dao.select_gastos_admin(fechaInicio, fechafin);
+        System.out.println(est.getGastos_Admin());
         
     }
 
