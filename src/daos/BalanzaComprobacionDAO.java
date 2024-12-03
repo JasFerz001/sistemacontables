@@ -1,13 +1,12 @@
 package daos;
 
 import Utilidades.SubCuentas;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 import modelos.BalanzaComprobacion;
-
 public class BalanzaComprobacionDAO {
 
     private static final String QUERY_BALANZA
