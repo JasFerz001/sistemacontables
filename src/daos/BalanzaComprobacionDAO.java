@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import modelos.BalanzaComprobacion;
+
 public class BalanzaComprobacionDAO {
 
     private static final String QUERY_BALANZA
@@ -39,6 +40,8 @@ public class BalanzaComprobacionDAO {
             + "    libro_diario ld ON s.cod_subcuenta = ld.cod_subcuenta\n"
             + "GROUP BY \n"
             + "    cm.cod_mayor, cm.nombre\n"
+            + "HAVING \n"
+            + "    saldodeudor > 0 OR saldoacreedor > 0\n"
             + "ORDER BY \n"
             + "    cm.cod_mayor;";
 
@@ -67,6 +70,9 @@ public class BalanzaComprobacionDAO {
             + "    libro_diario ld ON s.cod_subcuenta = ld.cod_subcuenta\n"
             + "GROUP BY \n"
             + "    s.cod_subcuenta, s.nombre\n"
+            + "HAVING \n"
+            + "    COALESCE(SUM(CASE WHEN ld.transaccion = 'DEBE' THEN ld.monto ELSE 0 END), 0) > 0 \n"
+            + "    OR COALESCE(SUM(CASE WHEN ld.transaccion = 'HABER' THEN ld.monto ELSE 0 END), 0) > 0\n"
             + "ORDER BY \n"
             + "    s.cod_subcuenta;";
 
@@ -99,7 +105,7 @@ public class BalanzaComprobacionDAO {
         ArrayList<SubCuentas> subcuentas = new ArrayList<>();
         Conexion conexionBD = new Conexion();
 
-        try (Connection conexion = conexionBD.getConexion(); PreparedStatement stmt = conexion.prepareStatement(QUERY_SUBCUENTAS); ResultSet rs = stmt.executeQuery()) {
+        try (Connection conexion = conexionBD.getConexion(); PreparedStatement stmt = conexion.prepareStatement(QUERY_SUBCUENTAS_REGISTROS); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 SubCuentas cuentas = new SubCuentas(
