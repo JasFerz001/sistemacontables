@@ -4,11 +4,13 @@
  */
 package controladores;
 
+import Controladores.ControladorEstadoResultado;
 import daos.DaoEstadoResultado;
 import java.util.Date;
 import javax.swing.JFrame;
 import modelos.EstadoResultado;
 import vistas.Catalogos;
+import vistas.VistaEstadoResultado;
 
 
 /**
@@ -18,14 +20,9 @@ import vistas.Catalogos;
 public class MIAU {
 //tonto el q lo lea:3
     public static void main(String[] args) {
-        EstadoResultado est = new EstadoResultado();
-        DaoEstadoResultado dao = new DaoEstadoResultado();
-        String fechaInicio = "2024-11-01";
-        String fechafin = "2024-11-30";
-        
-        est = dao.select_gastos_admin(fechaInicio, fechafin);
-        System.out.println(est.getGastos_Admin());
-        
+        VistaEstadoResultado v = new VistaEstadoResultado(new JFrame(), true);
+        ControladorEstadoResultado c = new ControladorEstadoResultado(v);
+        v.iniciar();
     }
 
 }

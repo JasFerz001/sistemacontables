@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Date;
 import modelos.EstadoResultado;
 
 /**
@@ -22,6 +21,16 @@ public class DaoEstadoResultado {
     private ResultSet rs = null;
     private PreparedStatement ps;
     private EstadoResultado estado;
+
+    public String select_ventas(String fechaInicio, String fechafin) {
+        String sql = "SELECT SUM(ld.monto) AS total_ventas\n"
+                + "FROM libro_diario ld\n"
+                + "JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta\n"
+                + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor\n"
+                + "WHERE cm.cod_mayor = '5101' \n"
+                + "    AND ld.fecha BETWEEN ? AND ?;";
+        return ventas(sql, fechaInicio, fechafin);
+    }
 
     public EstadoResultado select_ventas_totales(String fechaInicio, String fechafin) {
         String sql = "SELECT \n"
@@ -84,23 +93,32 @@ public class DaoEstadoResultado {
         return gastos_admin(sql, fechaInicio, fechafin);
     }
 
-    private static final String gastos_venta = "SELECT COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto WHEN ld.transaccion = 'Haber' THEN -ld.monto ELSE 0 END), 0) AS gastos_ventas\n"
-            + "FROM libro_diario ld\n"
-            + "JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta \n"
-            + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor \n"
-            + "WHERE cm.cod_mayor = '4301' AND ld.fecha BETWEEN ? AND ?;";
+    public EstadoResultado select_gasto_venta(String fechaInicio, String fechafin) {
+        String sql = "SELECT COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto WHEN ld.transaccion = 'Haber' THEN -ld.monto ELSE 0 END), 0) AS gastos_ventas\n"
+                + "FROM libro_diario ld\n"
+                + "JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta \n"
+                + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor \n"
+                + "WHERE cm.cod_mayor = '4301' AND ld.fecha BETWEEN ? AND ?;";
+        return gasto_ventas(sql, fechaInicio, fechafin);
+    }
 
-    private static final String ingresos_financieros = "SELECT COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto WHEN ld.transaccion = 'Haber' THEN -ld.monto ELSE 0 END), 0) AS ingresos_financieros\n"
-            + "FROM libro_diario ld\n"
-            + "JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta \n"
-            + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor \n"
-            + "WHERE cm.cod_mayor = '5201' AND ld.fecha BETWEEN ? AND ?;";
+    public EstadoResultado select_ingresos_finan(String fechaInicio, String fechafin) {
+        String sql = "SELECT COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto WHEN ld.transaccion = 'Haber' THEN -ld.monto ELSE 0 END), 0) AS ingresos_financieros\n"
+                + "FROM libro_diario ld\n"
+                + "JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta \n"
+                + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor \n"
+                + "WHERE cm.cod_mayor = '5201' AND ld.fecha BETWEEN ? AND ?;";
+        return ingresos_finan(sql, fechaInicio, fechafin);
+    }
 
-    private static final String gastos_financieros = "SELECT COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto WHEN ld.transaccion = 'Haber' THEN -ld.monto ELSE 0 END), 0) AS gastos_financieros\n"
-            + "FROM libro_diario ld\n"
-            + "JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta \n"
-            + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor \n"
-            + "WHERE cm.cod_mayor = '4303' AND ld.fecha BETWEEN ? AND ?;";
+    public EstadoResultado select_gasto_finan(String fechaInicio, String fechafin) {
+        String sql = "SELECT COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto WHEN ld.transaccion = 'Haber' THEN -ld.monto ELSE 0 END), 0) AS gastos_financieros\n"
+                + "FROM libro_diario ld\n"
+                + "JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta \n"
+                + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor \n"
+                + "WHERE cm.cod_mayor = '4303' AND ld.fecha BETWEEN ? AND ?;";
+        return gasto_finan(sql, fechaInicio, fechafin);
+    }
 
     private EstadoResultado ventas_Totales(String sql, String fecha_Inicio, String fecha_Fin) {
         EstadoResultado obj = null;
@@ -215,4 +233,137 @@ public class DaoEstadoResultado {
         return obj;
     }
 
+    private EstadoResultado gasto_ventas(String sql, String fecha_Inicio, String fecha_Fin) {
+        EstadoResultado obj = null;
+        try {
+            this.conexion = new Conexion();
+            this.conexion.getConexion();
+            this.conection = conexion.getConexion();
+            ps = conection.prepareStatement(sql);
+            ps.setString(1, "" + fecha_Inicio + "");
+            ps.setString(2, "" + fecha_Fin + "");
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                obj = new EstadoResultado();
+                obj.setGastos_Ventas(rs.getString("gastos_ventas"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            conexion.cerrarConexiones();
+        }
+        return obj;
+    }
+
+    private EstadoResultado ingresos_finan(String sql, String fecha_Inicio, String fecha_Fin) {
+        EstadoResultado obj = null;
+        try {
+            this.conexion = new Conexion();
+            this.conexion.getConexion();
+            this.conection = conexion.getConexion();
+            ps = conection.prepareStatement(sql);
+            ps.setString(1, "" + fecha_Inicio + "");
+            ps.setString(2, "" + fecha_Fin + "");
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                obj = new EstadoResultado();
+                obj.setIngresos_Finan(rs.getString("ingresos_financieros"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            conexion.cerrarConexiones();
+        }
+        return obj;
+    }
+
+    private EstadoResultado gasto_finan(String sql, String fecha_Inicio, String fecha_Fin) {
+        EstadoResultado obj = null;
+        try {
+            this.conexion = new Conexion();
+            this.conexion.getConexion();
+            this.conection = conexion.getConexion();
+            ps = conection.prepareStatement(sql);
+            ps.setString(1, "" + fecha_Inicio + "");
+            ps.setString(2, "" + fecha_Fin + "");
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                obj = new EstadoResultado();
+                obj.setGastos_Finan(rs.getString("gastos_financieros"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            conexion.cerrarConexiones();
+        }
+        return obj;
+    }
+    
+    private String ventas(String sql, String fecha_Inicio, String fecha_Fin) {
+        String  obj = null;
+        try {
+            this.conexion = new Conexion();
+            this.conexion.getConexion();
+            this.conection = conexion.getConexion();
+            ps = conection.prepareStatement(sql);
+            ps.setString(1, "" + fecha_Inicio + "");
+            ps.setString(2, "" + fecha_Fin + "");
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                obj = (rs.getString("total_ventas"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            conexion.cerrarConexiones();
+        }
+        return obj;
+    }
+
+    
+    
 }
