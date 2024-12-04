@@ -1,12 +1,26 @@
 package Controladores;
 
-import Vistas.VistaBalanceGeneral;
+import Reportes.Jasper;
+;
+import Vistas.VistaBalanceGenerales;
 import daos.Conexion;
 import daos.DaoBalanceGeneral;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelos.BalanceGeneral;
+import Vistas.VistaBalanceGenerales;
+import daos.Conexion;
+import daos.DaoBalanceGeneral;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.BalanceGeneral;
 
@@ -14,15 +28,20 @@ import modelos.BalanceGeneral;
  *
  * @author Luis
  */
+
+
 public class ControladorBalanceGeneral implements ActionListener {
+
     Calendar calendario = Calendar.getInstance();
     int anio = calendario.get(Calendar.YEAR);
 
     String activo = "ACTIVO CORRIENTE", aN = "ACTIVO NO CORRIENTE", pasivo = "PASIVO CORRIENTE", pN = "PASIVO NO CORRIENTE", patrimonio = "CAPITAL CONTABLE";
-    int tamaño = 0 ;
+    int tamaño = 0;
 
-    VistaBalanceGeneral vista = new VistaBalanceGeneral();
+    VistaBalanceGenerales vista = new VistaBalanceGenerales(new JFrame(), true);
     DaoBalanceGeneral dao = new DaoBalanceGeneral();
+
+    Jasper jasper = new Jasper();
 
     DefaultTableModel dtm = new DefaultTableModel();
     DefaultTableModel dtm2 = new DefaultTableModel();
@@ -37,14 +56,15 @@ public class ControladorBalanceGeneral implements ActionListener {
 
     Conexion con = new Conexion();
 
-    public ControladorBalanceGeneral(VistaBalanceGeneral v) {
+    public ControladorBalanceGeneral(VistaBalanceGenerales v) {
         this.vista = v;
         this.vista.Btn_Guardar.addActionListener(this);
+        this.vista.Btn_Imprimir.addActionListener(this);
     }
 
     public void setModels() {
 
-        vista.setVisible(true);
+        //vista.setVisible(true);
         //--para mostrar activos
         dtm.addColumn("Activos");
         dtm.addColumn("Total Activos");
@@ -129,22 +149,36 @@ public class ControladorBalanceGeneral implements ActionListener {
 
         int n = dao.GetNBalance();
 
+        String exito = "";
+
         dao.IniciarBalanceGeneral(n, anio);
+
+        if (exito == "fracaso") {
+            JOptionPane.showMessageDialog(vista, "hola");
+        }
 
         float totalActivoCorriente = 0, totalActivoNoCorriente = 0,
                 totalPasivoCorriente = 0, totalPasivoNoCorriente = 0,
                 totalPatrimonio = 0, totalActivo = Float.parseFloat(vista.totalActivos.getText()), totalPasivo = Float.parseFloat(vista.totalPasivos.getText());
 
+        int tipo_cuenta = 0;
+
         for (int i = 0; i < rowActivo; i++) {
             for (int j = 0; j < columnActivo; j++) {
-                if (vista.tabla_activos.getValueAt(i, j) == "Activo Corriente") {
+                if (vista.tabla_activos.getValueAt(i, j) == "ACTIVO CORRIENTE") {
                     totalActivoCorriente = Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 2)));
                     j = j + 2;
-                } else if (vista.tabla_activos.getValueAt(i, j) == "Activo No Corriente") {
+                    tipo_cuenta = 1;
+                } else if (vista.tabla_activos.getValueAt(i, j) == "ACTIVO NO CORRIENTE") {
                     totalActivoNoCorriente = Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 2)));
                     j = j + 2;
+                    tipo_cuenta = 2;
                 } else {
                     if (vista.tabla_activos.getValueAt(i, j) != " ") {
+                        if (tipo_cuenta > 0) {
+                            exito = dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_activos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 1))), n, tipo_cuenta);
+                            j = j + 1;
+                        }
                         //dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_activos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 1))), n);
                         j = j + 1;
                     }
@@ -152,19 +186,30 @@ public class ControladorBalanceGeneral implements ActionListener {
             }
         }
 
+        if (exito == "fracaso") {
+            JOptionPane.showMessageDialog(vista, "Error al guardar detalles del activo");
+            return false;
+        }
+
         for (int i = 0; i < rowPasivo; i++) {
             for (int j = 0; j < columnPasivo; j++) {
-                if (vista.tabla_pasivos.getValueAt(i, j) == "Pasivo Corriente") {
+                if (vista.tabla_pasivos.getValueAt(i, j) == "PASIVO CORRIENTE") {
                     totalPasivoCorriente = Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 2)));
                     j = j + 2;
-                } else if (vista.tabla_pasivos.getValueAt(i, j) == "Pasivo No Corriente") {
+                    tipo_cuenta = 3;
+                } else if (vista.tabla_pasivos.getValueAt(i, j) == "PASIVO NO CORRIENTE") {
                     totalPasivoNoCorriente = Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 2)));
                     j = j + 2;
-                } else if (vista.tabla_pasivos.getValueAt(i, j) == "Patrimonio") {
+                    tipo_cuenta = 4;
+                } else if (vista.tabla_pasivos.getValueAt(i, j) == "CAPITAL CONTABLE") {
                     totalPatrimonio = Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 2)));
                     j = j + 2;
+                    tipo_cuenta = 5;
                 } else {
                     if (vista.tabla_pasivos.getValueAt(i, j) != " ") {
+                        if (tipo_cuenta > 2) {
+                            exito = dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_pasivos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 1))), n, tipo_cuenta);
+                            j = j + 1;
                        // dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_pasivos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 1))), n);
                         j = j + 1;
                     }
@@ -172,14 +217,31 @@ public class ControladorBalanceGeneral implements ActionListener {
             }
         }
 
+        if (exito == "fracaso") {
+            JOptionPane.showMessageDialog(vista, "Error al guardar detalles del pasivo");
+            return false;
+        }
+
         dao.IngresarTotalesBalanceGeneral(totalActivoCorriente, totalActivoNoCorriente, totalPasivoCorriente, totalPasivoNoCorriente, totalPatrimonio, totalActivo, totalPasivo, n);
+
+        JOptionPane.showMessageDialog(vista, "Balance guardado con éxito");
+        }
         return true;
+        
+    }
+
+    public void iniciar() {
+        vista.setLocationRelativeTo(vista);
+        vista.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == vista.Btn_Guardar) {
             GuardarBalance();
+        } else if (e.getSource() == vista.Btn_Imprimir) {
+            vista.setVisible(false);
+            jasper.Reporte(1);
         }
     }
 }
