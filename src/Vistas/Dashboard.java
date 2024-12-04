@@ -2,6 +2,7 @@ package vistas;
 
 import Controladores.ControladorBalanceGeneral;
 import Controladores.ControladorBalanzaC;
+import Controladores.ControladorEstadoResultado;
 import Controladores.ControladorLibroDiario;
 import Controladores.ControladorMostrarLibroDiario;
 import Vistas.VistaBalanceGeneral;
@@ -214,7 +215,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(AgregarMayor, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AgregarSub, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelOp2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -301,7 +302,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menu3Op3.setForeground(new java.awt.Color(255, 255, 255));
         menu3Op3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
-        menu3Op3.setText("Report3");
+        menu3Op3.setText("Estado de Resultado");
         menu3Op3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu3Op3.setOpaque(true);
         menu3Op3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -328,10 +329,10 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(menu3Op1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(menu3Op2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(menu3Op3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(menu3Op2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         panelOp4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -583,7 +584,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(opMenu3Reportes, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelOp3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(opMenu4Cierre, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelOp4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -596,7 +597,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelOp6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
-                .addComponent(logo, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addComponent(logo, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -819,8 +820,9 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu3Op3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op3MousePressed
         opDefault();
         menu3Op3.setBackground(colorActivoOp);
-        //    ControladorEvaluarExpresion ctlEvaluarExpresion = new ControladorEvaluarExpresion(vista);
-
+        VistaEstadoResultado v = new  VistaEstadoResultado(new JFrame(), visible);
+        ControladorEstadoResultado c = new ControladorEstadoResultado(v);
+        v.iniciar();
     }//GEN-LAST:event_menu3Op3MousePressed
 
     private void opMenu4CierreMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opMenu4CierreMousePressed
