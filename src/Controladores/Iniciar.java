@@ -14,7 +14,5 @@ public class Iniciar {
         Dashboard principal = new Dashboard();
         principal.setVisible(true);
 
-          
-
     }
 }
