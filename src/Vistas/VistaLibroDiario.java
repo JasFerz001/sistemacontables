@@ -263,6 +263,7 @@ public class VistaLibroDiario extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbDatos.setColorBackgoundHead(new java.awt.Color(153, 0, 0));
         tbDatos.setRowHeight(25);
         jScrollPane2.setViewportView(tbDatos);
 
