@@ -15,11 +15,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.Cuentas_Mayor;
 import modelos.Cuentas_Principales;
 import vistas.AgregarCatalogo;
+import vistas.Catalogos;
 
 /**
  *
@@ -29,13 +31,14 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         MouseListener, KeyListener, ItemListener {
 
     AgregarCatalogo frmCatalogo;
+    Catalogos frmcat;
     ArrayList<Cuentas_Mayor> listaMayor;
     ControladorMostrarCatalogo ctrol;
     DaoCatalogo daoCatalogo;
     Cuentas_Mayor mayor;
     DefaultTableModel modelo;
 
-    public ControladorAgregarCatalogo(AgregarCatalogo frmCatalogo, ControladorMostrarCatalogo ctrol) {
+    public ControladorAgregarCatalogo(AgregarCatalogo frmCatalogo) {
         this.frmCatalogo = frmCatalogo;
         this.ctrol = ctrol;
         this.frmCatalogo.registrar.addActionListener(this);
@@ -43,7 +46,6 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         this.frmCatalogo.salir.addActionListener(this);
         this.frmCatalogo.editar.addActionListener(this);
         this.frmCatalogo.tablita.addMouseListener(this);
-        this.frmCatalogo.eliminar.addActionListener(this);
         this.frmCatalogo.editar.setEnabled(false);
         daoCatalogo = new DaoCatalogo();
         mostrar();
@@ -54,7 +56,6 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         this.frmCatalogo.registrar.addActionListener(this);
         this.frmCatalogo.cancelar.addActionListener(this);
         this.frmCatalogo.salir.addActionListener(this);
-        this.frmCatalogo.eliminar.addActionListener(this);
         this.mayor = mayor;
         this.ctrol = ctrol;
         daoCatalogo = new DaoCatalogo();
@@ -93,8 +94,7 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
             this.frmCatalogo.codigo.setEditable(true);
         } else if (e.getSource() == this.frmCatalogo.salir) {
             salir();
-        }else if(e.getSource() == this.frmCatalogo.eliminar){
-            eliminar();
+            
         }
     }
 
@@ -145,7 +145,7 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
     }
 
     public void salir() {
-        System.exit(0);
+        this.frmCatalogo.dispose();
     }
 
     @Override
