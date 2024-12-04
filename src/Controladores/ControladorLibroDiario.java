@@ -240,21 +240,18 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             double monto = Double.parseDouble(frmLibro.tfMonto.getText());
             String transaccion = frmLibro.cbTransaccion.getSelectedItem().toString();
             String concepto = frmLibro.tfConcepto.getText();
-            BigDecimal montoBigDecimal = new BigDecimal(monto).setScale(2, RoundingMode.DOWN);
+            BigDecimal montoBigDecimal = new BigDecimal(mont).setScale(2, RoundingMode.HALF_UP);
             double montoTruncado = montoBigDecimal.doubleValue();
             double montoConIVA = montoTruncado;
             if (frmLibro.rbAgregarIVA.isSelected()) {
                 double iva = montoTruncado * 0.13;
-                montoConIVA = iva;
+                montoConIVA = iva + montoTruncado;
             } else if (frmLibro.rbExtraerIVA.isSelected()) {
                 double ivaExtraido = (montoTruncado / 1.13) * 0.13;
-                montoConIVA = montoTruncado - ivaExtraido;
+                montoConIVA = montoTruncado - ivaExtraido; 
             }
-
-            BigDecimal montoConIVABigDecimal = new BigDecimal(montoConIVA).setScale(2, RoundingMode.HALF_UP);  // Redondear a 2 decimales
+            BigDecimal montoConIVABigDecimal = new BigDecimal(montoConIVA).setScale(2, RoundingMode.HALF_UP);
             double montoConIVATruncado = montoConIVABigDecimal.doubleValue();
-
-            // Actualizar datos en la tabla
             DefaultTableModel modeloTabla = (DefaultTableModel) frmLibro.tbDatos.getModel();
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             String fechaFormateada = formatoFecha.format(fechaSeleccionada);
