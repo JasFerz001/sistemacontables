@@ -21,6 +21,7 @@ import modelos.Cuenta;
 import vistas.AgregarCatalogo;
 import vistas.AgregarSubcuenta;
 import vistas.Catalogos;
+import vistas.Dashboard;
 
 /**
  *
@@ -38,10 +39,8 @@ public class ControladorMostrarCatalogo extends MouseAdapter implements ActionLi
     public ControladorMostrarCatalogo(Catalogos frmMostrar) {
         this.frmMostrar = frmMostrar;
         this.frmMostrar.buscar.addKeyListener(this);
-        this.frmMostrar.agregarMayor.addActionListener(this);
-        this.frmMostrar.AgregarSub.addActionListener(this);
         this.frmMostrar.tablaMostrar.addMouseListener(this);
-
+        this.frmMostrar.salir.addActionListener(this);
         listaCuenta = new ArrayList<>();
         daoCatalogo = new DaoCatalogo();
         mostrar();
@@ -64,35 +63,33 @@ public class ControladorMostrarCatalogo extends MouseAdapter implements ActionLi
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.frmMostrar.agregarMayor) {
-            AgregarCatalogo frmCat = new AgregarCatalogo(new JFrame(), true);
-            ControladorAgregarCatalogo a = new ControladorAgregarCatalogo(frmCat, this);
-            frmCat.iniciar();
-        }else if(e.getSource() == this.frmMostrar.AgregarSub){
-            AgregarSubcuenta frmSub = new AgregarSubcuenta(new JFrame(), true);
-            ControladorSubCuenta es = new ControladorSubCuenta(frmSub, this);
-            frmSub.iniciar();
+        if (e.getSource() == this.frmMostrar.salir) {
+            salir();
         }
+    }
+
+    public void salir() {
+        this.frmMostrar.dispose();
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getSource() == this.frmMostrar.buscar) {
             ArrayList<Cuenta> lista = daoCatalogo.buscarCuentasJerarquicas(this.frmMostrar.buscar.getText() + e.getKeyChar());
-            if(lista.isEmpty()){
+            if (lista.isEmpty()) {
                 mostrar();
-            }else{
+            } else {
                 mostrarBusqueda(lista);
             }
         }
     }
-    
-    public void mostrarBusqueda(ArrayList<Cuenta> listita){
+
+    public void mostrarBusqueda(ArrayList<Cuenta> listita) {
         modelo = new DefaultTableModel();
         String titulos[] = {"CODIGO DE CUENTA", "NOMBRE DE LA CUENTA"};
         modelo.setColumnIdentifiers(titulos);
         int i = 1;
-        for(Cuenta x : listita){
+        for (Cuenta x : listita) {
             Object datos[] = {x.getCodigo(), x.getNombre()};
             modelo.addRow(datos);
             i++;
@@ -109,11 +106,11 @@ public class ControladorMostrarCatalogo extends MouseAdapter implements ActionLi
     public void itemStateChanged(ItemEvent e) {
     }
 
-     @Override
+    @Override
     public void mouseClicked(MouseEvent e) {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {    
+    public void keyTyped(KeyEvent e) {
     }
 }

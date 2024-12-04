@@ -1,7 +1,7 @@
-
 package controladores;
 
 import vistas.Dashboard;
+
 
 /**
  *
@@ -14,5 +14,7 @@ public class Iniciar {
         Dashboard principal = new Dashboard();
         principal.setVisible(true);
 
+        Dashboard d = new Dashboard();
+        d.iniciar();
     }
 }
