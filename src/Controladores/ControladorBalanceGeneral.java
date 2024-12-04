@@ -145,7 +145,7 @@ public class ControladorBalanceGeneral implements ActionListener {
                     j = j + 2;
                 } else {
                     if (vista.tabla_activos.getValueAt(i, j) != " ") {
-                        dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_activos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 1))), n);
+                        //dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_activos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 1))), n);
                         j = j + 1;
                     }
                 }
@@ -165,7 +165,7 @@ public class ControladorBalanceGeneral implements ActionListener {
                     j = j + 2;
                 } else {
                     if (vista.tabla_pasivos.getValueAt(i, j) != " ") {
-                        dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_pasivos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 1))), n);
+                       // dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_pasivos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 1))), n);
                         j = j + 1;
                     }
                 }
