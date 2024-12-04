@@ -179,8 +179,6 @@ public class ControladorBalanceGeneral implements ActionListener {
                             exito = dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_activos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 1))), n, tipo_cuenta);
                             j = j + 1;
                         }
-                        //dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_activos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 1))), n);
-                        j = j + 1;
                     }
                 }
             }
@@ -210,8 +208,7 @@ public class ControladorBalanceGeneral implements ActionListener {
                         if (tipo_cuenta > 2) {
                             exito = dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_pasivos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 1))), n, tipo_cuenta);
                             j = j + 1;
-                       // dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_pasivos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 1))), n);
-                        j = j + 1;
+                        }
                     }
                 }
             }
@@ -225,9 +222,9 @@ public class ControladorBalanceGeneral implements ActionListener {
         dao.IngresarTotalesBalanceGeneral(totalActivoCorriente, totalActivoNoCorriente, totalPasivoCorriente, totalPasivoNoCorriente, totalPatrimonio, totalActivo, totalPasivo, n);
 
         JOptionPane.showMessageDialog(vista, "Balance guardado con éxito");
-        }
+
         return true;
-        
+
     }
 
     public void iniciar() {
