@@ -314,7 +314,7 @@ public class DaoBalanceGeneral {
 
     }
 
-    public void IngresardetallesBalanceGeneral(String cuenta, double monto, int n_balance, int tipo_cuenta) {
+    public String IngresardetallesBalanceGeneral(String cuenta, double monto, int n_balance, int tipo_cuenta) {
         try {
             this.accesoDB = this.conexion.getConexion();
             this.ps = this.accesoDB.prepareStatement(INGRESAR_DETALLES_BALANCE_GENERAL);
@@ -328,10 +328,12 @@ public class DaoBalanceGeneral {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return "fracaso";
         }
+        return "exito";
     }
 
-    public void IngresarTotalesBalanceGeneral(double total_activo_corriente, double total_activo_nocorriente, double total_pasivo_corriente, double total_pasivo_nocorriente, double total_capital, double total_activo, double total_pasivo, int n_balance) {
+    public String IngresarTotalesBalanceGeneral(double total_activo_corriente, double total_activo_nocorriente, double total_pasivo_corriente, double total_pasivo_nocorriente, double total_capital, double total_activo, double total_pasivo, int n_balance) {
         try {
             this.accesoDB = this.conexion.getConexion();
             this.ps = this.accesoDB.prepareStatement(INGRESAR_TOTALES_BALANCE_GENERAL);
@@ -350,10 +352,12 @@ public class DaoBalanceGeneral {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return "fracaso";
         }
+        return "exito";
     }
 
-    public void IniciarBalanceGeneral(int i, int anio) {
+    public String IniciarBalanceGeneral(int i, int anio) {
         try {
             this.accesoDB = this.conexion.getConexion();
             this.ps = this.accesoDB.prepareStatement(INICIAR_BALANCE_GENERAL);
@@ -366,7 +370,9 @@ public class DaoBalanceGeneral {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return "fracaso";
         }
+        return "exito";
     }
 
 }

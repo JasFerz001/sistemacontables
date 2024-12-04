@@ -4,7 +4,7 @@ import Controladores.ControladorBalanceGeneral;
 import Controladores.ControladorBalanzaC;
 import Controladores.ControladorLibroDiario;
 import Controladores.ControladorMostrarLibroDiario;
-import Vistas.VistaBalanceGeneral;
+import Vistas.VistaBalanceGenerales;
 import Vistas.VistaBalanzaComprobacion;
 import Vistas.VistaLibroDiario;
 import Vistas.VistaMostrarLibroDiario;
@@ -16,6 +16,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import modelos.BalanceGeneral;
 
 public class Dashboard extends javax.swing.JFrame {
 
@@ -793,12 +794,14 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_panelOp3MousePressed
 
     private void menu3Op2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op2MousePressed
-        VistaBalanceGeneral frm = new VistaBalanceGeneral();
-        ControladorBalanceGeneral ctrl = new ControladorBalanceGeneral(frm);
-        ctrl.setModels();
-        
         opDefault();
         menu3Op2.setBackground(colorActivoOp);
+        
+        VistaBalanceGenerales vista = new VistaBalanceGenerales(new JFrame(), true);
+        ControladorBalanceGeneral control = new ControladorBalanceGeneral(vista);
+        control.setModels();
+        control.iniciar();
+        
     }//GEN-LAST:event_menu3Op2MousePressed
 
     private void menu3Op3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op3MousePressed
