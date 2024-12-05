@@ -4,7 +4,7 @@
  */
 package Controladores;
 
-import Vistas.VistaDetallesMayor;
+import Vistas.VistadetallesMayor;
 import daos.DaoCatalogo;
 import daos.DaoMayor;
 import java.awt.event.ActionEvent;
@@ -28,7 +28,7 @@ public class controladorDetallesMayor  extends MouseAdapter implements ActionLis
         MouseListener, KeyListener, ItemListener{
 
     
-    VistaDetallesMayor frmDetalles;
+    VistadetallesMayor frmDetalles;
     ControladorLibroMayor ctrMayor;
     DefaultTableModel modelo;
     LibroMayor cuentaSeleccionada;
@@ -37,7 +37,7 @@ public class controladorDetallesMayor  extends MouseAdapter implements ActionLis
 
   
 
-    public controladorDetallesMayor(VistaDetallesMayor frmDetalles, ControladorLibroMayor ctrMayor, LibroMayor cuentaSeleccionada) {
+    public controladorDetallesMayor(VistadetallesMayor frmDetalles, ControladorLibroMayor ctrMayor, LibroMayor cuentaSeleccionada) {
         this.frmDetalles = frmDetalles;
         this.ctrMayor = ctrMayor;
         this.cuentaSeleccionada = cuentaSeleccionada;
