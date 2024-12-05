@@ -17,6 +17,7 @@ public class VistaDetallesMayor extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
+        
     }
     
     public void iniciar() {
@@ -111,6 +112,7 @@ public class VistaDetallesMayor extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
