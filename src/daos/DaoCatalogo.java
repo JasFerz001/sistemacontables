@@ -30,8 +30,13 @@ public class DaoCatalogo {
     private ResultSet rs = null;
     private PreparedStatement ps;
     private Connection accesoDB;
+
+    
+    private Catalogo catalogo;
+
     private Cuentas_Principales cuentasprin;
     private SubCuentas subcuenta;
+
 
     private static final String SELECCIONAR_CATALOGO = "SELECT cod_catalogo, nombre FROM catalogo;";
     private static final String SELECT_CUENTA_PRINC = "SELECT cod_principal, nombre FROM cuentas_principales;";

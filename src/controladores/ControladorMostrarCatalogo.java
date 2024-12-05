@@ -96,7 +96,7 @@ public class ControladorMostrarCatalogo extends MouseAdapter implements ActionLi
         }
         this.frmMostrar.tablaMostrar.setModel(modelo);
         this.frmMostrar.tablaMostrar.setDefaultEditor(Object.class, null);
-    }
+    } 
 
     @Override
     public void keyReleased(KeyEvent e) {
