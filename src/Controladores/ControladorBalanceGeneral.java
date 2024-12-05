@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import Vistas.VistaBalanceGenerales;
 import daos.Conexion;
 import daos.DaoBalanceGeneral;
+import daos.DaoEstadoResultado;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.BalanceGeneral;
+import modelos.EstadoResultado;
 
 /**
  *
@@ -29,6 +31,9 @@ public class ControladorBalanceGeneral implements ActionListener {
 
     VistaBalanceGenerales vista = new VistaBalanceGenerales(new JFrame(), true);
     DaoBalanceGeneral dao = new DaoBalanceGeneral();
+    
+    DaoEstadoResultado daoResultado = new DaoEstadoResultado();
+    EstadoResultado estado = new EstadoResultado();
 
     Jasper jasper = new Jasper();
 
@@ -41,7 +46,7 @@ public class ControladorBalanceGeneral implements ActionListener {
     ArrayList<BalanceGeneral> listaPasivosNoCorrientes = new ArrayList();
     ArrayList<BalanceGeneral> listaPatrimonio = new ArrayList();
 
-    float ResEjercicio = (float) 0;
+    float ResEjercicio;
 
     Conexion con = new Conexion();
 
@@ -228,5 +233,70 @@ public class ControladorBalanceGeneral implements ActionListener {
             vista.setVisible(false);
             jasper.Reporte(1);
         }
+    }
+    
+    
+        public void generar() {
+        estado = new EstadoResultado();
+        String fc_inicio = "2024-01-01";
+        String fc_fin = "2024-12-30";
+        float ivfinal = (float) 200000.00;
+        estado = (daoResultado.select_ventas_totales(fc_inicio, fc_fin));
+        String vn = estado.getVentas_Totales();
+
+        estado = (daoResultado.select_costo_de_venta(fc_inicio, fc_fin));
+        String cv = estado.getCosto_Ventas();
+        
+        float utilidadBruta = (Float.parseFloat(vn) - (Float.parseFloat(cv) - ivfinal));
+        System.out.println(utilidadBruta);
+
+        estado = daoResultado.select_gastos_admin(fc_inicio, fc_fin);
+        String ga = estado.getGastos_Admin();
+        
+        estado = daoResultado.select_gasto_venta(fc_inicio, fc_fin);
+        String gv = estado.getGastos_Ventas();
+        
+        float utilidadOperacion = utilidadBruta - (Float.parseFloat(ga) + Float.parseFloat(gv));
+        
+        EstadoResultado e = new EstadoResultado();
+        e = daoResultado.select_ingresos_finan(fc_inicio, fc_fin);
+        String inf = e.getIngresos_Finan();
+        
+        estado = daoResultado.select_gasto_finan(fc_inicio, fc_fin);
+        String gf = estado.getGastos_Finan();
+        
+        float utilidadAntes;
+        if (Float.parseFloat(inf) == Float.parseFloat(gf)) {
+            utilidadAntes = utilidadOperacion;
+            
+        } else if (Float.parseFloat(inf) < Float.parseFloat(gf)) {
+            utilidadAntes = utilidadOperacion - (Float.parseFloat(inf) - Float.parseFloat(gf));
+            
+        } else {
+            utilidadAntes = utilidadOperacion + (Float.parseFloat(inf) - Float.parseFloat(gf));
+            
+        }
+
+        float ventas = Float.parseFloat(daoResultado.select_ventas(fc_inicio, fc_fin));
+        System.out.println(ventas);
+
+        float isr;
+        float reservaLegal;
+        if (ventas < 1500000) {
+            isr = (float) (utilidadAntes * 0.25);
+            reservaLegal = (float) ((utilidadAntes - isr) * 0.07);
+            //this.frmResultado.isr.setText("$" + isr);
+            //this.frmResultado.reservaLegal.setText("$" + reservaLegal);
+            float ue = utilidadAntes - isr - reservaLegal;
+            ResEjercicio = ue;
+        } else {
+            isr = (float) (utilidadAntes * 0.30);
+            //this.frmResultado.isr.setText("$" + isr);
+            reservaLegal = (float) ((utilidadAntes - isr) * 0.07);
+            //this.frmResultado.reservaLegal.setText("$" + reservaLegal);
+            float ue = utilidadAntes - isr - reservaLegal;
+            ResEjercicio = ue;
+        }
+
     }
 }
