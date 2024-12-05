@@ -1,10 +1,11 @@
 package daos;
 
+import Utilidades.SubCuentas;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 import modelos.BalanzaComprobacion;
 
 public class BalanzaComprobacionDAO {
@@ -39,8 +40,41 @@ public class BalanzaComprobacionDAO {
             + "    libro_diario ld ON s.cod_subcuenta = ld.cod_subcuenta\n"
             + "GROUP BY \n"
             + "    cm.cod_mayor, cm.nombre\n"
+            + "HAVING \n"
+            + "    saldodeudor > 0 OR saldoacreedor > 0\n"
             + "ORDER BY \n"
             + "    cm.cod_mayor;";
+
+    private static final String QUERY_SUBCUENTAS = "SELECT \n"
+            + "    s.cod_subcuenta AS codigo_subcuenta,\n"
+            + "    s.nombre AS nombre_subcuenta,\n"
+            + "    COALESCE(SUM(CASE WHEN ld.transaccion = 'DEBE' THEN ld.monto ELSE 0 END), 0) AS total_debe,\n"
+            + "    COALESCE(SUM(CASE WHEN ld.transaccion = 'HABER' THEN ld.monto ELSE 0 END), 0) AS total_haber\n"
+            + "FROM \n"
+            + "    subcuentas s\n"
+            + "LEFT JOIN \n"
+            + "    libro_diario ld ON s.cod_subcuenta = ld.cod_subcuenta\n"
+            + "GROUP BY \n"
+            + "    s.cod_subcuenta, s.nombre\n"
+            + "ORDER BY \n"
+            + "    s.cod_subcuenta;";
+
+    private static final String QUERY_SUBCUENTAS_REGISTROS = "SELECT \n"
+            + "    s.cod_subcuenta AS codigo_subcuenta,\n"
+            + "    s.nombre AS nombre_subcuenta,\n"
+            + "    COALESCE(SUM(CASE WHEN ld.transaccion = 'DEBE' THEN ld.monto ELSE 0 END), 0) AS total_debe,\n"
+            + "    COALESCE(SUM(CASE WHEN ld.transaccion = 'HABER' THEN ld.monto ELSE 0 END), 0) AS total_haber\n"
+            + "FROM \n"
+            + "    subcuentas s\n"
+            + "INNER JOIN \n"
+            + "    libro_diario ld ON s.cod_subcuenta = ld.cod_subcuenta\n"
+            + "GROUP BY \n"
+            + "    s.cod_subcuenta, s.nombre\n"
+            + "HAVING \n"
+            + "    COALESCE(SUM(CASE WHEN ld.transaccion = 'DEBE' THEN ld.monto ELSE 0 END), 0) > 0 \n"
+            + "    OR COALESCE(SUM(CASE WHEN ld.transaccion = 'HABER' THEN ld.monto ELSE 0 END), 0) > 0\n"
+            + "ORDER BY \n"
+            + "    s.cod_subcuenta;";
 
     public List<BalanzaComprobacion> obtenerBalanzaComprobacion() {
         List<BalanzaComprobacion> balanza = new ArrayList<>();
@@ -65,4 +99,28 @@ public class BalanzaComprobacionDAO {
         }
         return balanza;
     }
+
+    public ArrayList<SubCuentas> obtenerSubCuentas() {
+
+        ArrayList<SubCuentas> subcuentas = new ArrayList<>();
+        Conexion conexionBD = new Conexion();
+
+        try (Connection conexion = conexionBD.getConexion(); PreparedStatement stmt = conexion.prepareStatement(QUERY_SUBCUENTAS_REGISTROS); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                SubCuentas cuentas = new SubCuentas(
+                        rs.getString("codigo_subcuenta"),
+                        rs.getString("nombre_subcuenta"),
+                        rs.getFloat("total_debe"),
+                        rs.getFloat("total_haber")
+                );
+                subcuentas.add(cuentas);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return subcuentas;
+
+    }
+
 }

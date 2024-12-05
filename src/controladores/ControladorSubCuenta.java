@@ -35,12 +35,11 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
     SubCuentas subcuentas;
     DefaultTableModel modelo;
 
-    public ControladorSubCuenta(AgregarSubcuenta frmSub, ControladorMostrarCatalogo ctrol) {
+    public ControladorSubCuenta(AgregarSubcuenta frmSub) {
         this.frmSub = frmSub;
         this.ctrol = ctrol;
         this.frmSub.registrar.addActionListener(this);
         this.frmSub.editar.addActionListener(this);
-        this.frmSub.eliminar.addActionListener(this);
         this.frmSub.cancelar.addActionListener(this);
         this.frmSub.salir.addActionListener(this);
         this.frmSub.tablita.addMouseListener(this);
@@ -56,7 +55,6 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
 
         this.frmSub.registrar.addActionListener(this);
         this.frmSub.editar.addActionListener(this);
-        this.frmSub.eliminar.addActionListener(this);
         this.frmSub.cancelar.addActionListener(this);
         this.frmSub.salir.addActionListener(this);
 
@@ -146,7 +144,7 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
     }
 
     public void salir() {
-        System.exit(0);
+        this.frmSub.dispose();
     }
 
     @Override
@@ -164,8 +162,6 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
             this.frmSub.codigo.setEditable(true);
         } else if (e.getSource() == this.frmSub.salir) {
             salir();
-        } else if (e.getSource() == this.frmSub.eliminar) {
-            eliminar();
         }
     }
 

@@ -1,6 +1,7 @@
 package Controladores;
 
 import Vistas.VistaBalanzaComprobacion;
+import Vistas.VistaSubCuentas;
 import daos.BalanzaComprobacionDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.BalanzaComprobacion;
 
@@ -25,6 +28,7 @@ public class ControladorBalanzaC extends MouseAdapter implements ActionListener,
     public ControladorBalanzaC(VistaBalanzaComprobacion vista) {
         this.vista = vista;
         this.vista.btnMostrar.addActionListener(this);
+        this.vista.btnMostrarSubCuentas.addActionListener(this);
         lista = new ArrayList();
         daoBalanza = new BalanzaComprobacionDAO();
     }
@@ -50,16 +54,15 @@ public class ControladorBalanzaC extends MouseAdapter implements ActionListener,
             totalDeudor += x.getSaldoDeudor();
             totalAcreedor += x.getSaldoAcreedor();
         }
+        
         this.vista.Tbalanza.setModel(modelo);
-        vista.tfDebe.setText(String.valueOf(totalDebe));
-        vista.tfHaber.setText(String.valueOf(totalHaber));
-        vista.tfDeudor.setText(String.valueOf(totalDeudor));
-        vista.tfAcreedor.setText(String.valueOf(totalAcreedor));
+        this.vista.lbDebe.setText(String.valueOf(totalDebe));
+        this.vista.lbHaber.setText(String.valueOf(totalHaber));
+        this.vista.lbDeudor.setText(String.valueOf(totalDeudor));
+        this.vista.lbAcreedor.setText(String.valueOf(totalAcreedor));
+      //  this.vista.tfAcreedor.setText(String.valueOf(totalAcreedor));
 
-        vista.tfDebe.setEnabled(false);
-        vista.tfHaber.setEnabled(false);
-        vista.tfDeudor.setEnabled(false);
-        vista.tfAcreedor.setEnabled(false);
+        System.out.println(totalDebe);
 
     }
 
@@ -67,7 +70,14 @@ public class ControladorBalanzaC extends MouseAdapter implements ActionListener,
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.vista.btnMostrar) {
             mostrar();
-        }
+        } else if (e.getSource() == this.vista.btnMostrarSubCuentas) {
+       
+        VistaSubCuentas vista1 = new VistaSubCuentas(new JFrame(), true);
+       
+        ControladorSubCuentas crt1 = new ControladorSubCuentas(vista1);
+       
+        vista1.setVisible(true);
+    }
     }
 
     @Override
