@@ -55,7 +55,7 @@ public class controladorDetallesMayor  extends MouseAdapter implements ActionLis
          
                  
                  mostrarBusqueda(lista);
-           
+          
     }
     
     

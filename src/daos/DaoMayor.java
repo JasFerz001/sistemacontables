@@ -114,45 +114,7 @@ public class DaoMayor {
         return this.listaLibroMayor;
     }
       
-//          private detallesMayor selectSub(String sql, String dato) {
-//        detallesMayor obj = null;
-//        try {
-//            Connection con = conexion.getConexion();
-//            ps = con.prepareStatement(sql);
-//            ps.setString(1, "%" + dato + "%");
-//            rs = ps.executeQuery();
-//
-//            if (rs.next()) {
-//                obj = new detallesMayor();
-//                obj.setIdMayor(rs.getString("id_cuenta_mayor"));
-//                 obj.setIdSubCuenta(rs.getString("id_subcuenta"));
-//                 obj.setNombreSub(rs.getString("nombre_subcuenta"));
-//                  obj.setPartida(rs.getInt("numero_partida"));
-//                obj.setFecha(rs.getDate("fecha_agregado"));
-//              
-//                obj.setConcepto(rs.getString("concepto"));
-//                obj.setMonto(rs.getDouble("monto"));
-//                obj.setTransaccion(rs.getString("transaccion"));
-//            }
-//        } catch (SQLException ex) {
-//            ex.printStackTrace(); // Agrega un log adecuado o manejo de errores
-//        } finally {
-//            try {
-//                if (ps != null) {
-//                    ps.close();
-//                }
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//            } catch (SQLException ex) {
-//                ex.printStackTrace(); // Agrega un log adecuado o manejo de errores
-//            }
-//            conexion.cerrarConexiones();
-//        }
-//        return obj;
-//    }
-//     
-//      
+      
       
         public ArrayList<detallesMayor> MostrarDetalles(String busqueda) {
         ArrayList<detallesMayor> listaDetalles = new ArrayList<>();
