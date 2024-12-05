@@ -19,8 +19,6 @@ import modelos.EstadoResultado;
  *
  * @author Luis
  */
-
-
 public class ControladorBalanceGeneral implements ActionListener {
 
     Calendar calendario = Calendar.getInstance();
@@ -31,7 +29,7 @@ public class ControladorBalanceGeneral implements ActionListener {
 
     VistaBalanceGenerales vista = new VistaBalanceGenerales(new JFrame(), true);
     DaoBalanceGeneral dao = new DaoBalanceGeneral();
-    
+
     DaoEstadoResultado daoResultado = new DaoEstadoResultado();
     EstadoResultado estado = new EstadoResultado();
 
@@ -46,7 +44,10 @@ public class ControladorBalanceGeneral implements ActionListener {
     ArrayList<BalanceGeneral> listaPasivosNoCorrientes = new ArrayList();
     ArrayList<BalanceGeneral> listaPatrimonio = new ArrayList();
 
-    float ResEjercicio;
+    
+    float reservaLegal = getReservaLegal();
+    float ResEjercicio = getResultadoEjercicio();
+    float impuesto = impuestoSobreRenta();
 
     Conexion con = new Conexion();
 
@@ -105,7 +106,8 @@ public class ControladorBalanceGeneral implements ActionListener {
         for (int i = 0; i < listaPasivos.size(); i++) {
             dtm2.addRow(new Object[]{listaPasivos.get(i).getCuenta(), listaPasivos.get(i).getMonto(), " "});
         }
-
+        dtm2.addRow(new Object[]{"IMPUESTO POR PAGAR", impuesto, " "});
+        
         //CONSULTAR EL TOTAL DE PASIVOS NO CORRIENTES
         float total_PNC = dao.GetTotalCuentasPasivo(pN, anio);
         //CONSULTAR CADA CUENTA DE PASIVOS CORRIENTES
@@ -113,6 +115,7 @@ public class ControladorBalanceGeneral implements ActionListener {
         for (int i = 0; i < listaPasivosNoCorrientes.size(); i++) {
             dtm2.addRow(new Object[]{listaPasivosNoCorrientes.get(i).getCuenta(), listaPasivosNoCorrientes.get(i).getMonto(), " "});
         }
+        
 
         //CONSULTAR EL TOTAL DE CAPITAL
         float total_CAP = dao.GetTotalCuentasPasivo(patrimonio, anio);
@@ -123,7 +126,8 @@ public class ControladorBalanceGeneral implements ActionListener {
                 dtm2.addRow(new Object[]{listaPatrimonio.get(i).getCuenta(), listaPatrimonio.get(i).getMonto(), " "});
             }
         }
-        dtm2.addRow(new Object[]{"Resultado del ejercicio", ResEjercicio, " "});
+        dtm2.addRow(new Object[]{"RESERVA LEGAL", reservaLegal, " "});
+        dtm2.addRow(new Object[]{"RESULTADO DEL EJERCICIO", ResEjercicio, " "});
 
         float total_activos = dao.GetTotalActivos(anio);
         float total_pasivos = dao.GetTotalPasivos(anio) + ResEjercicio;
@@ -234,10 +238,41 @@ public class ControladorBalanceGeneral implements ActionListener {
             jasper.Reporte(1);
         }
     }
-    
-    
-        public void generar() {
-        estado = new EstadoResultado();
+
+//    public float getDato() {
+//        String fc_inicio = "2024-01-01";
+//        String fc_fin = "2024-12-30";
+//        float ivfinal = (float) 200000.00;
+//        estado = (daoResultado.select_ventas_totales(fc_inicio, fc_fin));
+//        String vn = estado.getVentas_Totales();
+//        estado = (daoResultado.select_costo_de_venta(fc_inicio, fc_fin));
+//        String cv = estado.getCosto_Ventas();
+//        float utilidadBruta = (Float.parseFloat(vn) - (Float.parseFloat(cv) - ivfinal));
+//        estado = daoResultado.select_gastos_admin(fc_inicio, fc_fin);
+//        String ga = estado.getGastos_Admin();
+//        estado = daoResultado.select_gasto_venta(fc_inicio, fc_fin);
+//        String gv = estado.getGastos_Ventas();
+//        float utilidadOperacion = utilidadBruta - (Float.parseFloat(ga) + Float.parseFloat(gv));
+//        estado = daoResultado.select_ingresos_finan(fc_inicio, fc_fin);
+//        String inf = estado.getIngresos_Finan();
+//        estado = daoResultado.select_gasto_finan(fc_inicio, fc_fin);
+//        String gf = estado.getGastos_Finan();
+//
+//        float utilidadAntes;
+//        if (Float.parseFloat(inf) == Float.parseFloat(gf)) {
+//            utilidadAntes = utilidadOperacion;
+//
+//        } else if (Float.parseFloat(inf) < Float.parseFloat(gf)) {
+//            utilidadAntes = utilidadOperacion - (Float.parseFloat(inf) - Float.parseFloat(gf));
+//
+//        } else {
+//            utilidadAntes = utilidadOperacion + (Float.parseFloat(inf) - Float.parseFloat(gf));
+//
+//        }
+//        return utilidadAntes;
+//
+//    }
+    public float getDato() {
         String fc_inicio = "2024-01-01";
         String fc_fin = "2024-12-30";
         float ivfinal = (float) 200000.00;
@@ -246,57 +281,79 @@ public class ControladorBalanceGeneral implements ActionListener {
 
         estado = (daoResultado.select_costo_de_venta(fc_inicio, fc_fin));
         String cv = estado.getCosto_Ventas();
-        
+
         float utilidadBruta = (Float.parseFloat(vn) - (Float.parseFloat(cv) - ivfinal));
         System.out.println(utilidadBruta);
 
         estado = daoResultado.select_gastos_admin(fc_inicio, fc_fin);
         String ga = estado.getGastos_Admin();
-        
+
         estado = daoResultado.select_gasto_venta(fc_inicio, fc_fin);
         String gv = estado.getGastos_Ventas();
-        
+
         float utilidadOperacion = utilidadBruta - (Float.parseFloat(ga) + Float.parseFloat(gv));
-        
+
         EstadoResultado e = new EstadoResultado();
         e = daoResultado.select_ingresos_finan(fc_inicio, fc_fin);
         String inf = e.getIngresos_Finan();
-        
+
         estado = daoResultado.select_gasto_finan(fc_inicio, fc_fin);
         String gf = estado.getGastos_Finan();
-        
+
         float utilidadAntes;
         if (Float.parseFloat(inf) == Float.parseFloat(gf)) {
             utilidadAntes = utilidadOperacion;
-            
+
         } else if (Float.parseFloat(inf) < Float.parseFloat(gf)) {
             utilidadAntes = utilidadOperacion - (Float.parseFloat(inf) - Float.parseFloat(gf));
             
         } else {
             utilidadAntes = utilidadOperacion + (Float.parseFloat(inf) - Float.parseFloat(gf));
-            
+
         }
 
         float ventas = Float.parseFloat(daoResultado.select_ventas(fc_inicio, fc_fin));
         System.out.println(ventas);
-
-        float isr;
-        float reservaLegal;
-        if (ventas < 1500000) {
-            isr = (float) (utilidadAntes * 0.25);
-            reservaLegal = (float) ((utilidadAntes - isr) * 0.07);
-            //this.frmResultado.isr.setText("$" + isr);
-            //this.frmResultado.reservaLegal.setText("$" + reservaLegal);
-            float ue = utilidadAntes - isr - reservaLegal;
-            ResEjercicio = ue;
-        } else {
-            isr = (float) (utilidadAntes * 0.30);
-            //this.frmResultado.isr.setText("$" + isr);
-            reservaLegal = (float) ((utilidadAntes - isr) * 0.07);
-            //this.frmResultado.reservaLegal.setText("$" + reservaLegal);
-            float ue = utilidadAntes - isr - reservaLegal;
-            ResEjercicio = ue;
-        }
-
+        return utilidadAntes;
     }
+
+    private float getReservaLegal() {
+        String fc_inicio = "2024-01-01";
+        String fc_fin = "2024-12-30";
+        float utilidadAntes = getDato();
+
+        float reservaLegal;
+
+        reservaLegal = (float) (utilidadAntes * 0.07);
+
+        reservaLegal = (float) (utilidadAntes * 0.07);
+
+        return reservaLegal;
+    }
+
+    private float impuestoSobreRenta() {
+        float isr;
+        String fc_inicio = "2024-01-01";
+        String fc_fin = "2024-12-30";
+        float ventas = Float.parseFloat(daoResultado.select_ventas(fc_inicio, fc_fin));
+        float utilidadAntes = getDato();
+        float reserva = getReservaLegal();
+
+        if (ventas < 1500000) {
+            isr = (float) ((utilidadAntes - reserva) * 0.25);
+        } else {
+            isr = (float) ((utilidadAntes - reserva) * 0.30);
+        }
+        return isr;
+    }
+
+    private float getResultadoEjercicio() {
+        float utilidadAntes = getDato();
+        float isr = impuestoSobreRenta();
+        float reserva = getReservaLegal();
+
+        float ue = utilidadAntes - isr - reserva;
+        return ue;
+    }
+
 }

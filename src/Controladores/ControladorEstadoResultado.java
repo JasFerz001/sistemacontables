@@ -13,11 +13,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
-<<<<<<< HEAD
-=======
 import java.text.SimpleDateFormat;
 import javax.crypto.AEADBadTagException;
->>>>>>> main
 import modelos.EstadoResultado;
 import vistas.VistaEstadoResultado;
 
@@ -105,7 +102,7 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
         float reservaLegal;
         if (ventas < 1500000) {
             reservaLegal = (float) ((utilidadAntes) * 0.07);
-            isr = (float) ((utilidadAntes -reservaLegal) * 0.25);
+            isr = (float) ((utilidadAntes - reservaLegal) * 0.25);
             this.frmResultado.isr.setText("$" + isr);
             this.frmResultado.reservaLegal.setText("$" + reservaLegal);
             float ue = utilidadAntes - isr - reservaLegal;

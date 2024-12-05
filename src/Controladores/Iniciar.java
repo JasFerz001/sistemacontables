@@ -11,7 +11,6 @@ import Vistas.Login;
 public class Iniciar {
 
     public static void main(String[] args) {
-
         Login login = new Login();
         ControladorLogin ctrl = new ControladorLogin(login);
         login.setVisible(true);    
