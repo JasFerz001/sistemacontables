@@ -88,6 +88,8 @@ public class ControladorBalanzaC extends MouseAdapter implements ActionListener,
        
         vista1.setVisible(true);
     }else if (e.getSource() == this.vista.btnPdf) {
+          VistaSubCuentas vista1 = new VistaSubCuentas(new JFrame(), true);
+          vista1.setVisible(false);
           jasper.Reporte(2);
         }
     }

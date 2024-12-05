@@ -255,39 +255,6 @@ public class ControladorBalanceGeneral implements ActionListener {
         }
     }
 
-//    public float getDato() {
-//        String fc_inicio = "2024-01-01";
-//        String fc_fin = "2024-12-30";
-//        float ivfinal = (float) 200000.00;
-//        estado = (daoResultado.select_ventas_totales(fc_inicio, fc_fin));
-//        String vn = estado.getVentas_Totales();
-//        estado = (daoResultado.select_costo_de_venta(fc_inicio, fc_fin));
-//        String cv = estado.getCosto_Ventas();
-//        float utilidadBruta = (Float.parseFloat(vn) - (Float.parseFloat(cv) - ivfinal));
-//        estado = daoResultado.select_gastos_admin(fc_inicio, fc_fin);
-//        String ga = estado.getGastos_Admin();
-//        estado = daoResultado.select_gasto_venta(fc_inicio, fc_fin);
-//        String gv = estado.getGastos_Ventas();
-//        float utilidadOperacion = utilidadBruta - (Float.parseFloat(ga) + Float.parseFloat(gv));
-//        estado = daoResultado.select_ingresos_finan(fc_inicio, fc_fin);
-//        String inf = estado.getIngresos_Finan();
-//        estado = daoResultado.select_gasto_finan(fc_inicio, fc_fin);
-//        String gf = estado.getGastos_Finan();
-//
-//        float utilidadAntes;
-//        if (Float.parseFloat(inf) == Float.parseFloat(gf)) {
-//            utilidadAntes = utilidadOperacion;
-//
-//        } else if (Float.parseFloat(inf) < Float.parseFloat(gf)) {
-//            utilidadAntes = utilidadOperacion - (Float.parseFloat(inf) - Float.parseFloat(gf));
-//
-//        } else {
-//            utilidadAntes = utilidadOperacion + (Float.parseFloat(inf) - Float.parseFloat(gf));
-//
-//        }
-//        return utilidadAntes;
-//
-//    }
     public float getDato() {
         String fc_inicio = "2024-01-01";
         String fc_fin = "2024-12-30";

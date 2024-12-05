@@ -4,6 +4,7 @@
  */
 package Controladores;
 
+import Reportes.Jasper;
 import daos.DaoEstadoResultado;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,11 +29,14 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
     VistaEstadoResultado frmResultado;
     DaoEstadoResultado daoResultado;
     EstadoResultado estado;
+    
+    Jasper jasper = new Jasper();
 
     public ControladorEstadoResultado(VistaEstadoResultado frmResultado) {
         this.frmResultado = frmResultado;
         this.frmResultado.generar.addActionListener(this);
         this.frmResultado.salir.addActionListener(this);
+        this.frmResultado.reporte.addActionListener(this);
         daoResultado = new DaoEstadoResultado();
         estado = new EstadoResultado();
 
@@ -45,6 +49,10 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
         }
         if (e.getSource() == this.frmResultado.salir) {
             salir();
+        }
+        if(e.getSource() == this.frmResultado.reporte){
+            frmResultado.setVisible(false);
+            jasper.Reporte(3);
         }
     }
 
