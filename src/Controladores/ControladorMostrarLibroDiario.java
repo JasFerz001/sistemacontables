@@ -35,7 +35,7 @@ public class ControladorMostrarLibroDiario extends MouseAdapter implements Actio
         this.frmLibro.lbBuscar.addActionListener(this);
         this.frmLibro.btnAnterior.addActionListener(this);
         this.frmLibro.btnSiguiente.addActionListener(this);
-        this.frmLibro.btnModificarPartida.addActionListener(this);
+//        this.frmLibro.btnModificarPartida.addActionListener(this);
         daoLibro = new DaoLibroDiario();
         listaPartidas = daoLibro.selectAllLibroDiario();
         partidaActual = 0;
@@ -129,10 +129,10 @@ public class ControladorMostrarLibroDiario extends MouseAdapter implements Actio
             mostrarPartidaAnterior();
         } else if (e.getSource() == frmLibro.btnSiguiente) {
             mostrarPartidaSiguiente();
-        } else if (e.getSource() == frmLibro.btnModificarPartida) {
-            VistaLibroDiario frm = new VistaLibroDiario(new JFrame(), true, "Modificar Partida");
-            ControladorLibroDiario controladorLibroDiario = new ControladorLibroDiario(frm);
-            frm.setVisible(true);
+//        } else if (e.getSource() == frmLibro.btnModificarPartida) {
+//            VistaLibroDiario frm = new VistaLibroDiario(new JFrame(), true, "Modificar Partida");
+//            ControladorLibroDiario controladorLibroDiario = new ControladorLibroDiario(frm);
+//            frm.setVisible(true);
         }
     }
 
@@ -184,15 +184,15 @@ public class ControladorMostrarLibroDiario extends MouseAdapter implements Actio
         }
     }
 
-    @Override
-    public void mouseClicked(java.awt.event.MouseEvent e) {
-        int row = frmLibro.tbDatos.rowAtPoint(e.getPoint());
-        int column = frmLibro.tbDatos.columnAtPoint(e.getPoint());
-        if (column == 0) {
-            frmLibro.btnModificarPartida.setEnabled(true);
-        } else {
-            frmLibro.btnModificarPartida.setEnabled(false);
-        }
-    }
+//    @Override
+//    public void mouseClicked(java.awt.event.MouseEvent e) {
+//        int row = frmLibro.tbDatos.rowAtPoint(e.getPoint());
+//        int column = frmLibro.tbDatos.columnAtPoint(e.getPoint());
+//        if (column == 0) {
+//            frmLibro.btnModificarPartida.setEnabled(true);
+//        } else {
+//            frmLibro.btnModificarPartida.setEnabled(false);
+//        }
+//    }
 
 }

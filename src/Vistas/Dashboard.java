@@ -3,11 +3,13 @@ package vistas;
 import Controladores.ControladorBalanceGeneral;
 import Controladores.ControladorBalanzaC;
 import Controladores.ControladorLibroDiario;
+import Controladores.ControladorLogin;
 import Controladores.ControladorMostrarLibroDiario;
 import Vistas.VistaBalanceGeneral;
 import Vistas.VistaBalanzaComprobacion;
 import Vistas.VistaLibroDiario;
 import Vistas.VistaMostrarLibroDiario;
+import Vistas.Login;
 import controladores.ControladorMostrarCatalogo;
 import utilidades.Fondo;
 import java.awt.Color;
@@ -30,7 +32,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     public Dashboard() {
         initComponents();
-        setImageLabel(logo, "src/img/logo.png");
+        setImageLabel(logo, "src/img/minerva.png");
 //        setImageLabel(home, "src/img/cargando.gif");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         color();
@@ -750,13 +752,11 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void opSalirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opSalirMousePressed
         colorDefault();
-
         opDefault();
 //        panelSalir.setBackground(colorActivoModulo);
-        VistaSalir vista = new VistaSalir("Saliendo");
-        vista.setVisible(true);
-
-
+            Login login = new Login(); 
+            ControladorLogin ctrl = new ControladorLogin(login);
+            login.setVisible(true);
     }//GEN-LAST:event_opSalirMousePressed
 
     private void opMenu3ReportesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opMenu3ReportesMousePressed

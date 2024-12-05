@@ -5,18 +5,11 @@
 package vistas;
 
 import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
-import javax.swing.WindowConstants;
 
 /**
  *
@@ -35,9 +28,9 @@ public class VistaSalir extends JFrame implements ActionListener {
         this.setLocationRelativeTo(this); // ubica la ventana en el centro
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);//cerrar los proceso
         this.setResizable(false); // habilita el boton de minimizar
-        this.setUndecorated(true);
         Container contenedor = this.getContentPane();
         contenedor.setLayout(null);// null, porque quiero poner los componentes
+
         myBarra = new JProgressBar(0, 100);
         myBarra.setStringPainted(true);
         myBarra.setBounds(10, 10, 350, 30);

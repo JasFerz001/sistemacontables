@@ -1,6 +1,7 @@
 package Controladores;
 
 import Vistas.VistaLibroDiario;
+import Vistas.VistaMostrarLibroDiario;
 import daos.DaoLibroDiario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -248,7 +249,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
                 montoConIVA = iva + montoTruncado;
             } else if (frmLibro.rbExtraerIVA.isSelected()) {
                 double ivaExtraido = (montoTruncado / 1.13) * 0.13;
-                montoConIVA = montoTruncado - ivaExtraido; 
+                montoConIVA = montoTruncado - ivaExtraido;
             }
             BigDecimal montoConIVABigDecimal = new BigDecimal(montoConIVA).setScale(2, RoundingMode.HALF_UP);
             double montoConIVATruncado = montoConIVABigDecimal.doubleValue();
@@ -390,6 +391,12 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             }
             JOptionPane.showMessageDialog(null, "Partida procesada correctamente.");
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea agregar otra partida?", "Agregar Partida", JOptionPane.YES_NO_OPTION);
+            if (respuesta == JOptionPane.NO_OPTION) {
+                // Si la respuesta es "No", redirigir a VistaMostrarLibroDiario
+                VistaMostrarLibroDiario vista = new VistaMostrarLibroDiario();
+                ControladorMostrarLibroDiario ctrl = new ControladorMostrarLibroDiario(vista);
+                vista.setVisible(true); // Método que muestra el contenido de la vista
+            }
             limpiarCampos();
             frmLibro.tfPartidaAnterior.setText(String.valueOf(numeroPartida));
             frmLibro.tfNumeroPartida.setText(String.valueOf(numeroPartida + 1));
