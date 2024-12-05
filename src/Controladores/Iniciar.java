@@ -1,7 +1,16 @@
 package controladores;
 
+import Controladores.ControladorLibroMayor;
+import Vistas.VistaMayor;
+import javax.swing.JFrame;
+
+import vistas.Dashboard;
+
 import Controladores.ControladorLogin;
 import Vistas.Login;
+
+
+
 
 
 /**
@@ -15,5 +24,6 @@ public class Iniciar {
         Login login = new Login();
         ControladorLogin ctrl = new ControladorLogin(login);
         login.setVisible(true);    
+
     }
 }
