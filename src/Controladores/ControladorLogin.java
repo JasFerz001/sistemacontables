@@ -22,6 +22,7 @@ public class ControladorLogin implements ActionListener {
     public ControladorLogin(Login login) {
         this.login = login;
         this.login.btnIngresar.addActionListener(this);
+        
     }
 
     @Override
