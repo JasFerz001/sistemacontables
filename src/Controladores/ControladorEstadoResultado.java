@@ -13,6 +13,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
+<<<<<<< HEAD
+=======
+import java.text.SimpleDateFormat;
+import javax.crypto.AEADBadTagException;
+>>>>>>> main
 import modelos.EstadoResultado;
 import vistas.VistaEstadoResultado;
 
@@ -62,7 +67,7 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
         float utilidadBruta = (Float.parseFloat(vn) - (Float.parseFloat(cv) - ivfinal));
         System.out.println(utilidadBruta);
         this.frmResultado.utilidadBruta.setText("$" + utilidadBruta);
-
+        
         estado = daoResultado.select_gastos_admin(fc_inicio, fc_fin);
         String ga = estado.getGastos_Admin();
         this.frmResultado.gastosAdmin.setText("$" + ga);
@@ -99,16 +104,16 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
         float isr;
         float reservaLegal;
         if (ventas < 1500000) {
-            isr = (float) (utilidadAntes * 0.25);
-            reservaLegal = (float) ((utilidadAntes - isr) * 0.07);
+            reservaLegal = (float) ((utilidadAntes) * 0.07);
+            isr = (float) ((utilidadAntes -reservaLegal) * 0.25);
             this.frmResultado.isr.setText("$" + isr);
             this.frmResultado.reservaLegal.setText("$" + reservaLegal);
             float ue = utilidadAntes - isr - reservaLegal;
             this.frmResultado.utilidadEjercicio.setText("$" + ue);
         } else {
-            isr = (float) (utilidadAntes * 0.30);
+            reservaLegal = (float) ((utilidadAntes) * 0.07);
+            isr = (float) ((utilidadAntes -reservaLegal) * 0.30);
             this.frmResultado.isr.setText("$" + isr);
-            reservaLegal = (float) ((utilidadAntes - isr) * 0.07);
             this.frmResultado.reservaLegal.setText("$" + reservaLegal);
             float ue = utilidadAntes - isr - reservaLegal;
             this.frmResultado.utilidadEjercicio.setText("$" + ue);
