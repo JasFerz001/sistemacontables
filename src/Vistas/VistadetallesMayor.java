@@ -16,6 +16,7 @@ public class VistaDetallesMayor extends javax.swing.JDialog {
     public VistaDetallesMayor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
     }
     
     public void iniciar() {

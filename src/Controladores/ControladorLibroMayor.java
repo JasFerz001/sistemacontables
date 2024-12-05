@@ -39,9 +39,10 @@ public class ControladorLibroMayor extends MouseAdapter implements ActionListene
         this.frmMayor.btnDetalles.addActionListener(this);
         this.frmMayor.tbDatos.addMouseListener(this);
         
+        
         listaMayor = new ArrayList();
         daoMayor = new DaoMayor();
-        this.frmMayor.tbDatos.addMouseListener(this);
+       
         mostrar();
     }
 
@@ -55,7 +56,7 @@ public class ControladorLibroMayor extends MouseAdapter implements ActionListene
     
     
     
-    //tonto el q lo lea :3 7u7
+    
 
     public void mostrar()  {
 

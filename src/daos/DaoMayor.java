@@ -19,7 +19,7 @@ import modelos.detallesMayor;
 
 public class DaoMayor {
     
-    Conexion conexion;
+    private Conexion conexion;
     private ArrayList<LibroMayor> listaLibroMayor;
     private ArrayList<detallesMayor>listDetalles;
     private ResultSet rs = null;
@@ -78,9 +78,12 @@ public class DaoMayor {
 //    }
     
 
+   
+    
     public DaoMayor() {
-        this.conexion = conexion;
-    }
+    this.conexion = new Conexion(); // Inicializa la conexión aquí.
+}
+
      
       public ArrayList<LibroMayor> seleccionaDatos()  {
 
@@ -151,49 +154,55 @@ public class DaoMayor {
 //     
 //      
       
-        public ArrayList<Cuenta> buscarCuentasJerarquicas(String busqueda) {
-        ArrayList<Cuenta> listaCuentas = new ArrayList<>();
+        public ArrayList<detallesMayor> MostrarDetalles(String busqueda) {
+        ArrayList<detallesMayor> listaDetalles = new ArrayList<>();
 
         try {
             this.accesoDB = this.conexion.getConexion();
             this.ps = this.accesoDB.prepareStatement(
-                    "SELECT DISTINCT c.cod_catalogo AS Codigo, c.nombre AS Nombre "
-                    + "FROM catalogo c "
-                    + "WHERE c.cod_catalogo LIKE ? OR c.nombre LIKE ? "
-                    + "UNION ALL "
-                    + "SELECT DISTINCT CONCAT(cp.cod_principal) AS Codigo, cp.nombre AS Nombre "
-                    + "FROM cuentas_principales cp "
-                    + "JOIN catalogo c ON cp.cod_catalogo = c.cod_catalogo "
-                    + "WHERE cp.cod_principal LIKE ? OR cp.nombre LIKE ? "
-                    + "UNION ALL "
-                    + "SELECT DISTINCT CONCAT(cm.cod_mayor) AS Codigo, cm.nombre AS Nombre "
-                    + "FROM cuentas_mayor cm "
-                    + "JOIN cuentas_principales cp ON cm.cod_principal = cp.cod_principal "
-                    + "JOIN catalogo c ON cp.cod_catalogo = c.cod_catalogo "
-                    + "WHERE cm.cod_mayor LIKE ? OR cm.nombre LIKE ? "
-                    + "UNION ALL "
-                    + "SELECT DISTINCT CONCAT(sc.cod_subcuenta) AS Codigo, sc.nombre AS Nombre "
-                    + "FROM subcuentas sc "
-                    + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor "
-                    + "JOIN cuentas_principales cp ON cm.cod_principal = cp.cod_principal "
-                    + "JOIN catalogo c ON cp.cod_catalogo = c.cod_catalogo "
-                    + "WHERE sc.cod_subcuenta LIKE ? OR sc.nombre LIKE ? "
-                    + "ORDER BY Codigo;"
+                    "SELECT \n" +
+"    cm.cod_mayor AS id_cuenta_mayor,\n" +
+"    sc.cod_subcuenta AS id_subcuenta,\n" +
+"    sc.nombre AS nombre_subcuenta,\n" +
+"    ld.numero_partida AS numero_partida,\n" +
+"    ld.fecha AS fecha_agregado,\n" +
+"    ld.concepto AS concepto,\n" +
+"    ld.monto AS monto,\n" +
+"    ld.transaccion AS transaccion\n" +
+"FROM \n" +
+"    cuentas_mayor cm\n" +
+"INNER JOIN \n" +
+"    subcuentas sc ON cm.cod_mayor = sc.cod_mayor\n" +
+"INNER JOIN \n" +
+"    libro_diario ld ON sc.cod_subcuenta = ld.cod_subcuenta\n" +
+"WHERE \n" +
+"    cm.nombre LIKE ? \n" +
+"ORDER BY \n" +
+"    cm.cod_mayor, sc.cod_subcuenta, ld.numero_partida;"
             );
 
             String queryBusqueda = "%" + busqueda + "%";
-            for (int i = 1; i <= 8; i++) {
+            for (int i = 1; i <= 1; i++) {
                 this.ps.setString(i, queryBusqueda);
             }
 
             this.rs = ps.executeQuery();
 
-            Cuenta cuenta;
+            detallesMayor obj;
             while (this.rs.next()) {
-                cuenta = new Cuenta();
-                cuenta.setCodigo(rs.getString("Codigo"));
-                cuenta.setNombre(rs.getString("Nombre"));
-                listaCuentas.add(cuenta);
+                obj = new detallesMayor();
+               
+                obj.setIdMayor(rs.getString("id_cuenta_mayor"));
+                 obj.setIdSubCuenta(rs.getString("id_subcuenta"));
+                 obj.setNombreSub(rs.getString("nombre_subcuenta"));
+                  obj.setPartida(rs.getInt("numero_partida"));
+                obj.setFecha(rs.getDate("fecha_agregado"));
+              
+                obj.setConcepto(rs.getString("concepto"));
+                obj.setMonto(rs.getDouble("monto"));
+                obj.setTransaccion(rs.getString("transaccion"));
+               
+                listaDetalles.add(obj);
             }
 
         } catch (SQLException e) {
@@ -212,7 +221,7 @@ public class DaoMayor {
             this.conexion.cerrarConexiones();
         }
 
-        return listaCuentas;
+        return listaDetalles;
     }
       
       
