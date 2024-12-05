@@ -49,8 +49,8 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
 
     public void generar() {
         estado = new EstadoResultado();
-        String fc_inicio = (this.frmResultado.fechaInicio.getText());
-        String fc_fin = (this.frmResultado.fechaFin.getText());
+        String fc_inicio = "2024-01-01";
+        String fc_fin = "2024-12-30";
         float ivfinal = Float.parseFloat(this.frmResultado.inventariofinal.getText());
         estado = (daoResultado.select_ventas_totales(fc_inicio, fc_fin));
         String vn = estado.getVentas_Totales();

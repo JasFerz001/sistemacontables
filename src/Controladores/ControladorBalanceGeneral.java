@@ -1,18 +1,7 @@
 package Controladores;
 
 import Reportes.Jasper;
-;
-import Vistas.VistaBalanceGenerales;
-import daos.Conexion;
-import daos.DaoBalanceGeneral;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Calendar;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import modelos.BalanceGeneral;
 import Vistas.VistaBalanceGenerales;
 import daos.Conexion;
 import daos.DaoBalanceGeneral;
@@ -64,7 +53,6 @@ public class ControladorBalanceGeneral implements ActionListener {
 
     public void setModels() {
 
-        //vista.setVisible(true);
         //--para mostrar activos
         dtm.addColumn("Activos");
         dtm.addColumn("Total Activos");
