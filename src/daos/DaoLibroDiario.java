@@ -25,6 +25,10 @@ public class DaoLibroDiario {
     private static final String INSERT_LIBRO_DIARIO = "INSERT INTO libro_diario"
             + "(numero_partida, fecha, cod_subcuenta, concepto, monto, transaccion) VALUES (?, ?, ?, ?, ?, ?);";
 
+    private static final String SELECT_ALL_LIBRO_DIARIO = "SELECT ld.numero_partida, ld.fecha, ld.cod_subcuenta, s.nombre AS nombreCuenta, ld.concepto, ld.monto, ld.transaccion FROM libro_diario ld INNER JOIN subcuentas s ON ld.cod_subcuenta = s.cod_subcuenta ";
+
+    private static final String UPDATE_LIBRO_DIARIO = "UPDATE libro_diario SET fecha=?, cod_subcuenta=?, concepto=?, monto=?, transaccion=? WHERE numero_partida=? ";
+
     public DaoLibroDiario() {
         this.conexion = new Conexion();
     }
@@ -63,6 +67,127 @@ public class DaoLibroDiario {
 
         return resultado;
     }
+
+    public ArrayList<LibroDiario> selectAllLibroDiario() {
+        ArrayList<LibroDiario> listaLibrosDiarios = new ArrayList<>();
+        try {
+            this.accesoDB = conexion.getConexion();
+            this.ps = this.accesoDB.prepareStatement(SELECT_ALL_LIBRO_DIARIO);
+            this.rs = this.ps.executeQuery();
+
+            while (rs.next()) {
+                LibroDiario libro = new LibroDiario(
+                        rs.getInt("numero_partida"),
+                        rs.getDate("fecha"),
+                        rs.getInt("cod_subcuenta"),
+                        rs.getString("nombreCuenta"), 
+                        rs.getDouble("monto"),
+                        rs.getString("transaccion"),
+                        rs.getString("concepto")
+                );
+                listaLibrosDiarios.add(libro);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al obtener todos los registros del libro diario: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (accesoDB != null) {
+                    accesoDB.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return listaLibrosDiarios;
+    }
+
+    public String updateLibroDiario(LibroDiario libroDiario) {
+        String resultado;
+        try {
+            this.accesoDB = conexion.getConexion();
+            this.ps = this.accesoDB.prepareStatement(UPDATE_LIBRO_DIARIO);
+            this.ps.setDate(1, new java.sql.Date(libroDiario.getFecha().getTime()));
+            this.ps.setInt(2, libroDiario.getCodSubcuenta());
+            this.ps.setString(3, libroDiario.getConcepto());
+            this.ps.setBigDecimal(4, BigDecimal.valueOf(libroDiario.getMonto()));
+            this.ps.setString(5, libroDiario.getTransaccion());
+            this.ps.setInt(6, libroDiario.getNumeroPartida());
+
+            int filasActualizadas = this.ps.executeUpdate();
+            if (filasActualizadas > 0) {
+                resultado = "exito";
+            } else {
+                resultado = "error_actualizar_libro_diario";
+            }
+        } catch (SQLException e) {
+            resultado = "error_excepcion";
+            e.printStackTrace();
+            System.out.println("Error al actualizar el libro diario: " + e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (accesoDB != null) {
+                    accesoDB.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return resultado;
+    }
+
+    public ArrayList<LibroDiario> selectLibroDiarioByPartida(int numeroPartida) {
+    ArrayList<LibroDiario> listaLibrosDiarios = new ArrayList<>();
+    try {
+        this.accesoDB = conexion.getConexion();
+        
+        String SELECT_LIBRO_DIARIO_PARTIDA = "SELECT * FROM libro_diario WHERE numero_partida = ?";
+        this.ps = this.accesoDB.prepareStatement(SELECT_LIBRO_DIARIO_PARTIDA);
+        this.ps.setInt(1, numeroPartida);
+
+        this.rs = this.ps.executeQuery();
+
+        while (rs.next()) {
+            LibroDiario libro = new LibroDiario(
+                    rs.getInt("numero_partida"),
+                    rs.getDate("fecha"),
+                    rs.getInt("cod_subcuenta"),
+                    rs.getString("nombreCuenta"), 
+                    rs.getDouble("monto"),
+                    rs.getString("transaccion"),
+                    rs.getString("concepto")
+            );
+            listaLibrosDiarios.add(libro);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("Error al obtener los registros del libro diario para la partida " + numeroPartida + ": " + e.getMessage());
+    } finally {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (accesoDB != null) {
+                accesoDB.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    return listaLibrosDiarios;
+}
 
     public ArrayList<SubCuentas> obtenerSubCuentas() {
         ArrayList<SubCuentas> listaSubCuentas = new ArrayList<>();
@@ -117,58 +242,4 @@ public class DaoLibroDiario {
         }
         return ultimaPartida;
     }
-// Método para obtener todas las partidas de la base de datos
-
-    public ArrayList<LibroDiario> obtenerTodasLasPartidas() {
-        ArrayList<LibroDiario> listaPartidas = new ArrayList<>();
-        String sql = """
-                 SELECT ld.numero_partida, ld.fecha, ld.cod_subcuenta, s.nombre, ld.concepto, ld.monto, ld.transaccion
-                 FROM libro_diario ld
-                 INNER JOIN subcuentas s ON ld.cod_subcuenta = s.cod_subcuenta;"""; // Consulta SQL
-
-        try {
-            // Obtener la conexión
-            this.accesoDB = conexion.getConexion();
-            this.ps = this.accesoDB.prepareStatement(sql);
-            this.rs = this.ps.executeQuery();  // Ejecutar la consulta
-
-            // Iterar a través de los resultados
-            while (rs.next()) {
-                // Crear un nuevo objeto LibroDiario para cada fila
-                LibroDiario libroDiario = new LibroDiario(
-                        rs.getInt("numero_partida"), // Número de partida
-                        rs.getDate("fecha"), // Fecha
-                        rs.getInt("cod_subcuenta"), // Código de subcuenta
-                        rs.getString("nombre"), // Nombre de la cuenta
-                        rs.getDouble("monto"), // Monto directamente como double
-                        rs.getString("transaccion"), // Tipo de transacción
-                        rs.getString("concepto") // Concepto
-                );
-
-                // Agregar el objeto a la lista
-                listaPartidas.add(libroDiario);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error al obtener las partidas: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (accesoDB != null) {
-                    accesoDB.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-
-        return listaPartidas;  // Retornar la lista de partidas
-    }
-
 }

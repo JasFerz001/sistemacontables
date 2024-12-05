@@ -4,11 +4,13 @@ import Controladores.ControladorBalanceGeneral;
 import Controladores.ControladorBalanzaC;
 import Controladores.ControladorEstadoResultado;
 import Controladores.ControladorLibroDiario;
+import Controladores.ControladorLogin;
 import Controladores.ControladorMostrarLibroDiario;
 import Vistas.VistaBalanceGenerales;
 import Vistas.VistaBalanzaComprobacion;
 import Vistas.VistaLibroDiario;
 import Vistas.VistaMostrarLibroDiario;
+import Vistas.Login;
 import controladores.ControladorAgregarCatalogo;
 import controladores.ControladorMostrarCatalogo;
 import controladores.ControladorSubCuenta;
@@ -34,7 +36,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     public Dashboard() {
         initComponents();
-        setImageLabel(logo, "src/img/logo.png");
+        setImageLabel(logo, "src/img/minerva.png");
 //        setImageLabel(home, "src/img/cargando.gif");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         color();
@@ -637,6 +639,12 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(lbCopyR, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        rSLabelFecha2.setForeground(new java.awt.Color(153, 0, 0));
+        rSLabelFecha2.setFont(new java.awt.Font("Roboto Bold", 1, 22)); // NOI18N
+
+        rSLabelHora2.setForeground(new java.awt.Color(153, 0, 0));
+        rSLabelHora2.setFont(new java.awt.Font("Roboto Bold", 1, 22)); // NOI18N
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -766,13 +774,11 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void opSalirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opSalirMousePressed
         colorDefault();
-
         opDefault();
 //        panelSalir.setBackground(colorActivoModulo);
-        VistaSalir vista = new VistaSalir("Saliendo");
-        vista.setVisible(true);
-
-
+            Login login = new Login(); 
+            ControladorLogin ctrl = new ControladorLogin(login);
+            login.setVisible(true);
     }//GEN-LAST:event_opSalirMousePressed
 
     private void opMenu3ReportesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opMenu3ReportesMousePressed
@@ -800,8 +806,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op1.setBackground(colorActivoOp);
         VistaBalanzaComprobacion vista = new VistaBalanzaComprobacion(new JFrame(), true);
         ControladorBalanzaC crt = new ControladorBalanzaC(vista);
-       vista.setVisible(true);
-       
+        vista.setVisible(true);
 
     }//GEN-LAST:event_menu3Op1MousePressed
 
