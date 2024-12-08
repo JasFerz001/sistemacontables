@@ -4,6 +4,7 @@
  */
 package Controladores;
 
+import Reportes.Jasper;
 import daos.DaoEstadoResultado;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
+import javax.crypto.AEADBadTagException;
 import modelos.EstadoResultado;
 import vistas.VistaEstadoResultado;
 
@@ -27,11 +29,14 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
     VistaEstadoResultado frmResultado;
     DaoEstadoResultado daoResultado;
     EstadoResultado estado;
+    
+    Jasper jasper = new Jasper();
 
     public ControladorEstadoResultado(VistaEstadoResultado frmResultado) {
         this.frmResultado = frmResultado;
         this.frmResultado.generar.addActionListener(this);
         this.frmResultado.salir.addActionListener(this);
+        this.frmResultado.reporte.addActionListener(this);
         daoResultado = new DaoEstadoResultado();
         estado = new EstadoResultado();
 
@@ -45,12 +50,16 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
         if (e.getSource() == this.frmResultado.salir) {
             salir();
         }
+        if(e.getSource() == this.frmResultado.reporte){
+            frmResultado.setVisible(false);
+            jasper.Reporte(3);
+        }
     }
 
     public void generar() {
         estado = new EstadoResultado();
-        String fc_inicio = (this.frmResultado.fechaInicio.getText());
-        String fc_fin = (this.frmResultado.fechaFin.getText());
+        String fc_inicio = "2024-01-01";
+        String fc_fin = "2024-12-30";
         float ivfinal = Float.parseFloat(this.frmResultado.inventariofinal.getText());
         estado = (daoResultado.select_ventas_totales(fc_inicio, fc_fin));
         String vn = estado.getVentas_Totales();
@@ -63,7 +72,7 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
         float utilidadBruta = (Float.parseFloat(vn) - (Float.parseFloat(cv) - ivfinal));
         System.out.println(utilidadBruta);
         this.frmResultado.utilidadBruta.setText("$" + utilidadBruta);
-
+        
         estado = daoResultado.select_gastos_admin(fc_inicio, fc_fin);
         String ga = estado.getGastos_Admin();
         this.frmResultado.gastosAdmin.setText("$" + ga);
@@ -100,16 +109,16 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
         float isr;
         float reservaLegal;
         if (ventas < 1500000) {
-            isr = (float) (utilidadAntes * 0.25);
-            reservaLegal = (float) ((utilidadAntes - isr) * 0.07);
+            reservaLegal = (float) ((utilidadAntes) * 0.07);
+            isr = (float) ((utilidadAntes - reservaLegal) * 0.25);
             this.frmResultado.isr.setText("$" + isr);
             this.frmResultado.reservaLegal.setText("$" + reservaLegal);
             float ue = utilidadAntes - isr - reservaLegal;
             this.frmResultado.utilidadEjercicio.setText("$" + ue);
         } else {
-            isr = (float) (utilidadAntes * 0.30);
+            reservaLegal = (float) ((utilidadAntes) * 0.07);
+            isr = (float) ((utilidadAntes -reservaLegal) * 0.30);
             this.frmResultado.isr.setText("$" + isr);
-            reservaLegal = (float) ((utilidadAntes - isr) * 0.07);
             this.frmResultado.reservaLegal.setText("$" + reservaLegal);
             float ue = utilidadAntes - isr - reservaLegal;
             this.frmResultado.utilidadEjercicio.setText("$" + ue);

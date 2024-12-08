@@ -4,16 +4,28 @@ import Controladores.ControladorBalanceGeneral;
 import Controladores.ControladorBalanzaC;
 import Controladores.ControladorEstadoResultado;
 import Controladores.ControladorLibroDiario;
+
+import Controladores.ControladorLibroMayor;
+
 import Controladores.ControladorLogin;
+
 import Controladores.ControladorMostrarLibroDiario;
 import Vistas.VistaBalanceGenerales;
 import Vistas.VistaBalanzaComprobacion;
 import Vistas.VistaLibroDiario;
 import Vistas.VistaMostrarLibroDiario;
+
+
+import Vistas.VistaMayor;
+
+import controladores.ControladorMostrarCatalogo;
+
+
 import Vistas.Login;
 import controladores.ControladorAgregarCatalogo;
 import controladores.ControladorMostrarCatalogo;
 import controladores.ControladorSubCuenta;
+
 import utilidades.Fondo;
 import java.awt.Color;
 import java.awt.Image;
@@ -83,6 +95,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op1 = new javax.swing.JLabel();
         menu3Op2 = new javax.swing.JLabel();
         menu3Op3 = new javax.swing.JLabel();
+        menu3Op4 = new javax.swing.JLabel();
         panelOp4 = new javax.swing.JPanel();
         menu4Op1 = new javax.swing.JLabel();
         menu4Op2 = new javax.swing.JLabel();
@@ -162,7 +175,7 @@ public class Dashboard extends javax.swing.JFrame {
         VerCatalogo.setForeground(new java.awt.Color(255, 255, 255));
         VerCatalogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         VerCatalogo.setText("Ver Catalago");
-        VerCatalogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        VerCatalogo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         VerCatalogo.setOpaque(true);
         VerCatalogo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -174,7 +187,7 @@ public class Dashboard extends javax.swing.JFrame {
         AgregarMayor.setForeground(new java.awt.Color(255, 255, 255));
         AgregarMayor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         AgregarMayor.setText("Agregar Cuenta Mayor");
-        AgregarMayor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AgregarMayor.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         AgregarMayor.setOpaque(true);
         AgregarMayor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -186,7 +199,7 @@ public class Dashboard extends javax.swing.JFrame {
         AgregarSub.setForeground(new java.awt.Color(255, 255, 255));
         AgregarSub.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         AgregarSub.setText("Agregar SubCuenta");
-        AgregarSub.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AgregarSub.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         AgregarSub.setOpaque(true);
         AgregarSub.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -231,7 +244,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu2Op1.setForeground(new java.awt.Color(255, 255, 255));
         menu2Op1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         menu2Op1.setText("Ingresar Libro Diario");
-        menu2Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu2Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu2Op1.setOpaque(true);
         menu2Op1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -243,7 +256,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu2Op2.setForeground(new java.awt.Color(255, 255, 255));
         menu2Op2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         menu2Op2.setText("Ver Libro Diario");
-        menu2Op2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu2Op2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu2Op2.setOpaque(true);
         menu2Op2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -282,7 +295,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op1.setForeground(new java.awt.Color(255, 255, 255));
         menu3Op1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         menu3Op1.setText("Balanza Comprobacion");
-        menu3Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu3Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu3Op1.setOpaque(true);
         menu3Op1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -294,7 +307,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op2.setForeground(new java.awt.Color(255, 255, 255));
         menu3Op2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         menu3Op2.setText("Balance General");
-        menu3Op2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu3Op2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu3Op2.setOpaque(true);
         menu3Op2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -306,11 +319,23 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op3.setForeground(new java.awt.Color(255, 255, 255));
         menu3Op3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         menu3Op3.setText("Estado de Resultado");
-        menu3Op3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu3Op3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu3Op3.setOpaque(true);
         menu3Op3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 menu3Op3MousePressed(evt);
+            }
+        });
+
+        menu3Op4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        menu3Op4.setForeground(new java.awt.Color(255, 255, 255));
+        menu3Op4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
+        menu3Op4.setText("Libro Mayor");
+        menu3Op4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        menu3Op4.setOpaque(true);
+        menu3Op4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                menu3Op4MousePressed(evt);
             }
         });
 
@@ -322,20 +347,23 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(panelOp3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(menu3Op1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menu3Op3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(menu3Op2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(menu3Op3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(menu3Op4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         panelOp3Layout.setVerticalGroup(
             panelOp3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelOp3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addComponent(menu3Op4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(menu3Op1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(menu3Op3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(menu3Op2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGap(12, 12, 12))
         );
 
         panelOp4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -348,7 +376,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu4Op1.setForeground(new java.awt.Color(255, 255, 255));
         menu4Op1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         menu4Op1.setText("Ver");
-        menu4Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu4Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu4Op1.setOpaque(true);
         menu4Op1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -360,7 +388,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu4Op2.setForeground(new java.awt.Color(255, 255, 255));
         menu4Op2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         menu4Op2.setText("Opc");
-        menu4Op2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu4Op2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu4Op2.setOpaque(true);
         menu4Op2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -399,7 +427,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu5Op1.setForeground(new java.awt.Color(255, 255, 255));
         menu5Op1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         menu5Op1.setText("Ver");
-        menu5Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu5Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu5Op1.setOpaque(true);
         menu5Op1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -434,7 +462,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu6Op1.setForeground(new java.awt.Color(255, 255, 255));
         menu6Op1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         menu6Op1.setText("Ver");
-        menu6Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu6Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu6Op1.setOpaque(true);
         menu6Op1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -468,7 +496,7 @@ public class Dashboard extends javax.swing.JFrame {
         opMenu1Catalogo.setForeground(new java.awt.Color(0, 51, 153));
         opMenu1Catalogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         opMenu1Catalogo.setText("Catalogo");
-        opMenu1Catalogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        opMenu1Catalogo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         opMenu1Catalogo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 opMenu1CatalogoMousePressed(evt);
@@ -479,7 +507,7 @@ public class Dashboard extends javax.swing.JFrame {
         opMenu2LibroDiario.setForeground(new java.awt.Color(0, 51, 153));
         opMenu2LibroDiario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         opMenu2LibroDiario.setText("Libro Diario");
-        opMenu2LibroDiario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        opMenu2LibroDiario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         opMenu2LibroDiario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 opMenu2LibroDiarioMousePressed(evt);
@@ -490,7 +518,7 @@ public class Dashboard extends javax.swing.JFrame {
         opMenu3Reportes.setForeground(new java.awt.Color(0, 51, 153));
         opMenu3Reportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         opMenu3Reportes.setText("Reportes");
-        opMenu3Reportes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        opMenu3Reportes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         opMenu3Reportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 opMenu3ReportesMousePressed(evt);
@@ -501,7 +529,7 @@ public class Dashboard extends javax.swing.JFrame {
         opMenu4Cierre.setForeground(new java.awt.Color(0, 51, 153));
         opMenu4Cierre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         opMenu4Cierre.setText("Cierre");
-        opMenu4Cierre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        opMenu4Cierre.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         opMenu4Cierre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 opMenu4CierreMousePressed(evt);
@@ -512,7 +540,7 @@ public class Dashboard extends javax.swing.JFrame {
         opMenu5AcercaDe.setForeground(new java.awt.Color(0, 51, 153));
         opMenu5AcercaDe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         opMenu5AcercaDe.setText("Acerca de");
-        opMenu5AcercaDe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        opMenu5AcercaDe.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         opMenu5AcercaDe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 opMenu5AcercaDeMousePressed(evt);
@@ -523,7 +551,7 @@ public class Dashboard extends javax.swing.JFrame {
         opMenu6.setForeground(new java.awt.Color(0, 51, 153));
         opMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
         opMenu6.setText("Opción");
-        opMenu6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        opMenu6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         opMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 opMenu6MousePressed(evt);
@@ -610,11 +638,11 @@ public class Dashboard extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 951, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 977, Short.MAX_VALUE)
+            .addGap(0, 981, Short.MAX_VALUE)
         );
 
         panelCopyR.setBackground(new java.awt.Color(255, 255, 255));
@@ -675,7 +703,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/menu.png"))); // NOI18N
-        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel3MousePressed(evt);
@@ -687,7 +715,7 @@ public class Dashboard extends javax.swing.JFrame {
         opSalir.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         opSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salir.png"))); // NOI18N
         opSalir.setText("Salir");
-        opSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        opSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         opSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 opSalirMousePressed(evt);
@@ -775,10 +803,17 @@ public class Dashboard extends javax.swing.JFrame {
     private void opSalirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opSalirMousePressed
         colorDefault();
         opDefault();
+
+
+        VistaSalir vista = new VistaSalir("Saliendo");
+        vista.setVisible(true);
+
+
 //        panelSalir.setBackground(colorActivoModulo);
             Login login = new Login(); 
             ControladorLogin ctrl = new ControladorLogin(login);
             login.setVisible(true);
+
     }//GEN-LAST:event_opSalirMousePressed
 
     private void opMenu3ReportesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opMenu3ReportesMousePressed
@@ -804,9 +839,16 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu3Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op1MousePressed
         opDefault();
         menu3Op1.setBackground(colorActivoOp);
+
+         
+
         VistaBalanzaComprobacion vista = new VistaBalanzaComprobacion(new JFrame(), true);
         ControladorBalanzaC crt = new ControladorBalanzaC(vista);
-        vista.setVisible(true);
+
+       vista.setVisible(true);
+
+
+
 
     }//GEN-LAST:event_menu3Op1MousePressed
 
@@ -828,9 +870,14 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu3Op3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op3MousePressed
         opDefault();
         menu3Op3.setBackground(colorActivoOp);
+
+        //    ControladorEvaluarExpresion ctlEvaluarExpresion = new ControladorEvaluarExpresion(vista);
+        
+
         VistaEstadoResultado v = new  VistaEstadoResultado(new JFrame(), visible);
         ControladorEstadoResultado c = new ControladorEstadoResultado(v);
         v.iniciar();
+
     }//GEN-LAST:event_menu3Op3MousePressed
 
     private void opMenu4CierreMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opMenu4CierreMousePressed
@@ -945,6 +992,15 @@ public class Dashboard extends javax.swing.JFrame {
         a.iniciar();
     }//GEN-LAST:event_AgregarSubMousePressed
 
+    private void menu3Op4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op4MousePressed
+        opDefault();
+        menu3Op4.setBackground(colorActivoOp);
+        
+        VistaMayor frmLibroMayor = new VistaMayor(new JFrame(), true);
+        ControladorLibroMayor ctrl = new ControladorLibroMayor(frmLibroMayor);
+        frmLibroMayor.iniciar();
+    }//GEN-LAST:event_menu3Op4MousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel AgregarMayor;
@@ -964,6 +1020,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel menu3Op1;
     private javax.swing.JLabel menu3Op2;
     private javax.swing.JLabel menu3Op3;
+    private javax.swing.JLabel menu3Op4;
     private javax.swing.JLabel menu4Op1;
     private javax.swing.JLabel menu4Op2;
     private javax.swing.JLabel menu5Op1;
@@ -1035,6 +1092,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op1.setBackground(colorDefaultOp);
         menu3Op2.setBackground(colorDefaultOp);
         menu3Op3.setBackground(colorDefaultOp);
+        menu3Op4.setBackground(colorDefaultOp);
         menu4Op1.setBackground(colorDefaultOp);
         menu4Op2.setBackground(colorDefaultOp);
         menu5Op1.setBackground(colorDefaultOp);

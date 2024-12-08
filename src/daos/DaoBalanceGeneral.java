@@ -156,14 +156,21 @@ public class DaoBalanceGeneral {
             this.ps.setString(1, tipo);
             this.ps.setInt(2, anio);
             this.rs = ps.executeQuery();
-
+            String comparar = "1106";
             BalanceGeneral obj = null;
             while (this.rs.next()) {
                 obj = new BalanceGeneral();
-                obj.setCodigo(rs.getString("codigo"));
-                obj.setCuenta(rs.getString("nombre_subcuenta"));
-                obj.setMonto(Float.toString(rs.getFloat("saldo")));
-                this.listaBalanceGeneral.add(obj);
+                if (rs.getString("codigo").compareTo(comparar) == 0 ) {
+                    obj.setCodigo(rs.getString("codigo"));
+                    obj.setCuenta("INVENTARIO FINAL");
+                    obj.setMonto(Float.toString((float) 200000.00));
+                    this.listaBalanceGeneral.add(obj);
+                } else {
+                    obj.setCodigo(rs.getString("codigo"));
+                    obj.setCuenta(rs.getString("nombre_subcuenta"));
+                    obj.setMonto(Float.toString(rs.getFloat("saldo")));
+                    this.listaBalanceGeneral.add(obj);
+                }
             }
             this.conexion.cerrarConexiones();
 
