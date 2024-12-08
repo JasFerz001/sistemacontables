@@ -19,6 +19,8 @@ public class AgregarSubcuenta extends javax.swing.JDialog {
 
     /**
      * Creates new form AgregarSubcuenta
+     * @param parent
+     * @param modal
      */
     public AgregarSubcuenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

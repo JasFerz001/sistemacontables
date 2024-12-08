@@ -17,6 +17,8 @@ public class Catalogos extends javax.swing.JDialog {
 
     /**
      * Creates new form Catalogo
+     * @param parent
+     * @param modal
      */
     public Catalogos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
