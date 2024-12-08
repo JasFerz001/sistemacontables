@@ -15,11 +15,9 @@ import Vistas.VistaBalanzaComprobacion;
 import Vistas.VistaLibroDiario;
 import Vistas.VistaMostrarLibroDiario;
 
-
 import Vistas.VistaMayor;
 
 import controladores.ControladorMostrarCatalogo;
-
 
 import Vistas.Login;
 import controladores.ControladorAgregarCatalogo;
@@ -33,6 +31,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import modelos.BalanceGeneral;
 
 public class Dashboard extends javax.swing.JFrame {
@@ -375,7 +374,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu4Op1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menu4Op1.setForeground(new java.awt.Color(255, 255, 255));
         menu4Op1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
-        menu4Op1.setText("Ver");
+        menu4Op1.setText("Generar Ajuste de Cierre");
         menu4Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu4Op1.setOpaque(true);
         menu4Op1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -403,9 +402,10 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(panelOp4Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(panelOp4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(menu4Op2, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                    .addComponent(menu4Op1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(panelOp4Layout.createSequentialGroup()
+                        .addComponent(menu4Op2, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(menu4Op1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         panelOp4Layout.setVerticalGroup(
             panelOp4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -804,15 +804,13 @@ public class Dashboard extends javax.swing.JFrame {
         colorDefault();
         opDefault();
 
-
         VistaSalir vista = new VistaSalir("Saliendo");
         vista.setVisible(true);
 
-
 //        panelSalir.setBackground(colorActivoModulo);
-            Login login = new Login(); 
-            ControladorLogin ctrl = new ControladorLogin(login);
-            login.setVisible(true);
+        Login login = new Login();
+        ControladorLogin ctrl = new ControladorLogin(login);
+        login.setVisible(true);
 
     }//GEN-LAST:event_opSalirMousePressed
 
@@ -840,14 +838,10 @@ public class Dashboard extends javax.swing.JFrame {
         opDefault();
         menu3Op1.setBackground(colorActivoOp);
 
-         
-
         VistaBalanzaComprobacion vista = new VistaBalanzaComprobacion(new JFrame(), true);
         ControladorBalanzaC crt = new ControladorBalanzaC(vista);
 
-       vista.setVisible(true);
-
-
+        vista.setVisible(true);
 
 
     }//GEN-LAST:event_menu3Op1MousePressed
@@ -859,12 +853,12 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu3Op2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op2MousePressed
         opDefault();
         menu3Op2.setBackground(colorActivoOp);
-        
+
         VistaBalanceGenerales vista = new VistaBalanceGenerales(new JFrame(), true);
         ControladorBalanceGeneral control = new ControladorBalanceGeneral(vista);
         control.setModels();
         control.iniciar();
-        
+
     }//GEN-LAST:event_menu3Op2MousePressed
 
     private void menu3Op3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op3MousePressed
@@ -872,9 +866,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op3.setBackground(colorActivoOp);
 
         //    ControladorEvaluarExpresion ctlEvaluarExpresion = new ControladorEvaluarExpresion(vista);
-        
-
-        VistaEstadoResultado v = new  VistaEstadoResultado(new JFrame(), visible);
+        VistaEstadoResultado v = new VistaEstadoResultado(new JFrame(), visible);
         ControladorEstadoResultado c = new ControladorEstadoResultado(v);
         v.iniciar();
 
@@ -889,9 +881,24 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu4Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu4Op1MousePressed
         opDefault();
         menu4Op1.setBackground(colorActivoOp);
-//        VistaConsultar formConsultar = new VistaConsultar(new JFrame(), true, "Consulta Participante");
-//        ControladorParticipante ctlparticipante = new ControladorParticipante(formConsultar,userActivo);
-//        formConsultar.setVisible(true);
+        String input;
+        boolean isValid;
+        do {
+            input = JOptionPane.showInputDialog(this, "Ingrese el Inventario Final:", "Inventario Final", JOptionPane.PLAIN_MESSAGE);
+            if (input == null) {
+                // El usuario canceló la entrada
+                return;
+            }
+            // Validar entrada con expresión regular
+            isValid = input.matches("^\\d+(\\.\\d{1,2})?$");
+            if (!isValid) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido con hasta dos decimales.", "Entrada no válida", JOptionPane.ERROR_MESSAGE);
+            }
+        } while (!isValid);
+
+        double inventarioFinal = Double.parseDouble(input);
+        // Realiza operaciones con el inventarioFinal si es necesario
+        System.out.println("Inventario Final ingresado: " + inventarioFinal);
     }//GEN-LAST:event_menu4Op1MousePressed
 
     private void menu4Op2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu4Op2MousePressed
@@ -986,7 +993,7 @@ public class Dashboard extends javax.swing.JFrame {
     private void AgregarSubMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AgregarSubMousePressed
         opDefault();
         AgregarSub.setBackground(colorActivoOp);
-        
+
         AgregarSubcuenta a = new AgregarSubcuenta(new JFrame(), visible);
         ControladorSubCuenta ctrl = new ControladorSubCuenta(a);
         a.iniciar();
@@ -995,7 +1002,7 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu3Op4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op4MousePressed
         opDefault();
         menu3Op4.setBackground(colorActivoOp);
-        
+
         VistaMayor frmLibroMayor = new VistaMayor(new JFrame(), true);
         ControladorLibroMayor ctrl = new ControladorLibroMayor(frmLibroMayor);
         frmLibroMayor.iniciar();
