@@ -9,10 +9,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CierreContable {
 
     private Connection connection;
+    ArrayList<PartidaCierre> listaCierre;
 
     // Constructor que inicializa automáticamente la conexión
     public CierreContable() {
@@ -64,6 +66,73 @@ public class CierreContable {
             }
         }
         return 0.0;
+    }
+
+    public ArrayList<PartidaCierre> obtenerSaldoActivo(String codSubcuenta) throws SQLException {
+        listaCierre = new ArrayList<>();
+        PartidaCierre c = null;
+        String query = "SELECT sc.cod_subcuenta, COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto ELSE -ld.monto END), 0) AS saldo\n"
+                + "FROM libro_diario ld \n"
+                + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta\n"
+                + "WHERE sc.cod_subcuenta LIKE '1%'\n"
+                + "GROUP BY sc.cod_subcuenta\n"
+                + "HAVING \n"
+                + "COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto ELSE -ld.monto END), 0) != 0.0;";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, codSubcuenta);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                c = new PartidaCierre();
+                 c.setCodigo(rs.getInt("cod_subcuenta"));
+                 c.setMonto(rs.getDouble("saldo"));
+                 listaCierre.add(c);
+            }
+        }
+        return listaCierre;  
+    }
+    public ArrayList<PartidaCierre> obtenerSaldoPasivo(String codSubcuenta) throws SQLException {
+        listaCierre = new ArrayList<>();
+        PartidaCierre c = null;
+        String query = "SELECT sc.cod_subcuenta, COALESCE(SUM(CASE WHEN ld.transaccion = 'Haber' THEN ld.monto ELSE -ld.monto END), 0) AS saldo\n"
+                + "FROM libro_diario ld \n"
+                + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta\n"
+                + "WHERE sc.cod_subcuenta LIKE '2%'\n"
+                + "GROUP BY sc.cod_subcuenta\n"
+                + "HAVING \n"
+                + "COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto ELSE -ld.monto END), 0) != 0.0;";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, codSubcuenta);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                c = new PartidaCierre();
+                 c.setCodigo(rs.getInt("cod_subcuenta"));
+                 c.setMonto(rs.getDouble("saldo"));
+                 listaCierre.add(c);
+            }
+        }
+        return listaCierre;  
+    }
+    public ArrayList<PartidaCierre> obtenerSaldoPatrimonio(String codSubcuenta) throws SQLException {
+        listaCierre = new ArrayList<>();
+        PartidaCierre c = null;
+        String query = "SELECT sc.cod_subcuenta, COALESCE(SUM(CASE WHEN ld.transaccion = 'Haber' THEN ld.monto ELSE -ld.monto END), 0) AS saldo\n"
+                + "FROM libro_diario ld \n"
+                + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta\n"
+                + "WHERE sc.cod_subcuenta LIKE '3%'\n"
+                + "GROUP BY sc.cod_subcuenta\n"
+                + "HAVING \n"
+                + "COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto ELSE -ld.monto END), 0) != 0.0;";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, codSubcuenta);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                c = new PartidaCierre();
+                 c.setCodigo(rs.getInt("cod_subcuenta"));
+                 c.setMonto(rs.getDouble("saldo"));
+                 listaCierre.add(c);
+            }
+        }
+        return listaCierre;  
     }
 
     public double obtenerSaldoAbsoluto(String codCuenta) throws SQLException {
@@ -167,19 +236,19 @@ public class CierreContable {
 
     public void liquidarVentas(double ventas) throws SQLException {
         Double vent = obtenerSaldoHaber("5101");
-        
+
         double g_admin = obtenerSaldo("4301");
         double otros_gastos = obtenerSaldo("4304");
         double g_ventas = obtenerSaldo("4302");
         double g_finan = obtenerSaldo("4303");
         double totalGastos = g_admin + otros_gastos + g_ventas + g_finan;
-        
+
         double ingresos_finan = obtenerSaldoHaber("5201");
         double dividendos = obtenerSaldoHaber("5202");
         double otros_ingresos = obtenerSaldoHaber("5203");
         double ingresos_extra = obtenerSaldoHaber("5204");
         double totalIngresos = ingresos_finan + dividendos + otros_ingresos + ingresos_extra;
-        
+
         double ventitas = vent + totalIngresos - totalGastos;
         System.out.println(vent);
         if (ventas >= 150000) {
@@ -256,6 +325,7 @@ public class CierreContable {
         insertarTransaccion(numeroPartida, "310301", pyg, "liquidando perdidas y ganancias", "Haber");
     }
 
+   
     // Cerrar la conexión automáticamente
     public void cerrarConexion() {
         if (connection != null) {
