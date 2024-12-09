@@ -63,7 +63,12 @@ public class ControladorMostrarLibroDiario extends MouseAdapter implements Actio
     }
 
     public void cargarTablaLibroDiario() {
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         model.addColumn("Partida");
         model.addColumn("Fecha");
         model.addColumn("Código");
@@ -194,5 +199,4 @@ public class ControladorMostrarLibroDiario extends MouseAdapter implements Actio
 //            frmLibro.btnModificarPartida.setEnabled(false);
 //        }
 //    }
-
 }
