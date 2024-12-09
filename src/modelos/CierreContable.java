@@ -53,8 +53,6 @@ public class CierreContable {
         return 0.0;
     }
 
-<<<<<<< HEAD
-=======
     private double obtenerSaldoHaber(String codCuenta) throws SQLException {
         String query = "SELECT COALESCE(SUM(CASE WHEN transaccion = 'Haber' THEN monto ELSE -monto END), 0) AS saldo "
                 + "FROM libro_diario ld "
@@ -203,7 +201,6 @@ public class CierreContable {
         return listaCierre;
     }
 
->>>>>>> main
     private double obtenerSaldoAbsoluto(String codCuenta) throws SQLException {
         String query = "SELECT COALESCE(SUM(monto), 0) AS saldo "
                 + "FROM libro_diario ld "
@@ -220,14 +217,11 @@ public class CierreContable {
         return 0.0;
     }
 
-<<<<<<< HEAD
-=======
     public double obtener_Ventas() throws SQLException {
         double ventastotal = obtenerSaldoAbsoluto("5101");
         return ventastotal;
     }
 
->>>>>>> main
     // Insertar una transacción en el libro diario
     public void insertarTransaccion(int numeroPartida, String codSubcuenta, double monto, String concepto, String transaccion) throws SQLException {
         String query = "INSERT INTO libro_diario (numero_partida, cod_subcuenta, fecha, monto, concepto, transaccion) "
@@ -266,10 +260,7 @@ public class CierreContable {
     }
 
     public void ventasNetas() throws SQLException {
-<<<<<<< HEAD
         double ventas = obtenerSaldo("5101");
-=======
->>>>>>> main
         double rebajas = obtenerSaldoAbsoluto("4104");
         double devoluciones = obtenerSaldoAbsoluto("4103");
         double total = rebajas + devoluciones;
@@ -280,26 +271,20 @@ public class CierreContable {
         insertarTransaccion(numeroPartida, "410301", devoluciones, "Ventas Netas", "Haber");
     }
 
-<<<<<<< HEAD
     public void ComprasTotales() throws SQLException {
         double compras = obtenerSaldo("4101");
         double gastos = obtenerSaldoAbsoluto("5103");
-=======
     public void comprasTotales() throws SQLException {
         double gastos = obtenerSaldoAbsoluto("4102");
->>>>>>> main
 
         int numeroPartida = obtenerSiguienteNumeroPartida();
         insertarTransaccion(numeroPartida, "410101", gastos, "Por liquidacion de gastos", "Debe");
         insertarTransaccion(numeroPartida, "410201", gastos, "Por liquidacion de gastos", "Haber");
     }
 
-<<<<<<< HEAD
     public void ComprasNetas() throws SQLException {
         double compras = obtenerSaldo("4101");
-=======
     public void comprasNetas() throws SQLException {
->>>>>>> main
         double devoluciones = obtenerSaldoAbsoluto("5102");
         double rebajas = obtenerSaldoAbsoluto("5103");
         double total = devoluciones + rebajas;
