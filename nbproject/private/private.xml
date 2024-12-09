@@ -3,12 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/luisa/OneDrive/Documentos/GitHub/sistemacontables/src/daos/DaoEstadoResultado.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documentos/GitHub/sistemacontables/src/Controladores/ControladorBalanceGeneral.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documentos/GitHub/sistemacontables/src/Controladores/ControladorLibroDiario.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documentos/GitHub/sistemacontables/src/Vistas/VistaBalanceGenerales.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documentos/GitHub/sistemacontables/src/modelos/BalanceGeneral.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documentos/GitHub/sistemacontables/src/Controladores/Iniciar.java</file>
+            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Controladores/ControladorBalanzaC.java</file>
+            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Vistas/VistaBalanzaComprobacion.java</file>
+            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Vistas/VistaMayor.java</file>
+            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Reportes/Jasper.java</file>
+            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Controladores/ControladorLibroMayor.java</file>
+            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Controladores/Iniciar.java</file>
         </group>
     </open-files>
 </project-private>
