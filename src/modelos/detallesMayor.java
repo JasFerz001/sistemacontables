@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class detallesMayor {
     
+    
     String idMayor;
     Date fecha; 
     String idSubCuenta;
