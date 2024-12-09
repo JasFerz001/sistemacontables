@@ -993,7 +993,9 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_AgregarSubMousePressed
 
     private void menu3Op4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op4MousePressed
-        // TODO add your handling code here:
+        opDefault();
+        menu3Op4.setBackground(colorActivoOp);
+        
         VistaMayor frmLibroMayor = new VistaMayor(new JFrame(), true);
         ControladorLibroMayor ctrl = new ControladorLibroMayor(frmLibroMayor);
         frmLibroMayor.iniciar();
@@ -1090,6 +1092,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op1.setBackground(colorDefaultOp);
         menu3Op2.setBackground(colorDefaultOp);
         menu3Op3.setBackground(colorDefaultOp);
+        menu3Op4.setBackground(colorDefaultOp);
         menu4Op1.setBackground(colorDefaultOp);
         menu4Op2.setBackground(colorDefaultOp);
         menu5Op1.setBackground(colorDefaultOp);

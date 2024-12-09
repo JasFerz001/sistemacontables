@@ -28,6 +28,8 @@ public class DaoLibroDiario {
     private static final String SELECT_ALL_LIBRO_DIARIO = "SELECT ld.numero_partida, ld.fecha, ld.cod_subcuenta, s.nombre AS nombreCuenta, ld.concepto, ld.monto, ld.transaccion FROM libro_diario ld INNER JOIN subcuentas s ON ld.cod_subcuenta = s.cod_subcuenta ";
 
     private static final String UPDATE_LIBRO_DIARIO = "UPDATE libro_diario SET fecha=?, cod_subcuenta=?, concepto=?, monto=?, transaccion=? WHERE numero_partida=? ";
+    
+    private static final String MOSTRAS_N_PARTIDA = "UPDATE libro_diario SET fecha=?, cod_subcuenta=?, concepto=?, monto=?, transaccion=? WHERE numero_partida=? ";
 
     public DaoLibroDiario() {
         this.conexion = new Conexion();

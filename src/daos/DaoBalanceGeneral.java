@@ -24,10 +24,10 @@ public class DaoBalanceGeneral {
     private static final String CONSULTAR_BALANZA_ACTIVOS = "SELECT cm.cod_mayor AS codigo, \n"
             + "       cm.nombre AS nombre_subcuenta, \n"
             + "       COALESCE(SUM(CASE \n"
-            + "                    WHEN cm.naturaleza = 'DEUDOR' AND ld.transaccion = 'Debe' THEN CAST(ld.monto AS DECIMAL)\n"
-            + "                    WHEN cm.naturaleza = 'DEUDOR' AND ld.transaccion = 'Haber' THEN -CAST(ld.monto AS DECIMAL)\n"
-            + "                    WHEN cm.naturaleza = 'ACREEDOR' AND ld.transaccion = 'Debe' THEN -CAST(ld.monto AS DECIMAL)\n"
-            + "                    WHEN cm.naturaleza = 'ACREEDOR' AND ld.transaccion = 'Haber' THEN CAST(ld.monto AS DECIMAL)\n"
+            + "                    WHEN cm.naturaleza = 'DEUDOR' AND ld.transaccion = 'Debe' THEN (ld.monto)\n"
+            + "                    WHEN cm.naturaleza = 'DEUDOR' AND ld.transaccion = 'Haber' THEN -(ld.monto)\n"
+            + "                    WHEN cm.naturaleza = 'ACREEDOR' AND ld.transaccion = 'Debe' THEN -(ld.monto)\n"
+            + "                    WHEN cm.naturaleza = 'ACREEDOR' AND ld.transaccion = 'Haber' THEN (ld.monto)\n"
             + "                    ELSE 0 END), 0) AS saldo\n"
             + "FROM cuentas_mayor cm\n"
             + "JOIN subcuentas s ON cm.cod_mayor = s.cod_mayor\n"
@@ -42,10 +42,10 @@ public class DaoBalanceGeneral {
     private static final String CONSULTAR_BALANZA_PASIVOS = "SELECT cm.cod_mayor AS codigo, \n"
             + "       cm.nombre AS nombre_subcuenta, \n"
             + "       COALESCE(SUM(CASE \n"
-            + "                    WHEN cm.naturaleza = 'DEUDOR' AND ld.transaccion = 'Debe' THEN CAST(ld.monto AS DECIMAL)\n"
-            + "                    WHEN cm.naturaleza = 'DEUDOR' AND ld.transaccion = 'Haber' THEN -CAST(ld.monto AS DECIMAL)\n"
-            + "                    WHEN cm.naturaleza = 'ACREEDOR' AND ld.transaccion = 'Debe' THEN -CAST(ld.monto AS DECIMAL)\n"
-            + "                    WHEN cm.naturaleza = 'ACREEDOR' AND ld.transaccion = 'Haber' THEN CAST(ld.monto AS DECIMAL)\n"
+            + "                    WHEN cm.naturaleza = 'DEUDOR' AND ld.transaccion = 'Debe' THEN (ld.monto)\n"
+            + "                    WHEN cm.naturaleza = 'DEUDOR' AND ld.transaccion = 'Haber' THEN -(ld.monto)\n"
+            + "                    WHEN cm.naturaleza = 'ACREEDOR' AND ld.transaccion = 'Debe' THEN -(ld.monto)\n"
+            + "                    WHEN cm.naturaleza = 'ACREEDOR' AND ld.transaccion = 'Haber' THEN (ld.monto)\n"
             + "                    ELSE 0 END), 0) AS saldo\n"
             + "FROM cuentas_mayor cm\n"
             + "JOIN subcuentas s ON cm.cod_mayor = s.cod_mayor\n"
@@ -156,14 +156,21 @@ public class DaoBalanceGeneral {
             this.ps.setString(1, tipo);
             this.ps.setInt(2, anio);
             this.rs = ps.executeQuery();
-
+            String comparar = "1106";
             BalanceGeneral obj = null;
             while (this.rs.next()) {
                 obj = new BalanceGeneral();
-                obj.setCodigo(rs.getString("codigo"));
-                obj.setCuenta(rs.getString("nombre_subcuenta"));
-                obj.setMonto(Float.toString(rs.getFloat("saldo")));
-                this.listaBalanceGeneral.add(obj);
+                if (rs.getString("codigo").compareTo(comparar) == 0 ) {
+                    obj.setCodigo(rs.getString("codigo"));
+                    obj.setCuenta("INVENTARIO FINAL");
+                    obj.setMonto(Float.toString((float) 200000.00));
+                    this.listaBalanceGeneral.add(obj);
+                } else {
+                    obj.setCodigo(rs.getString("codigo"));
+                    obj.setCuenta(rs.getString("nombre_subcuenta"));
+                    obj.setMonto(Float.toString(rs.getFloat("saldo")));
+                    this.listaBalanceGeneral.add(obj);
+                }
             }
             this.conexion.cerrarConexiones();
 
