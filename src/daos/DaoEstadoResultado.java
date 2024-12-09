@@ -27,8 +27,7 @@ public class DaoEstadoResultado {
                 + "FROM libro_diario ld\n"
                 + "JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta\n"
                 + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor\n"
-                + "WHERE cm.cod_mayor = '5101' \n"
-                + "    AND ld.fecha BETWEEN ? AND ?;";
+                + "WHERE cm.cod_mayor = '5101'";
         return ventas(sql, fechaInicio, fechafin);
     }
 

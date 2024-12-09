@@ -16,8 +16,6 @@ public class AgregarCatalogo extends javax.swing.JDialog {
 
     /**
      * Creates new form AgregarCatalogo
-     * @param parent
-     * @param modal
      */
     String[] cuentas = {"DEUDOR", "ACREEDOR"};
 
@@ -171,6 +169,7 @@ public class AgregarCatalogo extends javax.swing.JDialog {
         cod.setForeground(new java.awt.Color(255, 255, 255));
         cod.setText("0");
 
+        tablita.setAutoCreateRowSorter(true);
         tablita.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
