@@ -21,7 +21,8 @@ public class DaoMayor {
     
     private Conexion conexion;
     private ArrayList<LibroMayor> listaLibroMayor;
-    private ArrayList<detallesMayor>listDetalles;
+ 
+    private ArrayList<detallesMayor>listDetallesSub;
     private ResultSet rs = null;
     private PreparedStatement ps;
     private Connection accesoDB;
@@ -54,31 +55,30 @@ public class DaoMayor {
 "    cm.cod_mayor;";
      
      
-//    public detallesMayor select_cod_principal(String dato) {
-//        String SELECT_SUB = "SELECT \n" +
-//"    cm.cod_mayor AS id_cuenta_mayor,\n" +
-//"    sc.cod_subcuenta AS id_subcuenta,\n" +
-//"    sc.nombre AS nombre_subcuenta,\n" +
-//"    ld.numero_partida AS numero_partida,\n" +
-//"    ld.fecha AS fecha_agregado,\n" +
-//"    ld.concepto AS concepto,\n" +
-//"    ld.monto AS monto,\n" +
-//"    ld.transaccion AS transaccion\n" +
-//"FROM \n" +
-//"    cuentas_mayor cm\n" +
-//"INNER JOIN \n" +
-//"    subcuentas sc ON cm.cod_mayor = sc.cod_mayor\n" +
-//"INNER JOIN \n" +
-//"    libro_diario ld ON sc.cod_subcuenta = ld.cod_subcuenta\n" +
-//"WHERE \n" +
-//"    cm.cod_mayor LIKE ?\n" +
-//"ORDER BY \n" +
-//"    cm.cod_mayor, sc.cod_subcuenta, ld.numero_partida;";
-//        return selectSub(SELECT_SUB,dato );
-//    }
-    
-
+      private static final String MostarSub = "SELECT"
+              + " cm.cod_mayor AS id_cuenta_mayor,"
+              + " sc.cod_subcuenta AS id_subcuenta,"
+              + " sc.nombre AS nombre_subcuenta,"
+              + " ld.numero_partida AS numero_partida,"
+              + " ld.fecha AS fecha_agregado,"
+              + " ld.concepto AS concepto,"
+              + " ld.monto AS monto,"
+              + " ld.transaccion AS transaccion FROM cuentas_mayor cm INNER JOIN subcuentas sc ON cm.cod_mayor = sc.cod_mayor INNER JOIN libro_diario ld ON sc.cod_subcuenta = ld.cod_subcuenta ORDER BY cm.cod_mayor, sc.cod_subcuenta, ld.numero_partida;";
    
+
+   public boolean insertar(LibroMayor obj){
+    String sql ="INSERT INTO libromayor(\n"
+            + "	codigo, nombre, debe, haber, saldo)\n"
+            + "	VALUES (?, ?, ?, ?,  ?);";
+    return insertarRegristro(sql,obj);
+}
+   
+    public boolean insertarSub(detallesMayor obj){
+    String sql ="INSERT INTO detalles_mayor(\n"
+            + "	codigoM,fecha,codigoS,nombre, numeroPartida, concepto, monto,transaccion)\n"
+            + "	VALUES (?, ?, ?, ?,  ?,?,?,?);";
+    return insertarRegristroSub(sql,obj);
+}
     
     public DaoMayor() {
     this.conexion = new Conexion(); // Inicializa la conexión aquí.
@@ -115,6 +115,96 @@ public class DaoMayor {
     }
       
       
+      public ArrayList<detallesMayor> seleccionaDatosSub()  {
+
+        this.listDetallesSub = new ArrayList();
+
+        try {
+            this.conexion = new Conexion();
+            this.accesoDB = this.conexion.getConexion();
+            this.ps = this.accesoDB.prepareStatement(MostarSub);
+            this.rs = ps.executeQuery();
+
+            detallesMayor obj = null;
+            while (this.rs.next()) {
+                obj = new detallesMayor();
+                 obj.setIdMayor(rs.getString("id_cuenta_mayor"));
+                 obj.setIdSubCuenta(rs.getString("id_subcuenta"));
+                 obj.setNombreSub(rs.getString("nombre_subcuenta"));
+                  obj.setPartida(rs.getInt("numero_partida"));
+                obj.setFecha(rs.getDate("fecha_agregado"));
+              
+                obj.setConcepto(rs.getString("concepto"));
+                obj.setMonto(rs.getDouble("monto"));
+                obj.setTransaccion(rs.getString("transaccion"));
+                this.listDetallesSub.add(obj);
+            }
+            this.conexion.cerrarConexiones();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return this.listDetallesSub;
+    }
+      
+        private boolean insertarRegristro(String sql,LibroMayor obj) {
+        try {
+            
+            this.accesoDB = this.conexion.getConexion();
+            this.ps = this.accesoDB.prepareStatement(sql);
+            this.ps.setString(1, obj.getCodigo());
+            this.ps.setString(2, obj.getNombre());
+            this.ps.setDouble(3, obj.getDebe());
+            this.ps.setDouble(4, obj.getHaber());
+            this.ps.setDouble(5, obj.getSaldo());
+          
+            
+
+            ps.execute();
+            
+             this.conexion.cerrarConexiones();
+             
+           return true;
+
+           
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+           return false;
+        }
+        
+    }
+        
+         private boolean insertarRegristroSub(String sql,detallesMayor obj) {
+        try {
+            
+            this.accesoDB = this.conexion.getConexion();
+            this.ps = this.accesoDB.prepareStatement(sql);
+            this.ps.setString(1, obj.getIdMayor());
+            this.ps.setDate(2, new java.sql.Date(obj.getFecha().getTime()));
+            this.ps.setString(3, obj.getIdSubCuenta());
+            this.ps.setString(4, obj.getNombreSub());
+            this.ps.setInt(5, obj.getPartida());
+             this.ps.setString(6, obj.getConcepto());
+            this.ps.setDouble(7, obj.getMonto());
+            this.ps.setString(8, obj.getTransaccion());
+          
+            
+
+            ps.execute();
+            
+             this.conexion.cerrarConexiones();
+             
+           return true;
+
+           
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+           return false;
+        }
+        
+    }
       
         public ArrayList<detallesMayor> MostrarDetalles(String busqueda) {
         ArrayList<detallesMayor> listaDetalles = new ArrayList<>();

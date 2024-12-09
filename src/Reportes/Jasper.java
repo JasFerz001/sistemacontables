@@ -38,6 +38,15 @@ public class Jasper {
                     report = (JasperReport) JRLoader.loadObject(getClass().getResource("/Reportes/EResultados.jasper"));
                     jprint = JasperFillManager.fillReport(report, null, ConnectionPool.getInstance().getConnection());
                 }
+                case 4 -> {
+                    report = (JasperReport) JRLoader.loadObject(getClass().getResource("/Reportes/JRdetallesMayor.jasper"));
+                    jprint = JasperFillManager.fillReport(report, null, ConnectionPool.getInstance().getConnection());
+                }
+                case 5 -> {
+                    report = (JasperReport) JRLoader.loadObject(getClass().getResource("/Reportes/JRmayor.jasper"));
+                    jprint = JasperFillManager.fillReport(report, null, ConnectionPool.getInstance().getConnection());
+                }
+
 
                 default ->
                     System.out.println("Finalizando proceso...");
@@ -61,7 +70,7 @@ public class Jasper {
     public static void main(String[] args) {
 
         Jasper jasper = new Jasper();
-        jasper.Reporte(2);
+        jasper.Reporte(4);
     }
 
 }

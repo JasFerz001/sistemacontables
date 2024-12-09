@@ -8,6 +8,7 @@ import daos.DaoBalanceGeneral;
 import daos.DaoEstadoResultado;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
@@ -27,6 +28,8 @@ public class ControladorBalanceGeneral implements ActionListener {
     String activo = "ACTIVO CORRIENTE", aN = "ACTIVO NO CORRIENTE", pasivo = "PASIVO CORRIENTE", pN = "PASIVO NO CORRIENTE", patrimonio = "CAPITAL CONTABLE";
     int tamaño = 0;
 
+    DecimalFormat decimal = new DecimalFormat("#.##");
+
     VistaBalanceGenerales vista = new VistaBalanceGenerales(new JFrame(), true);
     DaoBalanceGeneral dao = new DaoBalanceGeneral();
 
@@ -44,7 +47,6 @@ public class ControladorBalanceGeneral implements ActionListener {
     ArrayList<BalanceGeneral> listaPasivosNoCorrientes = new ArrayList();
     ArrayList<BalanceGeneral> listaPatrimonio = new ArrayList();
 
-    
     float reservaLegal = getReservaLegal();
     float ResEjercicio = getResultadoEjercicio();
     float impuesto = impuestoSobreRenta();
@@ -60,15 +62,31 @@ public class ControladorBalanceGeneral implements ActionListener {
     public void setModels() {
 
         //--para mostrar activos
+        dtm = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Deshabilita la edición de celdas
+            }
+        };
+
         dtm.addColumn("Activos");
         dtm.addColumn("Total Activos");
         dtm.addColumn("Total:");
+
         vista.tabla_activos.setModel(dtm);
 
         //--para mostrar pasivos
+        dtm2 = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Deshabilita la edición de celdas
+            }
+        };
+
         dtm2.addColumn("Pasivos");
         dtm2.addColumn("Total Pasivos");
         dtm2.addColumn("Total:");
+
         vista.tabla_pasivos.setModel(dtm2);
 
         listaActivos = dao.CargarBalanceGeneralActivos(activo, anio);
@@ -81,14 +99,14 @@ public class ControladorBalanceGeneral implements ActionListener {
     }
 
     public void agregarATabla() {
-        float total_AC=0;
+        float total_AC = 0;
         int aux = 0;
 
         //CONSULTAR EL TOTAL DE ACTIVOS CORRIENTES
         for (int i = 0; i < listaActivos.size(); i++) {
             total_AC = total_AC + Float.parseFloat(listaActivos.get(i).getMonto());
         }
-        
+
         //CONSULTAR CADA CUENTA DE ACTIVOS CORRIENTES
         dtm.addRow(new Object[]{"ACTIVO CORRIENTE", " ", total_AC});
         for (int i = 0; i < listaActivos.size(); i++) {
@@ -112,12 +130,12 @@ public class ControladorBalanceGeneral implements ActionListener {
             total_PC = total_PC + Float.parseFloat(listaPasivos.get(i).getMonto());
         }
         //CONSULTAR CADA CUENTA DE PASIVOS CORRIENTES
-        dtm2.addRow(new Object[]{"PASIVO CORRIENTE", " ", total_PC+impuesto});
+        dtm2.addRow(new Object[]{"PASIVO CORRIENTE", " ", total_PC + impuesto});
         for (int i = 0; i < listaPasivos.size(); i++) {
             dtm2.addRow(new Object[]{listaPasivos.get(i).getCuenta(), listaPasivos.get(i).getMonto(), " "});
         }
         dtm2.addRow(new Object[]{"IMPUESTO POR PAGAR", impuesto, " "});
-        
+
         //CONSULTAR EL TOTAL DE PASIVOS NO CORRIENTES
         float total_PNC = 0;
         for (int i = 0; i < listaPasivosNoCorrientes.size(); i++) {
@@ -128,7 +146,6 @@ public class ControladorBalanceGeneral implements ActionListener {
         for (int i = 0; i < listaPasivosNoCorrientes.size(); i++) {
             dtm2.addRow(new Object[]{listaPasivosNoCorrientes.get(i).getCuenta(), listaPasivosNoCorrientes.get(i).getMonto(), " "});
         }
-        
 
         //CONSULTAR EL TOTAL DE CAPITAL
         float total_CAP = 0;
@@ -150,6 +167,7 @@ public class ControladorBalanceGeneral implements ActionListener {
 
         vista.totalActivos.setText(Float.toString(total_activos));
         vista.totalPasivos.setText(Float.toString(total_pasivos));
+
     }
 
     public Boolean GuardarBalance() {
@@ -289,7 +307,7 @@ public class ControladorBalanceGeneral implements ActionListener {
 
         } else if (Float.parseFloat(inf) < Float.parseFloat(gf)) {
             utilidadAntes = utilidadOperacion - (Float.parseFloat(inf) - Float.parseFloat(gf));
-            
+
         } else {
             utilidadAntes = utilidadOperacion + (Float.parseFloat(inf) - Float.parseFloat(gf));
 
