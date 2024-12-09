@@ -47,9 +47,9 @@ public class ControladorBalanceGeneral implements ActionListener {
     ArrayList<BalanceGeneral> listaPasivosNoCorrientes = new ArrayList();
     ArrayList<BalanceGeneral> listaPatrimonio = new ArrayList();
 
-    float reservaLegal = getReservaLegal();
-    float ResEjercicio = getResultadoEjercicio();
-    float impuesto = impuestoSobreRenta();
+    Double reservaLegal = getReservaLegal();
+    Double ResEjercicio = getResultadoEjercicio();
+    Double impuesto = impuestoSobreRenta();
 
     Conexion con = new Conexion();
 
@@ -99,12 +99,12 @@ public class ControladorBalanceGeneral implements ActionListener {
     }
 
     public void agregarATabla() {
-        float total_AC = 0;
+        Double total_AC = 0.00;
         int aux = 0;
 
         //CONSULTAR EL TOTAL DE ACTIVOS CORRIENTES
         for (int i = 0; i < listaActivos.size(); i++) {
-            total_AC = total_AC + Float.parseFloat(listaActivos.get(i).getMonto());
+            total_AC = total_AC + Double.parseDouble(listaActivos.get(i).getMonto());
         }
 
         //CONSULTAR CADA CUENTA DE ACTIVOS CORRIENTES
@@ -114,9 +114,9 @@ public class ControladorBalanceGeneral implements ActionListener {
         }
 
         //CONSULTAR EL TOTAL DE ACTIVOS NO CORRIENTES
-        float total_ANC = 0;
+        Double total_ANC = 0.00;
         for (int i = 0; i < lisAcNocorrientes.size(); i++) {
-            total_ANC = total_ANC + Float.parseFloat(lisAcNocorrientes.get(i).getMonto());
+            total_ANC = total_ANC + Double.parseDouble(lisAcNocorrientes.get(i).getMonto());
         }
         //CONSULTAR CADA CUENTA DE ACTIVOS NO CORRIENTES
         dtm.addRow(new Object[]{"ACTIVO NO CORRIENTE", " ", total_ANC});
@@ -125,9 +125,10 @@ public class ControladorBalanceGeneral implements ActionListener {
         }
 
         //CONSULTAR EL TOTAL DE PASIVOS CORRIENTES
-        float total_PC = 0;
+        Double total_PC = 0.00;
         for (int i = 0; i < listaPasivos.size(); i++) {
-            total_PC = total_PC + Float.parseFloat(listaPasivos.get(i).getMonto());
+            Double a = total_PC + Double.parseDouble(listaPasivos.get(i).getMonto());
+            total_PC = Double.parseDouble(String.format("%.2f", a));
         }
         //CONSULTAR CADA CUENTA DE PASIVOS CORRIENTES
         dtm2.addRow(new Object[]{"PASIVO CORRIENTE", " ", total_PC + impuesto});
@@ -137,9 +138,10 @@ public class ControladorBalanceGeneral implements ActionListener {
         dtm2.addRow(new Object[]{"IMPUESTO POR PAGAR", impuesto, " "});
 
         //CONSULTAR EL TOTAL DE PASIVOS NO CORRIENTES
-        float total_PNC = 0;
+        Double total_PNC = 0.00;
         for (int i = 0; i < listaPasivosNoCorrientes.size(); i++) {
-            total_PNC = total_PNC + Float.parseFloat(listaPasivosNoCorrientes.get(i).getMonto());
+            Double b = total_PNC + Double.parseDouble(listaPasivosNoCorrientes.get(i).getMonto());
+            total_PNC = Double.parseDouble(String.format("%.2f", b));
         }
         //CONSULTAR CADA CUENTA DE PASIVOS CORRIENTES
         dtm2.addRow(new Object[]{"PASIVO NO CORRIENTE", " ", total_PNC});
@@ -148,12 +150,13 @@ public class ControladorBalanceGeneral implements ActionListener {
         }
 
         //CONSULTAR EL TOTAL DE CAPITAL
-        float total_CAP = 0;
+        Double total_CAP = 0.00;
         for (int i = 0; i < listaPatrimonio.size(); i++) {
-            total_CAP = total_CAP + Float.parseFloat(listaPatrimonio.get(i).getMonto());
+            Double c = total_CAP + Double.parseDouble(listaPatrimonio.get(i).getMonto());
+            total_CAP = Double.parseDouble(String.format("%.2f", c));
         }
         //CONSULTAR CADA CUENTA DE TOTAL DE CAPITAL
-        dtm2.addRow(new Object[]{"CAPITAL CONTABLE", " ", total_CAP});
+        dtm2.addRow(new Object[]{"CAPITAL CONTABLE", " ", total_CAP + reservaLegal + ResEjercicio});
         if (!listaPatrimonio.isEmpty()) {
             for (int i = 0; i < listaPatrimonio.size(); i++) {
                 dtm2.addRow(new Object[]{listaPatrimonio.get(i).getCuenta(), listaPatrimonio.get(i).getMonto(), " "});
@@ -162,11 +165,11 @@ public class ControladorBalanceGeneral implements ActionListener {
         dtm2.addRow(new Object[]{"RESERVA LEGAL", reservaLegal, " "});
         dtm2.addRow(new Object[]{"RESULTADO DEL EJERCICIO", ResEjercicio, " "});
 
-        float total_activos = total_AC + total_ANC;
-        float total_pasivos = total_PC + total_PNC + total_CAP + impuesto + reservaLegal + ResEjercicio;
+        Double total_activos = (total_AC + total_ANC);    
+       Double total_pasivos = (total_PC + total_PNC + total_CAP + impuesto + reservaLegal + ResEjercicio);
 
-        vista.totalActivos.setText(Float.toString(total_activos));
-        vista.totalPasivos.setText(Float.toString(total_pasivos));
+        vista.totalActivos.setText(String.format("%.2f", total_activos));
+        vista.totalPasivos.setText(String.format("%.2f", total_pasivos));
 
     }
 
@@ -188,26 +191,26 @@ public class ControladorBalanceGeneral implements ActionListener {
             JOptionPane.showMessageDialog(vista, "hola");
         }
 
-        float totalActivoCorriente = 0, totalActivoNoCorriente = 0,
-                totalPasivoCorriente = 0, totalPasivoNoCorriente = 0,
-                totalPatrimonio = 0, totalActivo = Float.parseFloat(vista.totalActivos.getText()), totalPasivo = Float.parseFloat(vista.totalPasivos.getText());
+        Double totalActivoCorriente = 0.00, totalActivoNoCorriente = 0.00,
+                totalPasivoCorriente = 0.00, totalPasivoNoCorriente = 0.00,
+                totalPatrimonio = 0.00, totalActivo = Double.parseDouble(vista.totalActivos.getText()), totalPasivo = Double.parseDouble(vista.totalPasivos.getText());
 
         int tipo_cuenta = 0;
 
         for (int i = 0; i < rowActivo; i++) {
             for (int j = 0; j < columnActivo; j++) {
                 if (vista.tabla_activos.getValueAt(i, j) == "ACTIVO CORRIENTE") {
-                    totalActivoCorriente = Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 2)));
+                    totalActivoCorriente = Double.parseDouble(String.valueOf(vista.tabla_activos.getValueAt(i, j + 2)));
                     j = j + 2;
                     tipo_cuenta = 1;
                 } else if (vista.tabla_activos.getValueAt(i, j) == "ACTIVO NO CORRIENTE") {
-                    totalActivoNoCorriente = Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 2)));
+                    totalActivoNoCorriente = Double.parseDouble(String.valueOf(vista.tabla_activos.getValueAt(i, j + 2)));
                     j = j + 2;
                     tipo_cuenta = 2;
                 } else {
                     if (vista.tabla_activos.getValueAt(i, j) != " ") {
                         if (tipo_cuenta > 0) {
-                            exito = dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_activos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_activos.getValueAt(i, j + 1))), n, tipo_cuenta);
+                            exito = dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_activos.getValueAt(i, j)), Double.parseDouble(String.valueOf(vista.tabla_activos.getValueAt(i, j + 1))), n, tipo_cuenta);
                             j = j + 1;
                         }
                     }
@@ -223,21 +226,21 @@ public class ControladorBalanceGeneral implements ActionListener {
         for (int i = 0; i < rowPasivo; i++) {
             for (int j = 0; j < columnPasivo; j++) {
                 if (vista.tabla_pasivos.getValueAt(i, j) == "PASIVO CORRIENTE") {
-                    totalPasivoCorriente = Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 2)));
+                    totalPasivoCorriente = Double.parseDouble(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 2)));
                     j = j + 2;
                     tipo_cuenta = 3;
                 } else if (vista.tabla_pasivos.getValueAt(i, j) == "PASIVO NO CORRIENTE") {
-                    totalPasivoNoCorriente = Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 2)));
+                    totalPasivoNoCorriente = Double.parseDouble(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 2)));
                     j = j + 2;
                     tipo_cuenta = 4;
                 } else if (vista.tabla_pasivos.getValueAt(i, j) == "CAPITAL CONTABLE") {
-                    totalPatrimonio = Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 2)));
+                    totalPatrimonio = Double.parseDouble(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 2)));
                     j = j + 2;
                     tipo_cuenta = 5;
                 } else {
                     if (vista.tabla_pasivos.getValueAt(i, j) != " ") {
                         if (tipo_cuenta > 2) {
-                            exito = dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_pasivos.getValueAt(i, j)), Float.parseFloat(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 1))), n, tipo_cuenta);
+                            exito = dao.IngresardetallesBalanceGeneral(String.valueOf(vista.tabla_pasivos.getValueAt(i, j)), Double.parseDouble(String.valueOf(vista.tabla_pasivos.getValueAt(i, j + 1))), n, tipo_cuenta);
                             j = j + 1;
                         }
                     }
@@ -273,17 +276,20 @@ public class ControladorBalanceGeneral implements ActionListener {
         }
     }
 
-    public float getDato() {
+    public Double getDato() {
         String fc_inicio = "2024-01-01";
         String fc_fin = "2024-12-30";
-        float ivfinal = (float) 200000.00;
+        Double ivfinal = (Double) 200000.00;
         estado = (daoResultado.select_ventas_totales(fc_inicio, fc_fin));
         String vn = estado.getVentas_Totales();
 
         estado = (daoResultado.select_costo_de_venta(fc_inicio, fc_fin));
         String cv = estado.getCosto_Ventas();
 
-        float utilidadBruta = (Float.parseFloat(vn) - (Float.parseFloat(cv) - ivfinal));
+        Double a = (Double.parseDouble(vn) - (Double.parseDouble(cv) - ivfinal));
+        
+        Double utilidadBruta = Double.parseDouble(String.format("%.2f", a));
+        
         System.out.println(utilidadBruta);
 
         estado = daoResultado.select_gastos_admin(fc_inicio, fc_fin);
@@ -292,7 +298,9 @@ public class ControladorBalanceGeneral implements ActionListener {
         estado = daoResultado.select_gasto_venta(fc_inicio, fc_fin);
         String gv = estado.getGastos_Ventas();
 
-        float utilidadOperacion = utilidadBruta - (Float.parseFloat(ga) + Float.parseFloat(gv));
+        Double b = utilidadBruta - (Double.parseDouble(ga) + Double.parseDouble(gv));
+        
+        Double utilidadOperacion = Double.parseDouble(String.format("%.2f", b));
 
         EstadoResultado e = new EstadoResultado();
         e = daoResultado.select_ingresos_finan(fc_inicio, fc_fin);
@@ -301,59 +309,58 @@ public class ControladorBalanceGeneral implements ActionListener {
         estado = daoResultado.select_gasto_finan(fc_inicio, fc_fin);
         String gf = estado.getGastos_Finan();
 
-        float utilidadAntes;
-        if (Float.parseFloat(inf) == Float.parseFloat(gf)) {
+        Double utilidadAntes;
+        if (Double.parseDouble(inf) == Double.parseDouble(gf)) {
             utilidadAntes = utilidadOperacion;
 
-        } else if (Float.parseFloat(inf) < Float.parseFloat(gf)) {
-            utilidadAntes = utilidadOperacion - (Float.parseFloat(inf) - Float.parseFloat(gf));
+        } else if (Double.parseDouble(inf) < Double.parseDouble(gf)) {
+            utilidadAntes = utilidadOperacion - (Double.parseDouble(inf) - Double.parseDouble(gf));
 
         } else {
-            utilidadAntes = utilidadOperacion + (Float.parseFloat(inf) - Float.parseFloat(gf));
+            utilidadAntes = utilidadOperacion + (Double.parseDouble(inf) - Double.parseDouble(gf));
 
         }
 
-        float ventas = Float.parseFloat(daoResultado.select_ventas(fc_inicio, fc_fin));
+        Double ventas = Double.parseDouble(daoResultado.select_ventas(fc_inicio, fc_fin));
         System.out.println(ventas);
         return utilidadAntes;
     }
 
-    private float getReservaLegal() {
+    private Double getReservaLegal() {
         String fc_inicio = "2024-01-01";
         String fc_fin = "2024-12-30";
-        float utilidadAntes = getDato();
+        Double utilidadAntes = getDato();
 
-        float reservaLegal;
-
-        reservaLegal = (float) (utilidadAntes * 0.07);
-
-        reservaLegal = (float) (utilidadAntes * 0.07);
+   
+        Double c = (Double) ((utilidadAntes) * 0.07);
+        Double reservaLegal = Double.parseDouble(String.format("%.2f", c));
 
         return reservaLegal;
     }
 
-    private float impuestoSobreRenta() {
-        float isr;
+    private Double impuestoSobreRenta() {
+        Double isr;
         String fc_inicio = "2024-01-01";
         String fc_fin = "2024-12-30";
-        float ventas = Float.parseFloat(daoResultado.select_ventas(fc_inicio, fc_fin));
-        float utilidadAntes = getDato();
-        float reserva = getReservaLegal();
+        Double ventas = Double.parseDouble(daoResultado.select_ventas(fc_inicio, fc_fin));
+        Double utilidadAntes = getDato();
 
         if (ventas < 1500000) {
-            isr = (float) ((utilidadAntes - reserva) * 0.25);
+            Double d = (Double) ((utilidadAntes - reservaLegal) * 0.25);
+            isr = Double.parseDouble(String.format("%.2f", d));
         } else {
-            isr = (float) ((utilidadAntes - reserva) * 0.30);
+            Double d = (Double) ((utilidadAntes - reservaLegal) * 0.25);
+            isr = Double.parseDouble(String.format("%.2f", d));
         }
         return isr;
     }
 
-    private float getResultadoEjercicio() {
-        float utilidadAntes = getDato();
-        float isr = impuestoSobreRenta();
-        float reserva = getReservaLegal();
+    private Double getResultadoEjercicio() {
+        Double utilidadAntes = getDato();
+        Double isr = impuestoSobreRenta();
+        Double reserva = getReservaLegal();
 
-        float ue = utilidadAntes - isr - reserva;
+        Double ue = utilidadAntes - isr - reserva;
         return ue;
     }
 

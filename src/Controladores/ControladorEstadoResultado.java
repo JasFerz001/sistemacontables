@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import javax.crypto.AEADBadTagException;
 import modelos.EstadoResultado;
@@ -31,6 +32,8 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
     EstadoResultado estado;
     
     Jasper jasper = new Jasper();
+    
+    DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public ControladorEstadoResultado(VistaEstadoResultado frmResultado) {
         this.frmResultado = frmResultado;
@@ -69,7 +72,9 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
         String cv = estado.getCosto_Ventas();
         this.frmResultado.costoVendido.setText("$" + (Float.parseFloat(estado.getCosto_Ventas()) - ivfinal));
 
-        float utilidadBruta = (Float.parseFloat(vn) - (Float.parseFloat(cv) - ivfinal));
+        float a = (Float.parseFloat(vn) - (Float.parseFloat(cv) - ivfinal));
+        
+        float utilidadBruta = Float.parseFloat(String.format("%.2f", a));
         System.out.println(utilidadBruta);
         this.frmResultado.utilidadBruta.setText("$" + utilidadBruta);
         
@@ -81,7 +86,10 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
         String gv = estado.getGastos_Ventas();
         this.frmResultado.gastoVentas.setText("$" + gv);
 
-        float utilidadOperacion = utilidadBruta - (Float.parseFloat(ga) + Float.parseFloat(gv));
+        
+        float b = utilidadBruta - (Float.parseFloat(ga) + Float.parseFloat(gv));
+        
+        float utilidadOperacion = Float.parseFloat(String.format("%.2f", b));
         this.frmResultado.utilidadOperacion.setText("$" + utilidadOperacion);
 
         EstadoResultado e = new EstadoResultado();
@@ -109,8 +117,11 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
         float isr;
         float reservaLegal;
         if (ventas < 1500000) {
-            reservaLegal = (float) ((utilidadAntes) * 0.07);
-            isr = (float) ((utilidadAntes - reservaLegal) * 0.25);
+            float c = (float) ((utilidadAntes) * 0.07);
+            reservaLegal = Float.parseFloat(String.format("%.2f", c));
+            
+            float d = (float) ((utilidadAntes - reservaLegal) * 0.25);
+            isr = Float.parseFloat(String.format("%.2f", d));
             this.frmResultado.isr.setText("$" + isr);
             this.frmResultado.reservaLegal.setText("$" + reservaLegal);
             float ue = utilidadAntes - isr - reservaLegal;
