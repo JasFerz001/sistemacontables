@@ -1,5 +1,6 @@
 package Controladores;
 
+import Reportes.Jasper;
 import Vistas.VistaMayor;
 import Vistas.VistadetallesMayor;
 
@@ -42,6 +43,8 @@ public class ControladorLibroMayor extends MouseAdapter implements ActionListene
         this.frmMayor.btnDetalles.addActionListener(this);
         this.frmMayor.btnGuardar.addActionListener(this);
         this.frmMayor.btnGuardarSub.addActionListener(this);
+        this.frmMayor.btnReporteM.addActionListener(this);
+        this.frmMayor.btnReporteMD.addActionListener(this);
         this.frmMayor.tbDatos.addMouseListener(this);
         
         listSub = new ArrayList<>();
@@ -134,6 +137,7 @@ public void actionPerformed(ActionEvent e) {
         if (opcion == JOptionPane.YES_OPTION) {
             guardar(); // Llamar al método para guardar los datos
             JOptionPane.showMessageDialog(frmMayor, "DATOS ALMACENADOS", "LISTO", JOptionPane.INFORMATION_MESSAGE);
+            frmMayor.btnGuardar.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(frmMayor, "OPERACIÓN CANCELADA", "CANCELADO", JOptionPane.WARNING_MESSAGE);
         }
@@ -150,9 +154,18 @@ public void actionPerformed(ActionEvent e) {
         if (opcion == JOptionPane.YES_OPTION) {
             guardarSub(); // Llamar al método para guardar los datos
             JOptionPane.showMessageDialog(frmMayor, "DATOS ALMACENADOS", "LISTO", JOptionPane.INFORMATION_MESSAGE);
+            frmMayor.btnGuardarSub.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(frmMayor, "OPERACIÓN CANCELADA", "CANCELADO", JOptionPane.WARNING_MESSAGE);
         }
+    }else if(e.getSource() == this.frmMayor.btnReporteM){
+        Jasper jas = new Jasper();
+        frmMayor.setVisible(false);
+        jas.Reporte(5);
+    }else if(e.getSource() == this.frmMayor.btnReporteMD){
+        Jasper jas = new Jasper();
+        frmMayor.setVisible(false);
+        jas.Reporte(4);
     }
 }
 

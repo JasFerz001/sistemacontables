@@ -42,6 +42,8 @@ public class VistaMayor extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnGuardarSub = new javax.swing.JButton();
+        btnReporteM = new javax.swing.JButton();
+        btnReporteMD = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -118,6 +120,32 @@ public class VistaMayor extends javax.swing.JDialog {
             }
         });
 
+        btnReporteM.setBackground(new java.awt.Color(204, 204, 255));
+        btnReporteM.setText("Reporte Mayor");
+        btnReporteM.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnReporteMMousePressed(evt);
+            }
+        });
+        btnReporteM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteMActionPerformed(evt);
+            }
+        });
+
+        btnReporteMD.setBackground(new java.awt.Color(204, 204, 255));
+        btnReporteMD.setText("Reporte Detalles");
+        btnReporteMD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnReporteMDMousePressed(evt);
+            }
+        });
+        btnReporteMD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteMDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -125,29 +153,33 @@ public class VistaMayor extends javax.swing.JDialog {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(43, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnReporteMD)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnReporteM)
+                        .addGap(27, 27, 27)
                         .addComponent(btnGuardarSub)
                         .addGap(18, 18, 18)
                         .addComponent(btnGuardar)
-                        .addGap(42, 42, 42)
-                        .addComponent(btnDetalles)
-                        .addGap(203, 203, 203))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37))))
+                        .addGap(27, 27, 27)
+                        .addComponent(btnDetalles))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(39, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(3, 3, 3)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDetalles)
                     .addComponent(btnGuardar)
-                    .addComponent(btnGuardarSub))
-                .addGap(41, 41, 41)
+                    .addComponent(btnGuardarSub)
+                    .addComponent(btnReporteM)
+                    .addComponent(btnReporteMD))
+                .addGap(50, 50, 50)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
@@ -192,6 +224,22 @@ public class VistaMayor extends javax.swing.JDialog {
     private void btnGuardarSubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarSubActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarSubActionPerformed
+
+    private void btnReporteMMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReporteMMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReporteMMousePressed
+
+    private void btnReporteMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteMActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReporteMActionPerformed
+
+    private void btnReporteMDMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReporteMDMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReporteMDMousePressed
+
+    private void btnReporteMDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteMDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReporteMDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,6 +287,8 @@ public class VistaMayor extends javax.swing.JDialog {
     public javax.swing.JButton btnDetalles;
     public javax.swing.JButton btnGuardar;
     public javax.swing.JButton btnGuardarSub;
+    public javax.swing.JButton btnReporteM;
+    public javax.swing.JButton btnReporteMD;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
