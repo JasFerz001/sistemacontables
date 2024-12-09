@@ -5,7 +5,9 @@
 package Controladores;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import modelos.CierreContable;
+import modelos.PartidaCierre;
 
 /**
  *
@@ -15,6 +17,8 @@ public class a {
 
     public static void main(String[] args) throws SQLException {
         CierreContable c = new CierreContable();
+        c.partidaCierre();
+    }
 //        double a = c.obtenerSaldoHaber("5101");
 //        System.out.println(a);
 //        c.ventasNetas();
@@ -28,8 +32,6 @@ public class a {
 //        c.liquidarOtrosGastos();
 //        c.utilidadEjercicio();
 
-        //double q = c.obtenerSaldoHaberSubcuenta("110601");
-    
-        //System.out.println(q);
-    }
+    //double q = c.obtenerSaldoHaberSubcuenta("110601");
+    //System.out.println(q);
 }

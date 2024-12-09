@@ -68,7 +68,7 @@ public class CierreContable {
         return 0.0;
     }
 
-    public ArrayList<PartidaCierre> obtenerSaldoActivo(String codSubcuenta) throws SQLException {
+    public ArrayList<PartidaCierre> obtenerSaldoActivo() throws SQLException {
         listaCierre = new ArrayList<>();
         PartidaCierre c = null;
         String query = "SELECT sc.cod_subcuenta, COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto ELSE -ld.monto END), 0) AS saldo\n"
@@ -79,18 +79,18 @@ public class CierreContable {
                 + "HAVING \n"
                 + "COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto ELSE -ld.monto END), 0) != 0.0;";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, codSubcuenta);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 c = new PartidaCierre();
-                 c.setCodigo(rs.getInt("cod_subcuenta"));
-                 c.setMonto(rs.getDouble("saldo"));
-                 listaCierre.add(c);
+                c.setCodigo(rs.getInt("cod_subcuenta"));
+                c.setMonto(rs.getDouble("saldo"));
+                listaCierre.add(c);
             }
         }
-        return listaCierre;  
+        return listaCierre;
     }
-    public ArrayList<PartidaCierre> obtenerSaldoPasivo(String codSubcuenta) throws SQLException {
+
+    public ArrayList<PartidaCierre> obtenerSaldoPasivo() throws SQLException {
         listaCierre = new ArrayList<>();
         PartidaCierre c = null;
         String query = "SELECT sc.cod_subcuenta, COALESCE(SUM(CASE WHEN ld.transaccion = 'Haber' THEN ld.monto ELSE -ld.monto END), 0) AS saldo\n"
@@ -101,18 +101,18 @@ public class CierreContable {
                 + "HAVING \n"
                 + "COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto ELSE -ld.monto END), 0) != 0.0;";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, codSubcuenta);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 c = new PartidaCierre();
-                 c.setCodigo(rs.getInt("cod_subcuenta"));
-                 c.setMonto(rs.getDouble("saldo"));
-                 listaCierre.add(c);
+                c.setCodigo(rs.getInt("cod_subcuenta"));
+                c.setMonto(rs.getDouble("saldo"));
+                listaCierre.add(c);
             }
         }
-        return listaCierre;  
+        return listaCierre;
     }
-    public ArrayList<PartidaCierre> obtenerSaldoPatrimonio(String codSubcuenta) throws SQLException {
+
+    public ArrayList<PartidaCierre> obtenerSaldoPatrimonio() throws SQLException {
         listaCierre = new ArrayList<>();
         PartidaCierre c = null;
         String query = "SELECT sc.cod_subcuenta, COALESCE(SUM(CASE WHEN ld.transaccion = 'Haber' THEN ld.monto ELSE -ld.monto END), 0) AS saldo\n"
@@ -123,16 +123,15 @@ public class CierreContable {
                 + "HAVING \n"
                 + "COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto ELSE -ld.monto END), 0) != 0.0;";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, codSubcuenta);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 c = new PartidaCierre();
-                 c.setCodigo(rs.getInt("cod_subcuenta"));
-                 c.setMonto(rs.getDouble("saldo"));
-                 listaCierre.add(c);
+                c.setCodigo(rs.getInt("cod_subcuenta"));
+                c.setMonto(rs.getDouble("saldo"));
+                listaCierre.add(c);
             }
         }
-        return listaCierre;  
+        return listaCierre;
     }
 
     public double obtenerSaldoAbsoluto(String codCuenta) throws SQLException {
@@ -325,7 +324,26 @@ public class CierreContable {
         insertarTransaccion(numeroPartida, "310301", pyg, "liquidando perdidas y ganancias", "Haber");
     }
 
-   
+    public void partidaCierre() throws SQLException {
+        int numeroPartida = obtenerSiguienteNumeroPartida();
+        ArrayList<PartidaCierre> lista1 = obtenerSaldoActivo();
+        ArrayList<PartidaCierre> lista2 = obtenerSaldoPasivo();
+        ArrayList<PartidaCierre> lista3  = obtenerSaldoPatrimonio();
+        
+        for (PartidaCierre x : lista2) {
+            insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE CIERRE", "Debe");
+        }
+        for (PartidaCierre x : lista3) {
+            insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE CIERRE", "Debe");
+        }
+        for (PartidaCierre x : lista1) {
+            insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE CIERRE", "Haber");
+        }
+
+//        insertarTransaccion(numeroPartida, "610101", pyg, "liquidando perdidas y ganancias", "Debe");
+//        insertarTransaccion(numeroPartida, "310301", pyg, "liquidando perdidas y ganancias", "Haber");
+    }
+
     // Cerrar la conexión automáticamente
     public void cerrarConexion() {
         if (connection != null) {
