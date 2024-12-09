@@ -15,6 +15,7 @@ public class CierreContable {
 
     private Connection connection;
     ArrayList<PartidaCierre> listaCierre;
+    ArrayList<LibroDiario> listaUltima;
 
     // Constructor que inicializa automáticamente la conexión
     public CierreContable() {
@@ -36,7 +37,7 @@ public class CierreContable {
     }
 
     // Obtener el saldo de una cuenta específica
-    public double obtenerSaldo(String codCuenta) throws SQLException {
+    private double obtenerSaldo(String codCuenta) throws SQLException {
         String query = "SELECT COALESCE(SUM(CASE WHEN transaccion = 'Debe' THEN monto ELSE -monto END), 0) AS saldo "
                 + "FROM libro_diario ld "
                 + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta "
@@ -52,7 +53,7 @@ public class CierreContable {
         return 0.0;
     }
 
-    public double obtenerSaldoHaber(String codCuenta) throws SQLException {
+    private double obtenerSaldoHaber(String codCuenta) throws SQLException {
         String query = "SELECT COALESCE(SUM(CASE WHEN transaccion = 'Haber' THEN monto ELSE -monto END), 0) AS saldo "
                 + "FROM libro_diario ld "
                 + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta "
@@ -68,7 +69,73 @@ public class CierreContable {
         return 0.0;
     }
 
-    public ArrayList<PartidaCierre> obtenerSaldoActivo() throws SQLException {
+    public ArrayList<PartidaCierre> obtenerSaldoActivoCierre(int partida) throws SQLException {
+        listaCierre = new ArrayList<>();
+        PartidaCierre c = null;
+        String query = "SELECT sc.cod_subcuenta, COALESCE(SUM(CASE WHEN ld.transaccion = 'Haber' THEN ld.monto ELSE -ld.monto END), 0) AS saldo\n"
+                + "FROM libro_diario ld \n"
+                + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta\n"
+                + "WHERE sc.cod_subcuenta LIKE '1%' AND ld.numero_partida = ?\n"
+                + "GROUP BY sc.cod_subcuenta\n"
+                + "HAVING COALESCE(SUM(CASE WHEN ld.transaccion = 'Haber' THEN ld.monto ELSE -ld.monto END), 0) != 0.0;";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, partida);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                c = new PartidaCierre();
+                c.setCodigo(rs.getInt("cod_subcuenta"));
+                c.setMonto(rs.getDouble("saldo"));
+                listaCierre.add(c);
+            }
+        }
+        return listaCierre;
+    }
+    public ArrayList<PartidaCierre> obtenerSaldoPasivoCierre(int partida) throws SQLException {
+        listaCierre = new ArrayList<>();
+        PartidaCierre c = null;
+        String query = "SELECT sc.cod_subcuenta, COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto ELSE -ld.monto END), 0) AS saldo\n"
+                + "FROM libro_diario ld \n"
+                + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta\n"
+                + "WHERE sc.cod_subcuenta LIKE '2%' AND ld.numero_partida = ?\n"
+                + "GROUP BY sc.cod_subcuenta\n"
+                + "HAVING COALESCE(SUM(CASE WHEN ld.transaccion = 'Haber' THEN ld.monto ELSE -ld.monto END), 0) != 0.0;";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, partida);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                c = new PartidaCierre();
+                c.setCodigo(rs.getInt("cod_subcuenta"));
+                c.setMonto(rs.getDouble("saldo"));
+                listaCierre.add(c);
+            }
+        }
+        return listaCierre;
+    }
+    
+    
+    public ArrayList<PartidaCierre> obtenerSaldoPatrimonioCierre(int partida) throws SQLException {
+        listaCierre = new ArrayList<>();
+        PartidaCierre c = null;
+        String query = "SELECT sc.cod_subcuenta, COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto ELSE -ld.monto END), 0) AS saldo\n"
+                + "FROM libro_diario ld \n"
+                + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta\n"
+                + "WHERE sc.cod_subcuenta LIKE '3%' AND ld.numero_partida = ?\n"
+                + "GROUP BY sc.cod_subcuenta\n"
+                + "HAVING COALESCE(SUM(CASE WHEN ld.transaccion = 'Haber' THEN ld.monto ELSE -ld.monto END), 0) != 0.0;";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, partida);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                c = new PartidaCierre();
+                c.setCodigo(rs.getInt("cod_subcuenta"));
+                c.setMonto(rs.getDouble("saldo"));
+                listaCierre.add(c);
+            }
+        }
+        return listaCierre;
+    }
+
+    private ArrayList<PartidaCierre> obtenerSaldoActivo() throws SQLException {
         listaCierre = new ArrayList<>();
         PartidaCierre c = null;
         String query = "SELECT sc.cod_subcuenta, COALESCE(SUM(CASE WHEN ld.transaccion = 'Debe' THEN ld.monto ELSE -ld.monto END), 0) AS saldo\n"
@@ -90,7 +157,7 @@ public class CierreContable {
         return listaCierre;
     }
 
-    public ArrayList<PartidaCierre> obtenerSaldoPasivo() throws SQLException {
+    private ArrayList<PartidaCierre> obtenerSaldoPasivo() throws SQLException {
         listaCierre = new ArrayList<>();
         PartidaCierre c = null;
         String query = "SELECT sc.cod_subcuenta, COALESCE(SUM(CASE WHEN ld.transaccion = 'Haber' THEN ld.monto ELSE -ld.monto END), 0) AS saldo\n"
@@ -112,7 +179,7 @@ public class CierreContable {
         return listaCierre;
     }
 
-    public ArrayList<PartidaCierre> obtenerSaldoPatrimonio() throws SQLException {
+    private ArrayList<PartidaCierre> obtenerSaldoPatrimonio() throws SQLException {
         listaCierre = new ArrayList<>();
         PartidaCierre c = null;
         String query = "SELECT sc.cod_subcuenta, COALESCE(SUM(CASE WHEN ld.transaccion = 'Haber' THEN ld.monto ELSE -ld.monto END), 0) AS saldo\n"
@@ -134,7 +201,7 @@ public class CierreContable {
         return listaCierre;
     }
 
-    public double obtenerSaldoAbsoluto(String codCuenta) throws SQLException {
+    private double obtenerSaldoAbsoluto(String codCuenta) throws SQLException {
         String query = "SELECT COALESCE(SUM(monto), 0) AS saldo "
                 + "FROM libro_diario ld "
                 + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta "
@@ -156,7 +223,7 @@ public class CierreContable {
     }
 
     // Insertar una transacción en el libro diario
-    private void insertarTransaccion(int numeroPartida, String codSubcuenta, double monto, String concepto, String transaccion) throws SQLException {
+    public void insertarTransaccion(int numeroPartida, String codSubcuenta, double monto, String concepto, String transaccion) throws SQLException {
         String query = "INSERT INTO libro_diario (numero_partida, cod_subcuenta, fecha, monto, concepto, transaccion) "
                 + "VALUES (?, ?, CURRENT_DATE, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -176,6 +243,17 @@ public class CierreContable {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt("siguiente_partida");
+            }
+        }
+        return 1;
+    }
+
+    public int obtenerNumeroPartida() throws SQLException {
+        String query = "SELECT COALESCE(MAX(numero_partida), 0) AS partida_actual FROM libro_diario";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("partida_actual");
             }
         }
         return 1;
@@ -328,8 +406,8 @@ public class CierreContable {
         int numeroPartida = obtenerSiguienteNumeroPartida();
         ArrayList<PartidaCierre> lista1 = obtenerSaldoActivo();
         ArrayList<PartidaCierre> lista2 = obtenerSaldoPasivo();
-        ArrayList<PartidaCierre> lista3  = obtenerSaldoPatrimonio();
-        
+        ArrayList<PartidaCierre> lista3 = obtenerSaldoPatrimonio();
+
         for (PartidaCierre x : lista2) {
             insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE CIERRE", "Debe");
         }
@@ -339,9 +417,23 @@ public class CierreContable {
         for (PartidaCierre x : lista1) {
             insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE CIERRE", "Haber");
         }
+    }
+    
+    private void partidaInicio() throws SQLException {
+        int numeroPartida = obtenerNumeroPartida();
+        ArrayList<PartidaCierre> lista1 = obtenerSaldoActivoCierre(numeroPartida);
+        ArrayList<PartidaCierre> lista2 = obtenerSaldoPasivoCierre(numeroPartida);
+        ArrayList<PartidaCierre> lista3 = obtenerSaldoPatrimonioCierre(numeroPartida);
 
-//        insertarTransaccion(numeroPartida, "610101", pyg, "liquidando perdidas y ganancias", "Debe");
-//        insertarTransaccion(numeroPartida, "310301", pyg, "liquidando perdidas y ganancias", "Haber");
+        for (PartidaCierre x : lista1) {
+            insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Debe");
+        }
+        for (PartidaCierre x : lista2) {
+            insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Debe");
+        }
+        for (PartidaCierre x : lista3) {
+            insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Haber");
+        }
     }
 
     // Cerrar la conexión automáticamente
