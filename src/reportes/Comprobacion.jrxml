@@ -164,25 +164,25 @@ ORDER BY
 				<reportElement x="280" y="0" width="100" height="30" uuid="ca0f77e0-d142-41b2-a0cd-2baba99913d9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f86e33b6-48cb-49e1-88f1-b1815f2614af"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{debe}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["$"+$F{debe}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="380" y="0" width="100" height="30" uuid="b2882331-7591-4aa9-b9b3-522bf330e60b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0a9054eb-b609-4a5e-b0b9-891bcaed0907"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{haber}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["$"+$F{haber}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="480" y="0" width="100" height="30" uuid="d98f2b5d-c816-4260-ab2a-fa002e42af26">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ea49a06a-bc0c-4537-a4ec-aece298fb3d6"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{saldodeudor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["$"+$F{saldodeudor}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="680" y="0" width="100" height="30" uuid="19ffbd0b-d0b5-4b54-b696-84e09e7dc821">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1fa4eeeb-49af-44c0-9e1c-0e5b8bdb2e1c"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{saldoacreedor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["$"+$F{saldoacreedor}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

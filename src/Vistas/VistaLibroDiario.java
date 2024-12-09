@@ -184,6 +184,11 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         btnProcesarPartida.setText("Procesar Partida");
         btnProcesarPartida.setBorder(null);
         btnProcesarPartida.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnProcesarPartida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProcesarPartidaActionPerformed(evt);
+            }
+        });
         PanelFondo.add(btnProcesarPartida, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 510, 150, 30));
 
         lbTotal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -287,6 +292,10 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnProcesarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcesarPartidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProcesarPartidaActionPerformed
 
     /**
      * @param args the command line arguments

@@ -19,8 +19,7 @@ public class AgregarSubcuenta extends javax.swing.JDialog {
 
     /**
      * Creates new form AgregarSubcuenta
-     * @param parent
-     * @param modal
+
      */
     public AgregarSubcuenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -323,7 +322,7 @@ public class AgregarSubcuenta extends javax.swing.JDialog {
         } else {
             // Convertir el carácter a mayúscula
             if (Character.isLetter(c)) {
-                evt.setKeyChar(Character.toUpperCase(c));
+                evt.setKeyChar((c));
             }
         }
     }//GEN-LAST:event_nombreCuentaKeyTyped
