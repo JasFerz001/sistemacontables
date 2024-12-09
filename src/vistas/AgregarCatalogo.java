@@ -16,8 +16,6 @@ public class AgregarCatalogo extends javax.swing.JDialog {
 
     /**
      * Creates new form AgregarCatalogo
-     * @param parent
-     * @param modal
      */
     String[] cuentas = {"DEUDOR", "ACREEDOR"};
 

@@ -16,6 +16,11 @@ public class LibroDiario {
     private String transaccion;
     private String concepto;
 
+    public LibroDiario() {
+    }
+    
+    
+
     public LibroDiario(int numeroPartida, Date fecha, int codSubcuenta, String nombreCuenta, double monto, String transaccion, String concepto) {
         this.numeroPartida = numeroPartida;
         this.fecha = fecha;
