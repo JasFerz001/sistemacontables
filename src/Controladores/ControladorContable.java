@@ -59,7 +59,7 @@ public class ControladorContable {
 
     public void calcularComprasTotales() {
         try {
-            cierreContable.ComprasTotales();
+            cierreContable.comprasTotales();
             System.out.println("Cálculo de Compras Totales realizado correctamente.");
         } catch (SQLException e) {
             System.err.println("Error al calcular Compras Totales: " + e.getMessage());
@@ -68,7 +68,7 @@ public class ControladorContable {
 
     public void calcularComprasNetas() {
         try {
-            cierreContable.ComprasNetas();
+            cierreContable.comprasNetas();
             System.out.println("Cálculo de Compras Netas realizado correctamente.");
         } catch (SQLException e) {
             System.err.println("Error al calcular Compras Netas: " + e.getMessage());

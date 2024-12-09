@@ -90,6 +90,7 @@ public class CierreContable {
         }
         return listaCierre;
     }
+
     public ArrayList<PartidaCierre> obtenerSaldoPasivoCierre(int partida) throws SQLException {
         listaCierre = new ArrayList<>();
         PartidaCierre c = null;
@@ -111,8 +112,7 @@ public class CierreContable {
         }
         return listaCierre;
     }
-    
-    
+
     public ArrayList<PartidaCierre> obtenerSaldoPatrimonioCierre(int partida) throws SQLException {
         listaCierre = new ArrayList<>();
         PartidaCierre c = null;
@@ -260,7 +260,6 @@ public class CierreContable {
     }
 
     public void ventasNetas() throws SQLException {
-        double ventas = obtenerSaldo("5101");
         double rebajas = obtenerSaldoAbsoluto("4104");
         double devoluciones = obtenerSaldoAbsoluto("4103");
         double total = rebajas + devoluciones;
@@ -271,9 +270,6 @@ public class CierreContable {
         insertarTransaccion(numeroPartida, "410301", devoluciones, "Ventas Netas", "Haber");
     }
 
-    public void ComprasTotales() throws SQLException {
-        double compras = obtenerSaldo("4101");
-        double gastos = obtenerSaldoAbsoluto("5103");
     public void comprasTotales() throws SQLException {
         double gastos = obtenerSaldoAbsoluto("4102");
 
@@ -282,8 +278,6 @@ public class CierreContable {
         insertarTransaccion(numeroPartida, "410201", gastos, "Por liquidacion de gastos", "Haber");
     }
 
-    public void ComprasNetas() throws SQLException {
-        double compras = obtenerSaldo("4101");
     public void comprasNetas() throws SQLException {
         double devoluciones = obtenerSaldoAbsoluto("5102");
         double rebajas = obtenerSaldoAbsoluto("5103");
@@ -295,12 +289,7 @@ public class CierreContable {
         insertarTransaccion(numeroPartida, "410101", total, "liquidacion de reb. y dev.", "Haber");
     }
 
-<<<<<<< HEAD
-    public void MercaderiaDisponible() throws SQLException {
-        double compras = obtenerSaldo("4101");
-=======
     public void mercaderiaDisponible() throws SQLException {
->>>>>>> main
         double inventario = obtenerSaldoAbsoluto("1106");
 
         int numeroPartida = obtenerSiguienteNumeroPartida();
@@ -308,13 +297,6 @@ public class CierreContable {
         insertarTransaccion(numeroPartida, "110601", inventario, "saldar cuenta de inventario", "Haber");
     }
 
-<<<<<<< HEAD
-    public void CostoVenta(Double inventario) throws SQLException {
-
-        int numeroPartida = obtenerSiguienteNumeroPartida();
-        insertarTransaccion(numeroPartida, "410101", inventario, "saldar cuenta de inventario", "Debe");
-        insertarTransaccion(numeroPartida, "111201", inventario, "saldar cuenta de inventario", "Haber");
-=======
     public void costoVenta(Double inventario) throws SQLException {
 
         int numeroPartida = obtenerSiguienteNumeroPartida();
@@ -436,7 +418,7 @@ public class CierreContable {
             insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE CIERRE", "Haber");
         }
     }
-    
+
     private void partidaInicio() throws SQLException {
         int numeroPartida = obtenerNumeroPartida();
         ArrayList<PartidaCierre> lista1 = obtenerSaldoActivoCierre(numeroPartida);
@@ -452,7 +434,6 @@ public class CierreContable {
         for (PartidaCierre x : lista3) {
             insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Haber");
         }
->>>>>>> main
     }
 
     // Cerrar la conexión automáticamente
@@ -466,8 +447,4 @@ public class CierreContable {
             }
         }
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 }

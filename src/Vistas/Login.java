@@ -199,20 +199,6 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-       System.exit(0);
-    }//GEN-LAST:event_btnSalirMouseClicked
-
-    private void btnSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseEntered
-        btnSalir.setBackground(Color.red);
-        txtSalir.setForeground(Color.white);
-    }//GEN-LAST:event_btnSalirMouseEntered
-
-    private void btnSalirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseExited
-        btnSalir.setBackground(Color.white);
-        txtSalir.setForeground(Color.red);
-    }//GEN-LAST:event_btnSalirMouseExited
-
     private void tfUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfUsuarioMousePressed
        if(tfUsuario.getText().equals("Ingrese su usuario")){
            tfUsuario.setText("");
@@ -243,6 +229,20 @@ public class Login extends javax.swing.JFrame {
         VistaSalir vista = new VistaSalir("Saliendo");
         vista.setVisible(true);
     }//GEN-LAST:event_txtSalirMousePressed
+
+    private void btnSalirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseExited
+        btnSalir.setBackground(Color.white);
+        txtSalir.setForeground(Color.red);
+    }//GEN-LAST:event_btnSalirMouseExited
+
+    private void btnSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseEntered
+        btnSalir.setBackground(Color.red);
+        txtSalir.setForeground(Color.white);
+    }//GEN-LAST:event_btnSalirMouseEntered
+
+    private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirMouseClicked
 
 //    /**
 //     * @param args the command line arguments
