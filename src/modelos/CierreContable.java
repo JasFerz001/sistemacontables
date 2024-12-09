@@ -50,6 +50,22 @@ public class CierreContable {
         return 0.0;
     }
 
+    private double obtenerSaldoAbsoluto(String codCuenta) throws SQLException {
+        String query = "SELECT COALESCE(SUM(monto), 0) AS saldo "
+                + "FROM libro_diario ld "
+                + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta "
+                + "LEFT JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor "
+                + "WHERE cm.cod_mayor = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, codCuenta);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble("saldo");
+            }
+        }
+        return 0.0;
+    }
+
     // Insertar una transacción en el libro diario
     private void insertarTransaccion(int numeroPartida, String codSubcuenta, double monto, String concepto, String transaccion) throws SQLException {
         String query = "INSERT INTO libro_diario (numero_partida, cod_subcuenta, fecha, monto, concepto, transaccion) "
@@ -78,8 +94,8 @@ public class CierreContable {
 
     public void ventasNetas() throws SQLException {
         double ventas = obtenerSaldo("5101");
-        double rebajas = obtenerSaldo("4104");
-        double devoluciones = obtenerSaldo("4103");
+        double rebajas = obtenerSaldoAbsoluto("4104");
+        double devoluciones = obtenerSaldoAbsoluto("4103");
         double total = rebajas + devoluciones;
 
         int numeroPartida = obtenerSiguienteNumeroPartida();
@@ -87,26 +103,42 @@ public class CierreContable {
         insertarTransaccion(numeroPartida, "410401", rebajas, "Ventas Netas", "Haber");
         insertarTransaccion(numeroPartida, "410301", devoluciones, "Ventas Netas", "Haber");
     }
-    
+
     public void ComprasTotales() throws SQLException {
         double compras = obtenerSaldo("4101");
-        double gastos = obtenerSaldo("5103");
+        double gastos = obtenerSaldoAbsoluto("5103");
 
         int numeroPartida = obtenerSiguienteNumeroPartida();
         insertarTransaccion(numeroPartida, "410101", gastos, "Por liquidacion de gastos", "Debe");
         insertarTransaccion(numeroPartida, "410201", gastos, "Por liquidacion de gastos", "Haber");
     }
-    
+
     public void ComprasNetas() throws SQLException {
         double compras = obtenerSaldo("4101");
-        double  devoluciones = obtenerSaldo("5102");
-        double rebajas = obtenerSaldo("5103");
+        double devoluciones = obtenerSaldoAbsoluto("5102");
+        double rebajas = obtenerSaldoAbsoluto("5103");
         double total = devoluciones + rebajas;
 
         int numeroPartida = obtenerSiguienteNumeroPartida();
         insertarTransaccion(numeroPartida, "510201", devoluciones, "liquidacion de reb. y dev.", "Debe");
         insertarTransaccion(numeroPartida, "510301", rebajas, "liquidacion de reb. y dev.", "Debe");
         insertarTransaccion(numeroPartida, "410101", total, "liquidacion de reb. y dev.", "Haber");
+    }
+
+    public void MercaderiaDisponible() throws SQLException {
+        double compras = obtenerSaldo("4101");
+        double inventario = obtenerSaldoAbsoluto("1106");
+
+        int numeroPartida = obtenerSiguienteNumeroPartida();
+        insertarTransaccion(numeroPartida, "410101", inventario, "saldar cuenta de inventario", "Debe");
+        insertarTransaccion(numeroPartida, "110601", inventario, "saldar cuenta de inventario", "Haber");
+    }
+
+    public void CostoVenta(Double inventario) throws SQLException {
+
+        int numeroPartida = obtenerSiguienteNumeroPartida();
+        insertarTransaccion(numeroPartida, "410101", inventario, "saldar cuenta de inventario", "Debe");
+        insertarTransaccion(numeroPartida, "111201", inventario, "saldar cuenta de inventario", "Haber");
     }
 
     // Cerrar la conexión automáticamente
@@ -120,5 +152,5 @@ public class CierreContable {
             }
         }
     }
-    
+
 }
