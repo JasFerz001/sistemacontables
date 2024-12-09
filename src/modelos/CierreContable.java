@@ -34,7 +34,7 @@ public class CierreContable {
     }
 
     // Obtener el saldo de una cuenta específica
-    private double obtenerSaldo(String codCuenta) throws SQLException {
+    public double obtenerSaldo(String codCuenta) throws SQLException {
         String query = "SELECT COALESCE(SUM(CASE WHEN transaccion = 'Debe' THEN monto ELSE -monto END), 0) AS saldo "
                 + "FROM libro_diario ld "
                 + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta "
@@ -48,6 +48,43 @@ public class CierreContable {
             }
         }
         return 0.0;
+    }
+
+    public double obtenerSaldoHaber(String codCuenta) throws SQLException {
+        String query = "SELECT COALESCE(SUM(CASE WHEN transaccion = 'Haber' THEN monto ELSE -monto END), 0) AS saldo "
+                + "FROM libro_diario ld "
+                + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta "
+                + "LEFT JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor "
+                + "WHERE cm.cod_mayor = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, codCuenta);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble("saldo");
+            }
+        }
+        return 0.0;
+    }
+
+    public double obtenerSaldoAbsoluto(String codCuenta) throws SQLException {
+        String query = "SELECT COALESCE(SUM(monto), 0) AS saldo "
+                + "FROM libro_diario ld "
+                + "LEFT JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta "
+                + "LEFT JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor "
+                + "WHERE cm.cod_mayor = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, codCuenta);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble("saldo");
+            }
+        }
+        return 0.0;
+    }
+
+    public double obtener_Ventas() throws SQLException {
+        double ventastotal = obtenerSaldoAbsoluto("5101");
+        return ventastotal;
     }
 
     // Insertar una transacción en el libro diario
@@ -77,9 +114,8 @@ public class CierreContable {
     }
 
     public void ventasNetas() throws SQLException {
-        double ventas = obtenerSaldo("5101");
-        double rebajas = obtenerSaldo("4104");
-        double devoluciones = obtenerSaldo("4103");
+        double rebajas = obtenerSaldoAbsoluto("4104");
+        double devoluciones = obtenerSaldoAbsoluto("4103");
         double total = rebajas + devoluciones;
 
         int numeroPartida = obtenerSiguienteNumeroPartida();
@@ -87,26 +123,137 @@ public class CierreContable {
         insertarTransaccion(numeroPartida, "410401", rebajas, "Ventas Netas", "Haber");
         insertarTransaccion(numeroPartida, "410301", devoluciones, "Ventas Netas", "Haber");
     }
-    
-    public void ComprasTotales() throws SQLException {
-        double compras = obtenerSaldo("4101");
-        double gastos = obtenerSaldo("5103");
+
+    public void comprasTotales() throws SQLException {
+        double gastos = obtenerSaldoAbsoluto("4102");
 
         int numeroPartida = obtenerSiguienteNumeroPartida();
         insertarTransaccion(numeroPartida, "410101", gastos, "Por liquidacion de gastos", "Debe");
         insertarTransaccion(numeroPartida, "410201", gastos, "Por liquidacion de gastos", "Haber");
     }
-    
-    public void ComprasNetas() throws SQLException {
-        double compras = obtenerSaldo("4101");
-        double  devoluciones = obtenerSaldo("5102");
-        double rebajas = obtenerSaldo("5103");
+
+    public void comprasNetas() throws SQLException {
+        double devoluciones = obtenerSaldoAbsoluto("5102");
+        double rebajas = obtenerSaldoAbsoluto("5103");
         double total = devoluciones + rebajas;
 
         int numeroPartida = obtenerSiguienteNumeroPartida();
         insertarTransaccion(numeroPartida, "510201", devoluciones, "liquidacion de reb. y dev.", "Debe");
         insertarTransaccion(numeroPartida, "510301", rebajas, "liquidacion de reb. y dev.", "Debe");
         insertarTransaccion(numeroPartida, "410101", total, "liquidacion de reb. y dev.", "Haber");
+    }
+
+    public void mercaderiaDisponible() throws SQLException {
+        double inventario = obtenerSaldoAbsoluto("1106");
+
+        int numeroPartida = obtenerSiguienteNumeroPartida();
+        insertarTransaccion(numeroPartida, "410101", inventario, "saldar cuenta de inventario", "Debe");
+        insertarTransaccion(numeroPartida, "110601", inventario, "saldar cuenta de inventario", "Haber");
+    }
+
+    public void costoVenta(Double inventario) throws SQLException {
+
+        int numeroPartida = obtenerSiguienteNumeroPartida();
+        insertarTransaccion(numeroPartida, "111201", inventario, "determinar costo de venta y apertura de invent. Final", "Debe");
+        insertarTransaccion(numeroPartida, "410101", inventario, "determinar costo de venta y apertura de invent. Final", "Haber");
+    }
+
+    public void utilidadBruta() throws SQLException {
+        double compras = obtenerSaldo("4101");
+        int numeroPartida = obtenerSiguienteNumeroPartida();
+        insertarTransaccion(numeroPartida, "510101", compras, "utilidad bruta", "Debe");
+        insertarTransaccion(numeroPartida, "410101", compras, "utilidad bruta", "Haber");
+    }
+
+    public void liquidarVentas(double ventas) throws SQLException {
+        Double vent = obtenerSaldoHaber("5101");
+        
+        double g_admin = obtenerSaldo("4301");
+        double otros_gastos = obtenerSaldo("4304");
+        double g_ventas = obtenerSaldo("4302");
+        double g_finan = obtenerSaldo("4303");
+        double totalGastos = g_admin + otros_gastos + g_ventas + g_finan;
+        
+        double ingresos_finan = obtenerSaldoHaber("5201");
+        double dividendos = obtenerSaldoHaber("5202");
+        double otros_ingresos = obtenerSaldoHaber("5203");
+        double ingresos_extra = obtenerSaldoHaber("5204");
+        double totalIngresos = ingresos_finan + dividendos + otros_ingresos + ingresos_extra;
+        
+        double ventitas = vent + totalIngresos - totalGastos;
+        System.out.println(vent);
+        if (ventas >= 150000) {
+            double res = (ventitas * 0.07);
+            double isr = (ventitas - res) * 0.30;
+            double perdida = vent - res - isr;
+            int numeroPartida = obtenerSiguienteNumeroPartida();
+            insertarTransaccion(numeroPartida, "510101", vent, "Apertura de perdidas y ganancias", "Debe");
+            insertarTransaccion(numeroPartida, "310201", res, "Apertura de perdidas y ganancias", "Haber");
+            insertarTransaccion(numeroPartida, "211101", isr, "Apertura de perdidas y ganancias", "Haber");
+            insertarTransaccion(numeroPartida, "610101", perdida, "Apertura de perdidas y ganancias", "Haber");
+
+        } else {
+            double res = (ventitas * 0.07);
+            double isr = (ventitas - res) * 0.25;
+            double perdida = vent - res - isr;
+            int numeroPartida = obtenerSiguienteNumeroPartida();
+            insertarTransaccion(numeroPartida, "510101", vent, "Apertura de perdidas y ganancias", "Debe");
+            insertarTransaccion(numeroPartida, "310201", res, "Apertura de perdidas y ganancias", "Haber");
+            insertarTransaccion(numeroPartida, "211101", isr, "Apertura de perdidas y ganancias", "Haber");
+            insertarTransaccion(numeroPartida, "610101", perdida, "Apertura de perdidas y ganancias", "Haber");
+        }
+    }
+
+    public void liquidarGastos() throws SQLException {
+        double g_admin = obtenerSaldo("4301");
+        double g_ventas = obtenerSaldo("4302");
+        double g_finan = obtenerSaldo("4303");
+        double total = g_admin + g_ventas + g_finan;
+
+        int numeroPartida = obtenerSiguienteNumeroPartida();
+        insertarTransaccion(numeroPartida, "610101", total, "liquidar gastos", "Debe");
+        insertarTransaccion(numeroPartida, "430141", g_ventas, "liquidar gastos", "Haber");
+        insertarTransaccion(numeroPartida, "430201", g_admin, "liquidar gastos", "Haber");
+        insertarTransaccion(numeroPartida, "430303", g_finan, "liquidar gastos", "Haber");
+    }
+
+    public void liquidarOtrosGastos() throws SQLException {
+        double otros_gastos = obtenerSaldo("4304");
+        double ingresos_finan = obtenerSaldoHaber("5201");
+        double dividendos = obtenerSaldoHaber("5202");
+        double otros_ingresos = obtenerSaldoHaber("5203");
+        double ingresos_extra = obtenerSaldoHaber("5204");
+        double suma = (ingresos_finan + dividendos + otros_ingresos + ingresos_extra);
+        if (otros_gastos == 0 && dividendos == 0 && otros_ingresos == 0 && ingresos_extra == 0) {
+            System.out.println("no existen otros gastos, ni ingresos financieros, para procesar la partida");
+        } else if (otros_gastos > suma) {
+            double total = otros_gastos - suma;
+            int numeroPartida = obtenerSiguienteNumeroPartida();
+            insertarTransaccion(numeroPartida, "610101", total, "liquidar otros gastos y otros productos", "Debe");
+            insertarTransaccion(numeroPartida, "520103", ingresos_finan, "liquidar otros gastos y otros productos", "Debe");
+            insertarTransaccion(numeroPartida, "520201", dividendos, "liquidar otros gastos y otros productos", "Debe");
+            insertarTransaccion(numeroPartida, "520302", otros_ingresos, "liquidar otros gastos y otros productos", "Debe");
+            insertarTransaccion(numeroPartida, "520404", ingresos_extra, "liquidar otros gastos y otros productos", "Debe");
+            insertarTransaccion(numeroPartida, "430402", otros_gastos, "liquidar otros gastos y otros productos", "Haber");
+
+        } else if (otros_gastos < suma) {
+            double total = suma - otros_gastos;
+            int numeroPartida = obtenerSiguienteNumeroPartida();
+            insertarTransaccion(numeroPartida, "520103", ingresos_finan, "liquidar otros gastos y otros productos", "Debe");
+            insertarTransaccion(numeroPartida, "520201", dividendos, "liquidar otros gastos y otros productos", "Debe");
+            insertarTransaccion(numeroPartida, "520302", otros_ingresos, "liquidar otros gastos y otros productos", "Debe");
+            insertarTransaccion(numeroPartida, "520404", ingresos_extra, "liquidar otros gastos y otros productos", "Debe");
+            insertarTransaccion(numeroPartida, "610101", total, "liquidar otros gastos y otros productos", "Haber");
+            insertarTransaccion(numeroPartida, "430402", otros_gastos, "liquidar otros gastos y otros productos", "Haber");
+        }
+    }
+
+    public void utilidadEjercicio() throws SQLException {
+        double pyg = obtenerSaldoHaber("6101");
+
+        int numeroPartida = obtenerSiguienteNumeroPartida();
+        insertarTransaccion(numeroPartida, "610101", pyg, "liquidando perdidas y ganancias", "Debe");
+        insertarTransaccion(numeroPartida, "310301", pyg, "liquidando perdidas y ganancias", "Haber");
     }
 
     // Cerrar la conexión automáticamente
@@ -120,5 +267,5 @@ public class CierreContable {
             }
         }
     }
-    
+
 }
