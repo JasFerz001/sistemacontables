@@ -35,45 +35,23 @@ public class VistaMayor extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbDatos = new javax.swing.JTable();
-        btnDetalles = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        btnGuardar = new javax.swing.JButton();
-        btnGuardarSub = new javax.swing.JButton();
-        btnReporteM = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbDatos = new rojerusan.RSTableMetro();
         btnReporteMD = new javax.swing.JButton();
+        btnReporteM = new javax.swing.JButton();
+        btnGuardarSub = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnDetalles = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        tbDatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tbDatos);
-
-        btnDetalles.setBackground(new java.awt.Color(204, 204, 255));
-        btnDetalles.setText("Detalles");
-        btnDetalles.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnDetallesMousePressed(evt);
-            }
-        });
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("LIBRO MAYOR ");
 
@@ -83,7 +61,7 @@ public class VistaMayor extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1256, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -94,55 +72,75 @@ public class VistaMayor extends javax.swing.JDialog {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        btnGuardar.setBackground(new java.awt.Color(204, 204, 255));
-        btnGuardar.setText("Guardar Cuentas Mayor");
-        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnGuardarMousePressed(evt);
+        tbDatos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        ));
+        tbDatos.setColorBackgoundHead(new java.awt.Color(153, 0, 0));
+        tbDatos.setRowHeight(25);
+        jScrollPane2.setViewportView(tbDatos);
+
+        btnReporteMD.setBackground(new java.awt.Color(0, 153, 51));
+        btnReporteMD.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnReporteMD.setForeground(new java.awt.Color(255, 255, 255));
+        btnReporteMD.setText("Reporte Detalles");
+        btnReporteMD.setBorder(null);
+        btnReporteMD.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnReporteMD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnReporteMDActionPerformed(evt);
             }
         });
 
-        btnGuardarSub.setBackground(new java.awt.Color(204, 204, 255));
-        btnGuardarSub.setText("Guardar Sub Cuentas");
-        btnGuardarSub.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnGuardarSubMousePressed(evt);
-            }
-        });
-        btnGuardarSub.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarSubActionPerformed(evt);
-            }
-        });
-
-        btnReporteM.setBackground(new java.awt.Color(204, 204, 255));
+        btnReporteM.setBackground(new java.awt.Color(0, 153, 51));
+        btnReporteM.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnReporteM.setForeground(new java.awt.Color(255, 255, 255));
         btnReporteM.setText("Reporte Mayor");
-        btnReporteM.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnReporteMMousePressed(evt);
-            }
-        });
+        btnReporteM.setBorder(null);
+        btnReporteM.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnReporteM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReporteMActionPerformed(evt);
             }
         });
 
-        btnReporteMD.setBackground(new java.awt.Color(204, 204, 255));
-        btnReporteMD.setText("Reporte Detalles");
-        btnReporteMD.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnReporteMDMousePressed(evt);
+        btnGuardarSub.setBackground(new java.awt.Color(0, 153, 51));
+        btnGuardarSub.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnGuardarSub.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardarSub.setText("Guardar Sub Cuentas");
+        btnGuardarSub.setBorder(null);
+        btnGuardarSub.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarSub.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarSubActionPerformed(evt);
             }
         });
-        btnReporteMD.addActionListener(new java.awt.event.ActionListener() {
+
+        btnGuardar.setBackground(new java.awt.Color(0, 153, 51));
+        btnGuardar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setText("Guardar Cuentas Mayor");
+        btnGuardar.setBorder(null);
+        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReporteMDActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnDetalles.setBackground(new java.awt.Color(0, 153, 51));
+        btnDetalles.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnDetalles.setForeground(new java.awt.Color(255, 255, 255));
+        btnDetalles.setText("Detalles");
+        btnDetalles.setBorder(null);
+        btnDetalles.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDetalles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetallesActionPerformed(evt);
             }
         });
 
@@ -151,37 +149,37 @@ public class VistaMayor extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(43, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(59, 59, 59)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnReporteMD)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnReporteM)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnGuardarSub)
-                        .addGap(18, 18, 18)
+                        .addComponent(btnReporteMD, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnReporteM, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(btnGuardarSub, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnGuardar)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnDetalles))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDetalles)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnGuardarSub)
-                    .addComponent(btnReporteM)
-                    .addComponent(btnReporteMD))
-                .addGap(50, 50, 50)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnReporteMD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(btnReporteM, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGuardarSub, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDetalles, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -190,8 +188,7 @@ public class VistaMayor extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,44 +199,25 @@ public class VistaMayor extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDetallesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDetallesMousePressed
+    private void btnReporteMDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteMDActionPerformed
         // TODO add your handling code here:
-        
-        
-        
-    }//GEN-LAST:event_btnDetallesMousePressed
-
-    private void btnGuardarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardarMousePressed
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnGuardarSubMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarSubMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardarSubMousePressed
-
-    private void btnGuardarSubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarSubActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardarSubActionPerformed
-
-    private void btnReporteMMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReporteMMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnReporteMMousePressed
+    }//GEN-LAST:event_btnReporteMDActionPerformed
 
     private void btnReporteMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteMActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReporteMActionPerformed
 
-    private void btnReporteMDMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReporteMDMousePressed
+    private void btnGuardarSubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarSubActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnReporteMDMousePressed
+    }//GEN-LAST:event_btnGuardarSubActionPerformed
 
-    private void btnReporteMDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteMDActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnReporteMDActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDetallesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,7 +270,7 @@ public class VistaMayor extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JTable tbDatos;
+    private javax.swing.JScrollPane jScrollPane2;
+    public rojerusan.RSTableMetro tbDatos;
     // End of variables declaration//GEN-END:variables
 }
