@@ -23,11 +23,7 @@ public class a {
         
         //antes de esto tiene que sacar los reportes y el backup de la base antes del ajuste de iva.
         ajuste.ajustarIva();
-<<<<<<< HEAD
-        //despues del ajuste de iva
-=======
-        //Bakuc
->>>>>>> main
+
         c.ventasNetas();
         c.comprasTotales();
         c.comprasNetas();
