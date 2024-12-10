@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Controladores/ControladorBalanzaC.java</file>
-            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Vistas/VistaBalanzaComprobacion.java</file>
-            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Vistas/VistaMayor.java</file>
-            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Reportes/Jasper.java</file>
-            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Controladores/ControladorLibroMayor.java</file>
+            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Controladores/a.java</file>
+            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Controladores/ControladorContable.java</file>
+            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/modelos/CierreContable.java</file>
             <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Controladores/Iniciar.java</file>
+            <file>file:/C:/Users/Mac/Documents/GitHub/sistemacontables/src/Vistas/Dashboard.java</file>
         </group>
     </open-files>
 </project-private>
