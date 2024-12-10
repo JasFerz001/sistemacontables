@@ -61,14 +61,12 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
 
     public void generar() {
         estado = new EstadoResultado();
-        String fc_inicio = "2024-01-01";
-        String fc_fin = "2024-12-30";
         float ivfinal = Float.parseFloat(this.frmResultado.inventariofinal.getText());
-        estado = (daoResultado.select_ventas_totales(fc_inicio, fc_fin));
+        estado = (daoResultado.select_ventas_totales());
         String vn = estado.getVentas_Totales();
         this.frmResultado.ventasNetas.setText("$" + estado.getVentas_Totales());
 
-        estado = (daoResultado.select_costo_de_venta(fc_inicio, fc_fin));
+        estado = (daoResultado.select_costo_de_venta());
         String cv = estado.getCosto_Ventas();
         this.frmResultado.costoVendido.setText("$" + (Float.parseFloat(estado.getCosto_Ventas()) - ivfinal));
 
@@ -78,11 +76,11 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
         System.out.println(utilidadBruta);
         this.frmResultado.utilidadBruta.setText("$" + utilidadBruta);
         
-        estado = daoResultado.select_gastos_admin(fc_inicio, fc_fin);
+        estado = daoResultado.select_gastos_admin();
         String ga = estado.getGastos_Admin();
         this.frmResultado.gastosAdmin.setText("$" + ga);
 
-        estado = daoResultado.select_gasto_venta(fc_inicio, fc_fin);
+        estado = daoResultado.select_gasto_venta();
         String gv = estado.getGastos_Ventas();
         this.frmResultado.gastoVentas.setText("$" + gv);
 
@@ -93,10 +91,10 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
         this.frmResultado.utilidadOperacion.setText("$" + utilidadOperacion);
 
         EstadoResultado e = new EstadoResultado();
-        e = daoResultado.select_ingresos_finan(fc_inicio, fc_fin);
+        e = daoResultado.select_ingresos_finan();
         String inf = e.getIngresos_Finan();
         this.frmResultado.ingresosFinancieros.setText("$" + inf);
-        estado = daoResultado.select_gasto_finan(fc_inicio, fc_fin);
+        estado = daoResultado.select_gasto_finan();
         String gf = estado.getGastos_Finan();
         this.frmResultado.gastosFinancieros.setText("$" + gf);
         float utilidadAntes;
@@ -111,7 +109,7 @@ public class ControladorEstadoResultado extends MouseAdapter implements ActionLi
             this.frmResultado.utilidadAntes.setText("$" + utilidadAntes);
         }
 
-        float ventas = Float.parseFloat(daoResultado.select_ventas(fc_inicio, fc_fin));
+        float ventas = Float.parseFloat(daoResultado.select_ventas());
         System.out.println(ventas);
 
         float isr;
