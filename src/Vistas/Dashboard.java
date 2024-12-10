@@ -1,25 +1,31 @@
-package vistas;
+package Vistas;
 
 import Controladores.ControladorBalanceGeneral;
 import Controladores.ControladorBalanzaC;
+import Controladores.ControladorContable;
 import Controladores.ControladorEstadoResultado;
 import Controladores.ControladorLibroDiario;
-
+import java.sql.SQLException;
 import Controladores.ControladorLibroMayor;
 
 import Controladores.ControladorLogin;
 
 import Controladores.ControladorMostrarLibroDiario;
+import utilidades.BackupDatabase;
+import utilidades.RestoreBackupDatabase;
 import Vistas.VistaBalanceGenerales;
 import Vistas.VistaBalanzaComprobacion;
 import Vistas.VistaLibroDiario;
 import Vistas.VistaMostrarLibroDiario;
-
+import vistas.VistaSalir;
+import vistas.Catalogos;
+import vistas.VistaEstadoResultado;
+import vistas.AgregarCatalogo;
+import vistas.AgregarSubcuenta;
 
 import Vistas.VistaMayor;
 
 import controladores.ControladorMostrarCatalogo;
-
 
 import Vistas.Login;
 import controladores.ControladorAgregarCatalogo;
@@ -33,11 +39,15 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import modelos.BalanceGeneral;
 
 public class Dashboard extends javax.swing.JFrame {
 
     boolean visible = false;
+    
+    
     Color colorDefaultModulo,
             colorActivoModulo,
             colorDefaultOp,
@@ -99,9 +109,11 @@ public class Dashboard extends javax.swing.JFrame {
         panelOp4 = new javax.swing.JPanel();
         menu4Op1 = new javax.swing.JLabel();
         menu4Op2 = new javax.swing.JLabel();
+        menu4Op3 = new javax.swing.JLabel();
         panelOp5 = new javax.swing.JPanel();
         menu5Op1 = new javax.swing.JLabel();
         panelOp6 = new javax.swing.JPanel();
+        menu6Op2 = new javax.swing.JLabel();
         menu6Op1 = new javax.swing.JLabel();
         lbSistemasContables = new javax.swing.JLabel();
         opMenu1Catalogo = new javax.swing.JLabel();
@@ -375,7 +387,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu4Op1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menu4Op1.setForeground(new java.awt.Color(255, 255, 255));
         menu4Op1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
-        menu4Op1.setText("Ver");
+        menu4Op1.setText("Generar Ajuste de IVA");
         menu4Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu4Op1.setOpaque(true);
         menu4Op1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -387,12 +399,24 @@ public class Dashboard extends javax.swing.JFrame {
         menu4Op2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menu4Op2.setForeground(new java.awt.Color(255, 255, 255));
         menu4Op2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
-        menu4Op2.setText("Opc");
+        menu4Op2.setText("Generar Partidas de Ajuste");
         menu4Op2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu4Op2.setOpaque(true);
         menu4Op2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 menu4Op2MousePressed(evt);
+            }
+        });
+
+        menu4Op3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        menu4Op3.setForeground(new java.awt.Color(255, 255, 255));
+        menu4Op3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
+        menu4Op3.setText("Nuevo Ciclo Contable");
+        menu4Op3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        menu4Op3.setOpaque(true);
+        menu4Op3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                menu4Op3MousePressed(evt);
             }
         });
 
@@ -403,9 +427,12 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(panelOp4Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(panelOp4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(menu4Op2, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                    .addComponent(menu4Op1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(menu4Op1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelOp4Layout.createSequentialGroup()
+                        .addGroup(panelOp4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(menu4Op2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(menu4Op3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         panelOp4Layout.setVerticalGroup(
             panelOp4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,7 +441,9 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(menu4Op1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(menu4Op2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(menu4Op3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         panelOp5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -458,10 +487,22 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        menu6Op2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        menu6Op2.setForeground(new java.awt.Color(255, 255, 255));
+        menu6Op2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
+        menu6Op2.setText("Generar Backup ");
+        menu6Op2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        menu6Op2.setOpaque(true);
+        menu6Op2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                menu6Op2MousePressed(evt);
+            }
+        });
+
         menu6Op1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menu6Op1.setForeground(new java.awt.Color(255, 255, 255));
         menu6Op1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
-        menu6Op1.setText("Ver");
+        menu6Op1.setText("Restore Backup");
         menu6Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menu6Op1.setOpaque(true);
         menu6Op1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -475,16 +516,22 @@ public class Dashboard extends javax.swing.JFrame {
         panelOp6Layout.setHorizontalGroup(
             panelOp6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelOp6Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(26, 26, 26)
+                .addComponent(menu6Op2, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                .addGap(7, 7, 7))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOp6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(menu6Op1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelOp6Layout.setVerticalGroup(
             panelOp6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelOp6Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(menu6Op2, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(menu6Op1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         lbSistemasContables.setBackground(new java.awt.Color(204, 204, 204));
@@ -550,7 +597,7 @@ public class Dashboard extends javax.swing.JFrame {
         opMenu6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         opMenu6.setForeground(new java.awt.Color(0, 51, 153));
         opMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
-        opMenu6.setText("Opción");
+        opMenu6.setText("Backup o Restore BD");
         opMenu6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         opMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -574,15 +621,15 @@ public class Dashboard extends javax.swing.JFrame {
                             .addComponent(opMenu6, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(panelOp3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelOp4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(menuLateralLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(panelOp6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelOp5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(menuLateralLayout.createSequentialGroup()
                         .addContainerGap(5, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(opMenu2LibroDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelOp2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(opHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(opHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(menuLateralLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(panelOp6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(menuLateralLayout.createSequentialGroup()
                 .addContainerGap()
@@ -619,7 +666,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(opMenu4Cierre, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelOp4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(opMenu5AcercaDe, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelOp5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -627,8 +674,8 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(opMenu6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelOp6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(logo, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -642,7 +689,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 981, Short.MAX_VALUE)
+            .addGap(0, 992, Short.MAX_VALUE)
         );
 
         panelCopyR.setBackground(new java.awt.Color(255, 255, 255));
@@ -804,15 +851,13 @@ public class Dashboard extends javax.swing.JFrame {
         colorDefault();
         opDefault();
 
-
         VistaSalir vista = new VistaSalir("Saliendo");
         vista.setVisible(true);
 
-
 //        panelSalir.setBackground(colorActivoModulo);
-            Login login = new Login(); 
-            ControladorLogin ctrl = new ControladorLogin(login);
-            login.setVisible(true);
+        Login login = new Login();
+        ControladorLogin ctrl = new ControladorLogin(login);
+        login.setVisible(true);
 
     }//GEN-LAST:event_opSalirMousePressed
 
@@ -840,14 +885,10 @@ public class Dashboard extends javax.swing.JFrame {
         opDefault();
         menu3Op1.setBackground(colorActivoOp);
 
-         
-
         VistaBalanzaComprobacion vista = new VistaBalanzaComprobacion(new JFrame(), true);
         ControladorBalanzaC crt = new ControladorBalanzaC(vista);
 
-       vista.setVisible(true);
-
-
+        vista.setVisible(true);
 
 
     }//GEN-LAST:event_menu3Op1MousePressed
@@ -859,12 +900,12 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu3Op2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op2MousePressed
         opDefault();
         menu3Op2.setBackground(colorActivoOp);
-        
+
         VistaBalanceGenerales vista = new VistaBalanceGenerales(new JFrame(), true);
         ControladorBalanceGeneral control = new ControladorBalanceGeneral(vista);
         control.setModels();
         control.iniciar();
-        
+
     }//GEN-LAST:event_menu3Op2MousePressed
 
     private void menu3Op3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op3MousePressed
@@ -872,9 +913,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op3.setBackground(colorActivoOp);
 
         //    ControladorEvaluarExpresion ctlEvaluarExpresion = new ControladorEvaluarExpresion(vista);
-        
-
-        VistaEstadoResultado v = new  VistaEstadoResultado(new JFrame(), visible);
+        VistaEstadoResultado v = new VistaEstadoResultado(new JFrame(), visible);
         ControladorEstadoResultado c = new ControladorEstadoResultado(v);
         v.iniciar();
 
@@ -884,20 +923,108 @@ public class Dashboard extends javax.swing.JFrame {
         colorDefault();
         opDefault();
         ocultarMod(3);
+        this.menu4Op2.setEnabled(false);
+        this.menu4Op3.setEnabled(false);
     }//GEN-LAST:event_opMenu4CierreMousePressed
 
     private void menu4Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu4Op1MousePressed
+        // Restablecer estado por defecto de la interfaz
         opDefault();
         menu4Op1.setBackground(colorActivoOp);
-//        VistaConsultar formConsultar = new VistaConsultar(new JFrame(), true, "Consulta Participante");
-//        ControladorParticipante ctlparticipante = new ControladorParticipante(formConsultar,userActivo);
-//        formConsultar.setVisible(true);
+        
+        int opcion1 = JOptionPane.showConfirmDialog(
+            this, 
+            "Para Realizar Esta Opcion Debe de Haber Generado Un Backup de La Base y Los Reportes", 
+            "CONFIRMAR ACCIÓN", 
+            JOptionPane.YES_NO_OPTION
+        );
+        
+        ControladorContable ctr = new ControladorContable();
+        // Comprobar qué botón presionó el usuario
+        
+        // Comprobar qué botón presionó el usuario
+        if (opcion1 == JOptionPane.YES_OPTION) {
+            ctr.ajustarIva(); // Llamar al método para guardar los datos
+            JOptionPane.showMessageDialog(this, "Ajuste de IVA Realizado", "LISTO", JOptionPane.INFORMATION_MESSAGE);
+            this.menu4Op1.setEnabled(false);
+            this.menu4Op2.setEnabled(true);
+            this.menu4Op3.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "OPERACIÓN CANCELADA", "CANCELADO", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_menu4Op1MousePressed
 
     private void menu4Op2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu4Op2MousePressed
         opDefault();
         menu4Op2.setBackground(colorActivoOp);
 
+         String input;
+        boolean isValid;
+
+        // Solicitar al usuario el inventario final
+        do {
+            input = JOptionPane.showInputDialog(this, "Ingrese el Inventario Final:", "Inventario Final", JOptionPane.PLAIN_MESSAGE);
+
+            // Verificar si el usuario canceló la entrada
+            if (input == null) {
+                return; // El usuario canceló, se sale del método
+            }
+
+            // Validar que el input sea un número con hasta dos decimales
+            isValid = input.matches("^\\d+(\\.\\d{1,2})?$");
+            if (!isValid) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido con hasta dos decimales.", "Entrada no válida", JOptionPane.ERROR_MESSAGE);
+            }
+        } while (!isValid); // Continuar hasta que la entrada sea válida
+
+        // Convertir el valor ingresado a double
+        double inventarioFinal = Double.parseDouble(input);
+
+        // Crear el controlador contable
+        ControladorContable controlador = new ControladorContable();
+
+        try {
+           
+
+            // Calcular Ventas Netas
+            controlador.calcularVentasNetas();
+
+            // Calcular Compras Totales
+            controlador.calcularComprasTotales();
+
+            // Calcular Compras Netas
+            controlador.calcularComprasNetas();
+            //Calcular mercaderia disponible
+            controlador.calcularMercaderiaDisponible();
+            
+            //Calcular costo de ventas
+            controlador.calcularCostoVentas(inventarioFinal);
+           
+            //Calcular Utilidad Bruta
+            controlador.calcularUtilidadBruta();
+            
+            //Calcular Liquidar ventas
+            controlador.calcularLiquidarVentas();
+            //Calcular Liquidar Gastos
+            controlador.calcularLiquidarGastos();
+            //Calcular otros gastos
+            controlador.calcularLiquidarOtrosGastos();
+            //Calcular utilidad del ejercicio
+            controlador.calcularUtilidadEjercicio();
+            
+
+            // Cerrar conexiones al finalizar
+            controlador.cerrarConexiones();
+
+        } catch (Exception e) {
+            // Manejo genérico de cualquier otra excepción
+            JOptionPane.showMessageDialog(this, "Ha ocurrido un error inesperado: " + e.getMessage(), "Error General", JOptionPane.ERROR_MESSAGE);
+        }
+        
+            this.menu4Op2.setEnabled(false);
+            this.menu4Op3.setEnabled(true);
+        
     }//GEN-LAST:event_menu4Op2MousePressed
 
     private void panelOp4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelOp4MousePressed
@@ -925,13 +1052,10 @@ public class Dashboard extends javax.swing.JFrame {
     private void panelOp5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelOp5MousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_panelOp5MousePressed
-
+    //RESTORE DE BACKUP BD 
     private void menu6Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu6Op1MousePressed
-        opDefault();
-        menu6Op1.setBackground(colorActivoOp);
-//        VistaConsultaRol frmConsultRol = new VistaConsultaRol(new JFrame(), true, "Consulta Rol");
-//        ControladorRol ctrRol = new ControladorRol(frmConsultRol,userActivo);
-//        frmConsultRol.setVisible(true);
+        RestoreBackupDatabase restoreBackup = new RestoreBackupDatabase();
+        restoreBackup.restoreBackup();
     }//GEN-LAST:event_menu6Op1MousePressed
 
     private void panelOp6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelOp6MousePressed
@@ -986,7 +1110,7 @@ public class Dashboard extends javax.swing.JFrame {
     private void AgregarSubMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AgregarSubMousePressed
         opDefault();
         AgregarSub.setBackground(colorActivoOp);
-        
+
         AgregarSubcuenta a = new AgregarSubcuenta(new JFrame(), visible);
         ControladorSubCuenta ctrl = new ControladorSubCuenta(a);
         a.iniciar();
@@ -995,11 +1119,40 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu3Op4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu3Op4MousePressed
         opDefault();
         menu3Op4.setBackground(colorActivoOp);
-        
+
         VistaMayor frmLibroMayor = new VistaMayor(new JFrame(), true);
         ControladorLibroMayor ctrl = new ControladorLibroMayor(frmLibroMayor);
         frmLibroMayor.iniciar();
     }//GEN-LAST:event_menu3Op4MousePressed
+    //CREAR EL BACKUP DE LA BASE DE DATOS SIC
+    private void menu6Op2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu6Op2MousePressed
+        BackupDatabase backupDatabase = new BackupDatabase();
+        backupDatabase.createBackup();
+    }//GEN-LAST:event_menu6Op2MousePressed
+
+    private void menu4Op3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu4Op3MousePressed
+        // TODO add your handling code here:
+        ControladorContable controlador = new ControladorContable();
+
+        try {
+           
+
+            controlador.calcularPartidaCierre();
+            
+            
+            controlador.AlmacenarNuevoCiclo();
+            
+
+            // Cerrar conexiones al finalizar
+            controlador.cerrarConexiones();
+
+        } catch (Exception e) {
+            // Manejo genérico de cualquier otra excepción
+            JOptionPane.showMessageDialog(this, "Ha ocurrido un error inesperado: " + e.getMessage(), "Error General", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+    }//GEN-LAST:event_menu4Op3MousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1023,8 +1176,10 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel menu3Op4;
     private javax.swing.JLabel menu4Op1;
     private javax.swing.JLabel menu4Op2;
+    private javax.swing.JLabel menu4Op3;
     private javax.swing.JLabel menu5Op1;
     private javax.swing.JLabel menu6Op1;
+    private javax.swing.JLabel menu6Op2;
     private javax.swing.JPanel menuLateral;
     private javax.swing.JPanel opHome;
     public javax.swing.JLabel opMenu1Catalogo;
