@@ -1,8 +1,12 @@
 package Controladores;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import modelos.AjusteIVA;
 import modelos.CierreContable;
+import modelos.PartidaCierre;
+import utilidades.BackupDatabase;
+import utilidades.RestoreBackupDatabase;
 
 /**
  *
@@ -73,6 +77,112 @@ public class ControladorContable {
         } catch (SQLException e) {
             System.err.println("Error al calcular Compras Netas: " + e.getMessage());
         }
+    }
+    
+     public void calcularUtilidadBruta() {
+        try {
+            cierreContable.utilidadBruta();
+            System.out.println("Cálculo de Utilidad Bruta realizado correctamente.");
+        } catch (SQLException e) {
+            System.err.println("Error al calcular Utilidad Bruta: " + e.getMessage());
+        }
+    }
+     
+     public void calcularLiquidarVentas() {
+        try {
+            CierreContable c = new CierreContable();
+            double a = c.obtener_Ventas();
+            cierreContable.liquidarVentas(a);
+            System.out.println("Cálculo de Liquidacion de Ventas realizado correctamente.");
+        } catch (SQLException e) {
+            System.err.println("Error al calcular Las Liquidaciones de Ventas: " + e.getMessage());
+        }
+    }
+     
+          public void calcularLiquidarGastos() {
+        try {
+            
+            cierreContable.liquidarGastos();
+            System.out.println("Cálculo de Liquidacion de Gastos realizado correctamente.");
+        } catch (SQLException e) {
+            System.err.println("Error al Calcular Las Liquidaciones de Gastos: " + e.getMessage());
+        }
+    }
+          
+          public void calcularLiquidarOtrosGastos() {
+        try {
+          
+            cierreContable.liquidarOtrosGastos();
+            System.out.println("Cálculo de Liquidacion de Otros Gastos realizado correctamente.");
+        } catch (SQLException e) {
+            System.err.println("Error al Calcular Las Liquidaciones de Otros Gastos: " + e.getMessage());
+        }
+    }
+     
+          public void calcularUtilidadEjercicio() {
+        try {
+          
+            cierreContable.utilidadEjercicio();
+            System.out.println("Cálculo de Utilidad del Ejercicio realizado correctamente.");
+        } catch (SQLException e) {
+            System.err.println("Error al Calcular Utilidad del Ejercicio: " + e.getMessage());
+        }
+    }
+          
+           public void calcularMercaderiaDisponible() {
+        try {
+          
+            cierreContable.mercaderiaDisponible();
+            System.out.println("Cálculo de Mercaderia Disponible realizado correctamente.");
+        } catch (SQLException e) {
+            System.err.println("Error al Calcular Utilidad del Ejercicio: " + e.getMessage());
+        }
+    }
+           
+             public void calcularPartidaCierre() {
+        try {
+          
+            cierreContable.partidaCierre();
+            System.out.println("Cálculo de Partida de Cierre realizado correctamente.");
+        } catch (SQLException e) {
+            System.err.println("Error al Calcular Partida de Cierre: " + e.getMessage());
+        }
+    }
+             
+                public void calcularCostoVentas(Double a) {
+        try {
+          
+            cierreContable.costoVenta(a);
+            System.out.println("Cálculo de Costo de Ventas realizado correctamente.");
+        } catch (SQLException e) {
+            System.err.println("Error al Calcular Costo de Ventas: " + e.getMessage());
+        }
+    }
+     
+                  public void AlmacenarNuevoCiclo() throws SQLException {
+                      BackupDatabase backupDatabase = new BackupDatabase();
+                      backupDatabase.createBackup();
+                      CierreContable c = new CierreContable();
+                       int numeroPartida = c.obtenerNumeroPartida();
+        ArrayList<PartidaCierre> lista1 = c.obtenerSaldoActivoCierre(numeroPartida);
+        ArrayList<PartidaCierre> lista2 = c.obtenerSaldoPasivoCierre(numeroPartida);
+        ArrayList<PartidaCierre> lista3 = c.obtenerSaldoPatrimonioCierre(numeroPartida);
+        //hacer drop de la base
+        //restaurar la base nueva, que seria la vacia
+        RestoreBackupDatabase restoreBackup = new RestoreBackupDatabase();
+        restoreBackup.restoreBackup();
+        
+        //hacer este insert.
+        for (PartidaCierre x : lista1) {
+            c.insertarTransaccion(1, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Debe");
+        }
+        for (PartidaCierre x : lista2) {
+            c.insertarTransaccion(1, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Debe");
+        }
+        for (PartidaCierre x : lista3) {
+            c.insertarTransaccion(1, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Haber");
+        }
+        
     }
 
     // Método para cerrar las conexiones de ambas clases

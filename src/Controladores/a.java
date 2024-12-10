@@ -23,16 +23,25 @@ public class a {
         
         //antes de esto tiene que sacar los reportes y el backup de la base antes del ajuste de iva.
         ajuste.ajustarIva();
+<<<<<<< HEAD
         //despues del ajuste de iva
+=======
+        //Bakuc
+>>>>>>> main
         c.ventasNetas();
         c.comprasTotales();
         c.comprasNetas();
+        //
         c.mercaderiaDisponible();
+        
         c.costoVenta(200000.00);
+        //
         c.utilidadBruta();
         c.liquidarVentas(a);
+        
         c.liquidarGastos();
         c.liquidarOtrosGastos();
+        
         c.utilidadEjercicio();
         
         //para hacer partida de cierre;
@@ -56,13 +65,13 @@ public class a {
         
         //hacer este insert.
         for (PartidaCierre x : lista1) {
-            c.insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Debe");
+            c.insertarTransaccion(1, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Debe");
         }
         for (PartidaCierre x : lista2) {
-            c.insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Debe");
+            c.insertarTransaccion(1, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Debe");
         }
         for (PartidaCierre x : lista3) {
-            c.insertarTransaccion(numeroPartida, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Haber");
+            c.insertarTransaccion(1, String.valueOf(x.getCodigo()), x.getMonto(), "PARTIDA DE APERTURA", "Haber");
         }
 
     }

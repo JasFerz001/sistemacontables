@@ -338,8 +338,6 @@ public class DaoEstadoResultado {
             this.conexion.getConexion();
             this.conection = conexion.getConexion();
             ps = conection.prepareStatement(sql);
-            //ps.setString(1, "" + fecha_Inicio + "");
-            //ps.setString(2, "" + fecha_Fin + "");
             rs = ps.executeQuery();
 
             if (rs.next()) {
