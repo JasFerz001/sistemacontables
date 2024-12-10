@@ -5,7 +5,7 @@ import ds.desktop.notify.DesktopNotify;
 import ds.desktop.notify.NotifyTheme;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import vistas.Dashboard;
+import Vistas.Dashboard;
 
 /**
  *
