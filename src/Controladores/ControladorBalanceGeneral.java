@@ -9,6 +9,7 @@ import daos.DaoEstadoResultado;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
@@ -60,7 +61,9 @@ public class ControladorBalanceGeneral implements ActionListener {
     }
 
     public void setModels() {
-
+        
+        this.vista.setAnio.setText(String.valueOf(anio));
+        
         //--para mostrar activos
         dtm = new DefaultTableModel() {
             @Override
