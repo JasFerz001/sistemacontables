@@ -23,6 +23,7 @@ public class a {
         
         //antes de esto tiene que sacar los reportes y el backup de la base antes del ajuste de iva.
         ajuste.ajustarIva();
+        //despues del ajuste de iva
         c.ventasNetas();
         c.comprasTotales();
         c.comprasNetas();
@@ -38,13 +39,19 @@ public class a {
         c.partidaCierre();
         //luego de ejecutar la partida de cierre, tiene que hacer un backup de la base tiniendo todos los datos de los ajustes y el cierre
         
+        
+        
+        
+        
         //hacer backup de la base 
        //antes de que drop a la base se tiene que hacer esta parte
         int numeroPartida = c.obtenerNumeroPartida();
         ArrayList<PartidaCierre> lista1 = c.obtenerSaldoActivoCierre(numeroPartida);
         ArrayList<PartidaCierre> lista2 = c.obtenerSaldoPasivoCierre(numeroPartida);
         ArrayList<PartidaCierre> lista3 = c.obtenerSaldoPatrimonioCierre(numeroPartida);
-        //hacer drop de la base
+        
+
+//hacer drop de la base
         //restaurar la base nueva, que seria la vacia
         
         //hacer este insert.
