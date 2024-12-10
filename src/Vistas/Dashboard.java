@@ -11,6 +11,7 @@ import Controladores.ControladorLibroMayor;
 import Controladores.ControladorLogin;
 
 import Controladores.ControladorMostrarLibroDiario;
+import Utilidades.VistaAcercaDe;
 import utilidades.BackupDatabase;
 import utilidades.RestoreBackupDatabase;
 import Vistas.VistaBalanceGenerales;
@@ -46,8 +47,7 @@ import modelos.BalanceGeneral;
 public class Dashboard extends javax.swing.JFrame {
 
     boolean visible = false;
-    
-    
+
     Color colorDefaultModulo,
             colorActivoModulo,
             colorDefaultOp,
@@ -92,8 +92,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         menuLateral = new javax.swing.JPanel();
-        opHome = new javax.swing.JPanel();
-        home = new javax.swing.JLabel();
         panelOp1 = new javax.swing.JPanel();
         VerCatalogo = new javax.swing.JLabel();
         AgregarMayor = new javax.swing.JLabel();
@@ -110,8 +108,6 @@ public class Dashboard extends javax.swing.JFrame {
         menu4Op1 = new javax.swing.JLabel();
         menu4Op2 = new javax.swing.JLabel();
         menu4Op3 = new javax.swing.JLabel();
-        panelOp5 = new javax.swing.JPanel();
-        menu5Op1 = new javax.swing.JLabel();
         panelOp6 = new javax.swing.JPanel();
         menu6Op2 = new javax.swing.JLabel();
         menu6Op1 = new javax.swing.JLabel();
@@ -120,9 +116,11 @@ public class Dashboard extends javax.swing.JFrame {
         opMenu2LibroDiario = new javax.swing.JLabel();
         opMenu3Reportes = new javax.swing.JLabel();
         opMenu4Cierre = new javax.swing.JLabel();
-        opMenu5AcercaDe = new javax.swing.JLabel();
         opMenu6 = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
+        opMenu5AcercaDe = new javax.swing.JLabel();
+        panelOp5 = new javax.swing.JPanel();
+        menu5Op1 = new javax.swing.JLabel();
         panelTop = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         escritorio = new javax.swing.JDesktopPane();
@@ -151,31 +149,6 @@ public class Dashboard extends javax.swing.JFrame {
         setUndecorated(true);
 
         menuLateral.setForeground(new java.awt.Color(255, 255, 255));
-
-        opHome.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                opHomeMousePressed(evt);
-            }
-        });
-
-        home.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        home.setForeground(new java.awt.Color(0, 51, 153));
-
-        javax.swing.GroupLayout opHomeLayout = new javax.swing.GroupLayout(opHome);
-        opHome.setLayout(opHomeLayout);
-        opHomeLayout.setHorizontalGroup(
-            opHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(opHomeLayout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
-        );
-        opHomeLayout.setVerticalGroup(
-            opHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, opHomeLayout.createSequentialGroup()
-                .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
 
         panelOp1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -446,41 +419,6 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        panelOp5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                panelOp5MousePressed(evt);
-            }
-        });
-
-        menu5Op1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        menu5Op1.setForeground(new java.awt.Color(255, 255, 255));
-        menu5Op1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
-        menu5Op1.setText("Ver");
-        menu5Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        menu5Op1.setOpaque(true);
-        menu5Op1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                menu5Op1MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelOp5Layout = new javax.swing.GroupLayout(panelOp5);
-        panelOp5.setLayout(panelOp5Layout);
-        panelOp5Layout.setHorizontalGroup(
-            panelOp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelOp5Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(menu5Op1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
-        panelOp5Layout.setVerticalGroup(
-            panelOp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelOp5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(menu5Op1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         panelOp6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 panelOp6MousePressed(evt);
@@ -516,12 +454,12 @@ public class Dashboard extends javax.swing.JFrame {
         panelOp6Layout.setHorizontalGroup(
             panelOp6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelOp6Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(menu6Op2, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                .addGap(7, 7, 7))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOp6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(menu6Op1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addGroup(panelOp6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menu6Op1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelOp6Layout.createSequentialGroup()
+                        .addComponent(menu6Op2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 1, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelOp6Layout.setVerticalGroup(
@@ -583,6 +521,17 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        opMenu6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        opMenu6.setForeground(new java.awt.Color(0, 51, 153));
+        opMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
+        opMenu6.setText("Backup o Restore BD");
+        opMenu6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        opMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                opMenu6MousePressed(evt);
+            }
+        });
+
         opMenu5AcercaDe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         opMenu5AcercaDe.setForeground(new java.awt.Color(0, 51, 153));
         opMenu5AcercaDe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
@@ -594,16 +543,40 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        opMenu6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        opMenu6.setForeground(new java.awt.Color(0, 51, 153));
-        opMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
-        opMenu6.setText("Backup o Restore BD");
-        opMenu6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        opMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
+        panelOp5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                opMenu6MousePressed(evt);
+                panelOp5MousePressed(evt);
             }
         });
+
+        menu5Op1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        menu5Op1.setForeground(new java.awt.Color(255, 255, 255));
+        menu5Op1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario.png"))); // NOI18N
+        menu5Op1.setText("Ver");
+        menu5Op1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        menu5Op1.setOpaque(true);
+        menu5Op1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                menu5Op1MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelOp5Layout = new javax.swing.GroupLayout(panelOp5);
+        panelOp5.setLayout(panelOp5Layout);
+        panelOp5Layout.setHorizontalGroup(
+            panelOp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelOp5Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(menu5Op1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+        panelOp5Layout.setVerticalGroup(
+            panelOp5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelOp5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(menu5Op1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout menuLateralLayout = new javax.swing.GroupLayout(menuLateral);
         menuLateral.setLayout(menuLateralLayout);
@@ -616,41 +589,38 @@ public class Dashboard extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(opMenu3Reportes, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(opMenu4Cierre, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(opMenu5AcercaDe, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(opMenu6, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(opMenu4Cierre, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(panelOp3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelOp4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelOp5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(menuLateralLayout.createSequentialGroup()
                         .addContainerGap(5, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(opMenu2LibroDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelOp2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(opHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(menuLateralLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(panelOp6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(opMenu6, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelOp6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(menuLateralLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuLateralLayout.createSequentialGroup()
-                        .addComponent(lbSistemasContables, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(188, 188, 188))
                     .addGroup(menuLateralLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbSistemasContables, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(opMenu1Catalogo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(opMenu5AcercaDe, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelOp5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(menuLateralLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         menuLateralLayout.setVerticalGroup(
             menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuLateralLayout.createSequentialGroup()
                 .addGap(8, 8, 8)
                 .addComponent(lbSistemasContables)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(opHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(opMenu1Catalogo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelOp1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -667,16 +637,15 @@ public class Dashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelOp4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(opMenu5AcercaDe, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelOp5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(opMenu6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelOp6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(opMenu5AcercaDe, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelOp5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -689,7 +658,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 992, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         panelCopyR.setBackground(new java.awt.Color(255, 255, 255));
@@ -813,8 +782,6 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelSalir.getAccessibleContext().setAccessibleParent(opHome);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -850,10 +817,6 @@ public class Dashboard extends javax.swing.JFrame {
     private void opSalirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opSalirMousePressed
         colorDefault();
         opDefault();
-
-        VistaSalir vista = new VistaSalir("Saliendo");
-        vista.setVisible(true);
-
 //        panelSalir.setBackground(colorActivoModulo);
         Login login = new Login();
         ControladorLogin ctrl = new ControladorLogin(login);
@@ -931,17 +894,17 @@ public class Dashboard extends javax.swing.JFrame {
         // Restablecer estado por defecto de la interfaz
         opDefault();
         menu4Op1.setBackground(colorActivoOp);
-        
+
         int opcion1 = JOptionPane.showConfirmDialog(
-            this, 
-            "Para Realizar Esta Opcion Debe de Haber Generado Un Backup de La Base y Los Reportes", 
-            "CONFIRMAR ACCIÓN", 
-            JOptionPane.YES_NO_OPTION
+                this,
+                "Para Realizar Esta Opcion Debe de Haber Generado Un Backup de La Base y Los Reportes",
+                "CONFIRMAR ACCIÓN",
+                JOptionPane.YES_NO_OPTION
         );
-        
+
         ControladorContable ctr = new ControladorContable();
         // Comprobar qué botón presionó el usuario
-        
+
         // Comprobar qué botón presionó el usuario
         if (opcion1 == JOptionPane.YES_OPTION) {
             ctr.ajustarIva(); // Llamar al método para guardar los datos
@@ -959,7 +922,7 @@ public class Dashboard extends javax.swing.JFrame {
         opDefault();
         menu4Op2.setBackground(colorActivoOp);
 
-         String input;
+        String input;
         boolean isValid;
 
         // Solicitar al usuario el inventario final
@@ -985,7 +948,6 @@ public class Dashboard extends javax.swing.JFrame {
         ControladorContable controlador = new ControladorContable();
 
         try {
-           
 
             // Calcular Ventas Netas
             controlador.calcularVentasNetas();
@@ -997,13 +959,13 @@ public class Dashboard extends javax.swing.JFrame {
             controlador.calcularComprasNetas();
             //Calcular mercaderia disponible
             controlador.calcularMercaderiaDisponible();
-            
+
             //Calcular costo de ventas
             controlador.calcularCostoVentas(inventarioFinal);
-           
+
             //Calcular Utilidad Bruta
             controlador.calcularUtilidadBruta();
-            
+
             //Calcular Liquidar ventas
             controlador.calcularLiquidarVentas();
             //Calcular Liquidar Gastos
@@ -1012,7 +974,6 @@ public class Dashboard extends javax.swing.JFrame {
             controlador.calcularLiquidarOtrosGastos();
             //Calcular utilidad del ejercicio
             controlador.calcularUtilidadEjercicio();
-            
 
             // Cerrar conexiones al finalizar
             controlador.cerrarConexiones();
@@ -1021,10 +982,10 @@ public class Dashboard extends javax.swing.JFrame {
             // Manejo genérico de cualquier otra excepción
             JOptionPane.showMessageDialog(this, "Ha ocurrido un error inesperado: " + e.getMessage(), "Error General", JOptionPane.ERROR_MESSAGE);
         }
-        
-            this.menu4Op2.setEnabled(false);
-            this.menu4Op3.setEnabled(true);
-        
+
+        this.menu4Op2.setEnabled(false);
+        this.menu4Op3.setEnabled(true);
+
     }//GEN-LAST:event_menu4Op2MousePressed
 
     private void panelOp4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelOp4MousePressed
@@ -1044,9 +1005,8 @@ public class Dashboard extends javax.swing.JFrame {
     private void menu5Op1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu5Op1MousePressed
         opDefault();
         menu5Op1.setBackground(colorActivoOp);
-//        VistaConsultar formConsultar = new VistaConsultar(new JFrame(), true, "Consulta Usuario");
-//        ControladorUsuario ctlUsuarios = new ControladorUsuario(formConsultar,userActivo);
-//        formConsultar.iniciar();
+        VistaAcercaDe frmAcerca = new VistaAcercaDe(this, visible, "© 2024 Software");
+        frmAcerca.setVisible(true);
     }//GEN-LAST:event_menu5Op1MousePressed
 
     private void panelOp5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelOp5MousePressed
@@ -1103,10 +1063,6 @@ public class Dashboard extends javax.swing.JFrame {
         frmMostrar.setVisible(true);
     }//GEN-LAST:event_menu2Op2MousePressed
 
-    private void opHomeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opHomeMousePressed
-
-    }//GEN-LAST:event_opHomeMousePressed
-
     private void AgregarSubMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AgregarSubMousePressed
         opDefault();
         AgregarSub.setBackground(colorActivoOp);
@@ -1135,13 +1091,10 @@ public class Dashboard extends javax.swing.JFrame {
         ControladorContable controlador = new ControladorContable();
 
         try {
-           
 
             controlador.calcularPartidaCierre();
-            
-            
+
             controlador.AlmacenarNuevoCiclo();
-            
 
             // Cerrar conexiones al finalizar
             controlador.cerrarConexiones();
@@ -1150,8 +1103,8 @@ public class Dashboard extends javax.swing.JFrame {
             // Manejo genérico de cualquier otra excepción
             JOptionPane.showMessageDialog(this, "Ha ocurrido un error inesperado: " + e.getMessage(), "Error General", JOptionPane.ERROR_MESSAGE);
         }
-        
-        
+
+
     }//GEN-LAST:event_menu4Op3MousePressed
 
 
@@ -1160,7 +1113,6 @@ public class Dashboard extends javax.swing.JFrame {
     public javax.swing.JLabel AgregarSub;
     public javax.swing.JLabel VerCatalogo;
     private javax.swing.JDesktopPane escritorio;
-    private javax.swing.JLabel home;
     public javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
@@ -1181,7 +1133,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel menu6Op1;
     private javax.swing.JLabel menu6Op2;
     private javax.swing.JPanel menuLateral;
-    private javax.swing.JPanel opHome;
     public javax.swing.JLabel opMenu1Catalogo;
     public javax.swing.JLabel opMenu2LibroDiario;
     public javax.swing.JLabel opMenu3Reportes;
@@ -1205,9 +1156,8 @@ public class Dashboard extends javax.swing.JFrame {
         menuLateral.setBackground(colorMenuLateral);
         menuLateral.setForeground(colorFuente);
 
-        opHome.setBackground(colorDefaultModulo);
-        home.setForeground(colorFuente2);
-
+//        opHome.setBackground(colorDefaultModulo);
+//        home.setForeground(colorFuente2);
         panelOp1.setBackground(colorDefaultModulo);
         opMenu1Catalogo.setForeground(colorFuente2);
 
@@ -1235,7 +1185,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     public void opDefault() {
-        opHome.setBackground(colorMenuLateral);
+//        opHome.setBackground(colorMenuLateral);
         opSalir.setBackground(colorMenuLateral);
         panelCopyR.setBackground(colorMenuLateral);
         //opciones
@@ -1250,8 +1200,10 @@ public class Dashboard extends javax.swing.JFrame {
         menu3Op4.setBackground(colorDefaultOp);
         menu4Op1.setBackground(colorDefaultOp);
         menu4Op2.setBackground(colorDefaultOp);
+        menu4Op3.setBackground(colorDefaultOp);
         menu5Op1.setBackground(colorDefaultOp);
         menu6Op1.setBackground(colorDefaultOp);
+        menu6Op2.setBackground(colorDefaultOp);
 
     }
 
@@ -1353,7 +1305,7 @@ public class Dashboard extends javax.swing.JFrame {
         opDefault();
         copyright();
         menuLateral.setVisible(visible);
-        opHome.setVisible(true);
+//        opHome.setVisible(true);
         opSalir.setVisible(true);
         this.escritorio.setBorder(new Fondo("/img/fondo.jpg"));
         lbSistemasContables.setText("Sistemas Contables");
