@@ -6,7 +6,7 @@ package Vistas;
 
 /**
  *
- * @author luisa
+ * @author luis
  */
 public class VistaBalanceGenerales extends javax.swing.JDialog {
 
