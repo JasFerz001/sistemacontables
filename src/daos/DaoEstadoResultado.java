@@ -119,12 +119,38 @@ public class DaoEstadoResultado {
                 + "WHERE cm.cod_mayor = '4303';";
         return gasto_finan(sql);
     }
+    
+    public String select_dev_ventas() {
+        String sql = "SELECT SUM(ld.monto) AS total_ventas\n"
+                + "FROM libro_diario ld\n"
+                + "JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta\n"
+                + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor\n"
+                + "WHERE cm.cod_mayor = '4103'";
+        return ventas(sql);
+    } 
+    
+    public String select_reb_ventas() {
+        String sql = "SELECT SUM(ld.monto) AS total_ventas\n"
+                + "FROM libro_diario ld\n"
+                + "JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta\n"
+                + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor\n"
+                + "WHERE cm.cod_mayor = '4104'";
+        return ventas(sql);
+    }
+    
+    public String select_inv_inicial() {
+        String sql = "SELECT SUM(ld.monto) AS total_ventas\n"
+                + "FROM libro_diario ld\n"
+                + "JOIN subcuentas sc ON ld.cod_subcuenta = sc.cod_subcuenta\n"
+                + "JOIN cuentas_mayor cm ON sc.cod_mayor = cm.cod_mayor\n"
+                + "WHERE cm.cod_mayor = '1106'";
+        return ventas(sql);
+    }
 
     private EstadoResultado ventas_Totales(String sql) {
         EstadoResultado obj = null;
         try {
             this.conexion = new Conexion();
-            this.conexion.getConexion();
             this.conection = conexion.getConexion();
             ps = conection.prepareStatement(sql);
             
@@ -156,7 +182,6 @@ public class DaoEstadoResultado {
         EstadoResultado obj = null;
         try {
             this.conexion = new Conexion();
-            this.conexion.getConexion();
             this.conection = conexion.getConexion();
             ps = conection.prepareStatement(sql);
             
@@ -188,7 +213,6 @@ public class DaoEstadoResultado {
         EstadoResultado obj = null;
         try {
             this.conexion = new Conexion();
-            this.conexion.getConexion();
             this.conection = conexion.getConexion();
             ps = conection.prepareStatement(sql);
             
@@ -220,7 +244,6 @@ public class DaoEstadoResultado {
         EstadoResultado obj = null;
         try {
             this.conexion = new Conexion();
-            this.conexion.getConexion();
             this.conection = conexion.getConexion();
             ps = conection.prepareStatement(sql);
            
@@ -252,7 +275,6 @@ public class DaoEstadoResultado {
         EstadoResultado obj = null;
         try {
             this.conexion = new Conexion();
-            this.conexion.getConexion();
             this.conection = conexion.getConexion();
             ps = conection.prepareStatement(sql);
            
@@ -284,7 +306,6 @@ public class DaoEstadoResultado {
         EstadoResultado obj = null;
         try {
             this.conexion = new Conexion();
-            this.conexion.getConexion();
             this.conection = conexion.getConexion();
             ps = conection.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -315,7 +336,6 @@ public class DaoEstadoResultado {
         String obj = null;
         try {
             this.conexion = new Conexion();
-            this.conexion.getConexion();
             this.conection = conexion.getConexion();
             ps = conection.prepareStatement(sql);
             rs = ps.executeQuery();
