@@ -280,10 +280,10 @@ public class ControladorBalanceGeneral implements ActionListener {
         String fc_inicio = "2024-01-01";
         String fc_fin = "2024-12-30";
         Double ivfinal = (Double) 200000.00;
-        estado = (daoResultado.select_ventas_totales(fc_inicio, fc_fin));
+        estado = (daoResultado.select_ventas_totales());
         String vn = estado.getVentas_Totales();
 
-        estado = (daoResultado.select_costo_de_venta(fc_inicio, fc_fin));
+        estado = (daoResultado.select_costo_de_venta());
         String cv = estado.getCosto_Ventas();
 
         Double a = (Double.parseDouble(vn) - (Double.parseDouble(cv) - ivfinal));
@@ -292,10 +292,10 @@ public class ControladorBalanceGeneral implements ActionListener {
         
         System.out.println(utilidadBruta);
 
-        estado = daoResultado.select_gastos_admin(fc_inicio, fc_fin);
+        estado = daoResultado.select_gastos_admin();
         String ga = estado.getGastos_Admin();
 
-        estado = daoResultado.select_gasto_venta(fc_inicio, fc_fin);
+        estado = daoResultado.select_gasto_venta();
         String gv = estado.getGastos_Ventas();
 
         Double b = utilidadBruta - (Double.parseDouble(ga) + Double.parseDouble(gv));
@@ -303,10 +303,10 @@ public class ControladorBalanceGeneral implements ActionListener {
         Double utilidadOperacion = Double.parseDouble(String.format("%.2f", b));
 
         EstadoResultado e = new EstadoResultado();
-        e = daoResultado.select_ingresos_finan(fc_inicio, fc_fin);
+        e = daoResultado.select_ingresos_finan();
         String inf = e.getIngresos_Finan();
 
-        estado = daoResultado.select_gasto_finan(fc_inicio, fc_fin);
+        estado = daoResultado.select_gasto_finan();
         String gf = estado.getGastos_Finan();
 
         Double utilidadAntes;
@@ -321,7 +321,7 @@ public class ControladorBalanceGeneral implements ActionListener {
 
         }
 
-        Double ventas = Double.parseDouble(daoResultado.select_ventas(fc_inicio, fc_fin));
+        Double ventas = Double.parseDouble(daoResultado.select_ventas());
         System.out.println(ventas);
         return utilidadAntes;
     }
@@ -342,7 +342,7 @@ public class ControladorBalanceGeneral implements ActionListener {
         Double isr;
         String fc_inicio = "2024-01-01";
         String fc_fin = "2024-12-30";
-        Double ventas = Double.parseDouble(daoResultado.select_ventas(fc_inicio, fc_fin));
+        Double ventas = Double.parseDouble(daoResultado.select_ventas());
         Double utilidadAntes = getDato();
 
         if (ventas < 1500000) {
