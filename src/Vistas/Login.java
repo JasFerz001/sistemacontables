@@ -14,12 +14,8 @@ import vistas.VistaSalir;
  * @author kevin
  */
 public class Login extends javax.swing.JFrame {
-
      boolean visible = false;
-
     DefaultTableModel modelo;
-    
-    
     public Login() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -29,6 +25,8 @@ public class Login extends javax.swing.JFrame {
     public void iniciar() {
         this.setVisible(true);
     }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,17 +63,17 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ddd.png"))); // NOI18N
         jLabel3.setText("INICIAR SESIÓN");
         background.add(jLabel3);
-        jLabel3.setBounds(380, 170, 200, 29);
+        jLabel3.setBounds(420, 230, 200, 29);
 
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 1, 20)); // NOI18N
         jLabel4.setText("Usuario");
         background.add(jLabel4);
-        jLabel4.setBounds(270, 250, 80, 26);
+        jLabel4.setBounds(310, 310, 80, 26);
 
         jLabel5.setFont(new java.awt.Font("Roboto Medium", 1, 20)); // NOI18N
         jLabel5.setText("Contraseña");
         background.add(jLabel5);
-        jLabel5.setBounds(270, 360, 120, 26);
+        jLabel5.setBounds(310, 420, 120, 26);
 
         panelLateral.setBackground(new java.awt.Color(153, 0, 0));
 
@@ -95,11 +93,11 @@ public class Login extends javax.swing.JFrame {
             .addGroup(panelLateralLayout.createSequentialGroup()
                 .addGap(116, 116, 116)
                 .addComponent(jLabel2)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addContainerGap(426, Short.MAX_VALUE))
         );
 
         background.add(panelLateral);
-        panelLateral.setBounds(930, 0, 440, 770);
+        panelLateral.setBounds(1100, 0, 440, 1080);
 
         btnSalir.setBackground(new java.awt.Color(255, 255, 255));
         btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -151,13 +149,8 @@ public class Login extends javax.swing.JFrame {
                 tfUsuarioMousePressed(evt);
             }
         });
-        tfUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfUsuarioActionPerformed(evt);
-            }
-        });
         background.add(tfUsuario);
-        tfUsuario.setBounds(270, 280, 430, 40);
+        tfUsuario.setBounds(310, 340, 430, 40);
 
         jPasswordField1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jPasswordField1.setForeground(new java.awt.Color(204, 204, 204));
@@ -169,11 +162,11 @@ public class Login extends javax.swing.JFrame {
             }
         });
         background.add(jPasswordField1);
-        jPasswordField1.setBounds(270, 390, 430, 40);
+        jPasswordField1.setBounds(310, 450, 430, 40);
         background.add(jSeparator1);
-        jSeparator1.setBounds(270, 320, 430, 20);
+        jSeparator1.setBounds(310, 380, 430, 20);
         background.add(jSeparator2);
-        jSeparator2.setBounds(270, 430, 430, 20);
+        jSeparator2.setBounds(310, 490, 430, 20);
 
         btnIngresar.setBackground(new java.awt.Color(196, 6, 33));
         btnIngresar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -188,7 +181,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         background.add(btnIngresar);
-        btnIngresar.setBounds(270, 480, 200, 50);
+        btnIngresar.setBounds(310, 540, 200, 50);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -200,9 +193,7 @@ public class Login extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -252,10 +243,6 @@ public class Login extends javax.swing.JFrame {
         VistaSalir vista = new VistaSalir("Saliendo");
         vista.setVisible(true);
     }//GEN-LAST:event_txtSalirMousePressed
-
-    private void tfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfUsuarioActionPerformed
 
 //    /**
 //     * @param args the command line arguments
