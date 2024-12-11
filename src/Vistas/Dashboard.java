@@ -1013,17 +1013,21 @@ public class Dashboard extends javax.swing.JFrame {
             //Calcular utilidad del ejercicio
             controlador.calcularUtilidadEjercicio();
             
+             JOptionPane.showMessageDialog(this, "Datos Almacenados Correctamente", "LISTO", JOptionPane.INFORMATION_MESSAGE);
 
             // Cerrar conexiones al finalizar
             controlador.cerrarConexiones();
+            
+             this.menu4Op1.setEnabled(false);
+            this.menu4Op2.setEnabled(false);
+            this.menu4Op3.setEnabled(true);
 
         } catch (Exception e) {
             // Manejo genérico de cualquier otra excepción
             JOptionPane.showMessageDialog(this, "Ha ocurrido un error inesperado: " + e.getMessage(), "Error General", JOptionPane.ERROR_MESSAGE);
         }
         
-            this.menu4Op2.setEnabled(false);
-            this.menu4Op3.setEnabled(true);
+           
         
     }//GEN-LAST:event_menu4Op2MousePressed
 
