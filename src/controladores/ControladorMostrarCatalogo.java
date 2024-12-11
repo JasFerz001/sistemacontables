@@ -21,7 +21,8 @@ import modelos.Cuenta;
 import vistas.AgregarCatalogo;
 import vistas.AgregarSubcuenta;
 import vistas.Catalogos;
-import vistas.Dashboard;
+import Vistas.Dashboard;
+
 
 /**
  *
@@ -40,7 +41,7 @@ public class ControladorMostrarCatalogo extends MouseAdapter implements ActionLi
         this.frmMostrar = frmMostrar;
         this.frmMostrar.buscar.addKeyListener(this);
         this.frmMostrar.tablaMostrar.addMouseListener(this);
-        this.frmMostrar.salir.addActionListener(this);
+       // this.frmMostrar.salir.addActionListener(this);
         listaCuenta = new ArrayList<>();
         daoCatalogo = new DaoCatalogo();
         mostrar();
@@ -63,9 +64,9 @@ public class ControladorMostrarCatalogo extends MouseAdapter implements ActionLi
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.frmMostrar.salir) {
+       /* if (e.getSource() == this.frmMostrar.salir) {
             salir();
-        }
+        }*/
     }
 
     public void salir() {

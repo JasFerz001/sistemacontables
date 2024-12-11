@@ -41,7 +41,7 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
         this.frmSub.registrar.addActionListener(this);
         this.frmSub.editar.addActionListener(this);
         this.frmSub.cancelar.addActionListener(this);
-        this.frmSub.salir.addActionListener(this);
+//        this.frmSub.salir.addActionListener(this);
         this.frmSub.tablita.addMouseListener(this);
         this.frmSub.editar.setEnabled(false);
         daoSub = new DaoSubCuenta();
@@ -56,7 +56,7 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
         this.frmSub.registrar.addActionListener(this);
         this.frmSub.editar.addActionListener(this);
         this.frmSub.cancelar.addActionListener(this);
-        this.frmSub.salir.addActionListener(this);
+//        this.frmSub.salir.addActionListener(this);
 
         daoSub = new DaoSubCuenta();
     }
@@ -160,9 +160,10 @@ public class ControladorSubCuenta extends MouseAdapter implements ActionListener
         } else if (e.getSource() == this.frmSub.cancelar) {
             limpiar();
             this.frmSub.codigo.setEditable(true);
-        } else if (e.getSource() == this.frmSub.salir) {
-            salir();
-        }
+        } 
+//        else if (e.getSource() == this.frmSub.salir) {
+//            salir();
+//        }
     }
 
     @Override
