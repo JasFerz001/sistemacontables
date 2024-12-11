@@ -48,7 +48,6 @@ public class Catalogos extends javax.swing.JDialog {
         tablaMostrar = new javax.swing.JTable();
         salir = new javax.swing.JButton();
 
-        setUndecorated(true);
         setResizable(false);
 
         jPanel4.setBackground(new java.awt.Color(116, 116, 116));
