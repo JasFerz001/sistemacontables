@@ -55,7 +55,6 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
         setUndecorated(true);
-        setPreferredSize(null);
         setResizable(false);
 
         background.setBackground(new java.awt.Color(255, 255, 255));
@@ -145,6 +144,8 @@ public class Login extends javax.swing.JFrame {
         tfUsuario.setForeground(new java.awt.Color(204, 204, 204));
         tfUsuario.setText("Ingrese su usuario");
         tfUsuario.setBorder(null);
+        tfUsuario.setFocusCycleRoot(true);
+        tfUsuario.setFocusTraversalPolicyProvider(true);
         tfUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tfUsuarioMousePressed(evt);
