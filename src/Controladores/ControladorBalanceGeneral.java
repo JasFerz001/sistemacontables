@@ -9,6 +9,7 @@ import daos.DaoEstadoResultado;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
@@ -60,7 +61,9 @@ public class ControladorBalanceGeneral implements ActionListener {
     }
 
     public void setModels() {
-
+        
+        this.vista.setAnio.setText(String.valueOf(anio));
+        
         //--para mostrar activos
         dtm = new DefaultTableModel() {
             @Override
@@ -165,8 +168,8 @@ public class ControladorBalanceGeneral implements ActionListener {
         dtm2.addRow(new Object[]{"RESERVA LEGAL", reservaLegal, " "});
         dtm2.addRow(new Object[]{"RESULTADO DEL EJERCICIO", ResEjercicio, " "});
 
-        Double total_activos = (total_AC + total_ANC);    
-       Double total_pasivos = (total_PC + total_PNC + total_CAP + impuesto + reservaLegal + ResEjercicio);
+        Double total_activos = (total_AC + total_ANC);
+        Double total_pasivos = (total_PC + total_PNC + total_CAP + impuesto + reservaLegal + ResEjercicio);
 
         vista.totalActivos.setText(String.format("%.2f", total_activos));
         vista.totalPasivos.setText(String.format("%.2f", total_pasivos));
@@ -277,36 +280,35 @@ public class ControladorBalanceGeneral implements ActionListener {
     }
 
     public Double getDato() {
-        String fc_inicio = "2024-01-01";
-        String fc_fin = "2024-12-30";
-        Double ivfinal = (Double) 200000.00;
-        estado = (daoResultado.select_ventas_totales(fc_inicio, fc_fin));
+        if (daoResultado.select_ventas() != null) {
+            Double ivfinal = (Double) 200000.00;
+            estado = (daoResultado.select_ventas_totales());
         String vn = estado.getVentas_Totales();
 
-        estado = (daoResultado.select_costo_de_venta(fc_inicio, fc_fin));
+        estado = (daoResultado.select_costo_de_venta());
         String cv = estado.getCosto_Ventas();
 
         Double a = (Double.parseDouble(vn) - (Double.parseDouble(cv) - ivfinal));
-        
+
         Double utilidadBruta = Double.parseDouble(String.format("%.2f", a));
-        
+
         System.out.println(utilidadBruta);
 
-        estado = daoResultado.select_gastos_admin(fc_inicio, fc_fin);
+        estado = daoResultado.select_gastos_admin();
         String ga = estado.getGastos_Admin();
 
-        estado = daoResultado.select_gasto_venta(fc_inicio, fc_fin);
+        estado = daoResultado.select_gasto_venta();
         String gv = estado.getGastos_Ventas();
 
         Double b = utilidadBruta - (Double.parseDouble(ga) + Double.parseDouble(gv));
-        
+
         Double utilidadOperacion = Double.parseDouble(String.format("%.2f", b));
 
         EstadoResultado e = new EstadoResultado();
-        e = daoResultado.select_ingresos_finan(fc_inicio, fc_fin);
+        e = daoResultado.select_ingresos_finan();
         String inf = e.getIngresos_Finan();
 
-        estado = daoResultado.select_gasto_finan(fc_inicio, fc_fin);
+        estado = daoResultado.select_gasto_finan();
         String gf = estado.getGastos_Finan();
 
         Double utilidadAntes;
@@ -320,18 +322,71 @@ public class ControladorBalanceGeneral implements ActionListener {
             utilidadAntes = utilidadOperacion + (Double.parseDouble(inf) - Double.parseDouble(gf));
 
         }
+        if (daoResultado.select_ventas() != null) {
+            Double ventas = Double.parseDouble(daoResultado.select_ventas());
+        } else {
+            Double ventas = 0.00;
+            System.out.println(ventas);
+        }
 
-        Double ventas = Double.parseDouble(daoResultado.select_ventas(fc_inicio, fc_fin));
-        System.out.println(ventas);
         return utilidadAntes;
+        }else{
+           Double ivfinal = 0.00;
+           estado = (daoResultado.select_ventas_totales());
+        String vn = estado.getVentas_Totales();
+
+        estado = (daoResultado.select_costo_de_venta());
+        String cv = estado.getCosto_Ventas();
+
+        Double a = (Double.parseDouble(vn) - (Double.parseDouble(cv) - ivfinal));
+
+        Double utilidadBruta = Double.parseDouble(String.format("%.2f", a));
+
+        System.out.println(utilidadBruta);
+
+        estado = daoResultado.select_gastos_admin();
+        String ga = estado.getGastos_Admin();
+
+        estado = daoResultado.select_gasto_venta();
+        String gv = estado.getGastos_Ventas();
+
+        Double b = utilidadBruta - (Double.parseDouble(ga) + Double.parseDouble(gv));
+
+        Double utilidadOperacion = Double.parseDouble(String.format("%.2f", b));
+
+        EstadoResultado e = new EstadoResultado();
+        e = daoResultado.select_ingresos_finan();
+        String inf = e.getIngresos_Finan();
+
+        estado = daoResultado.select_gasto_finan();
+        String gf = estado.getGastos_Finan();
+
+        Double utilidadAntes;
+        if (Double.parseDouble(inf) == Double.parseDouble(gf)) {
+            utilidadAntes = utilidadOperacion;
+
+        } else if (Double.parseDouble(inf) < Double.parseDouble(gf)) {
+            utilidadAntes = utilidadOperacion - (Double.parseDouble(inf) - Double.parseDouble(gf));
+
+        } else {
+            utilidadAntes = utilidadOperacion + (Double.parseDouble(inf) - Double.parseDouble(gf));
+
+        }
+        if (daoResultado.select_ventas() != null) {
+            Double ventas = Double.parseDouble(daoResultado.select_ventas());
+        } else {
+            Double ventas = 0.00;
+            System.out.println(ventas);
+        }
+
+        return utilidadAntes;
+        }
+        
     }
 
     private Double getReservaLegal() {
-        String fc_inicio = "2024-01-01";
-        String fc_fin = "2024-12-30";
         Double utilidadAntes = getDato();
 
-   
         Double c = (Double) ((utilidadAntes) * 0.07);
         Double reservaLegal = Double.parseDouble(String.format("%.2f", c));
 
@@ -340,19 +395,35 @@ public class ControladorBalanceGeneral implements ActionListener {
 
     private Double impuestoSobreRenta() {
         Double isr;
-        String fc_inicio = "2024-01-01";
-        String fc_fin = "2024-12-30";
-        Double ventas = Double.parseDouble(daoResultado.select_ventas(fc_inicio, fc_fin));
-        Double utilidadAntes = getDato();
 
-        if (ventas < 1500000) {
-            Double d = (Double) ((utilidadAntes - reservaLegal) * 0.25);
-            isr = Double.parseDouble(String.format("%.2f", d));
+//        Double ventas = Double.parseDouble(daoResultado.select_ventas());
+        if (daoResultado.select_ventas() != null) {
+            Double ventas = Double.parseDouble(daoResultado.select_ventas());
+            Double utilidadAntes = getDato();
+
+            if (ventas < 1500000) {
+                Double d = (Double) ((utilidadAntes - reservaLegal) * 0.25);
+                isr = Double.parseDouble(String.format("%.2f", d));
+            } else {
+                Double d = (Double) ((utilidadAntes - reservaLegal) * 0.25);
+                isr = Double.parseDouble(String.format("%.2f", d));
+            }
+            return isr;
         } else {
-            Double d = (Double) ((utilidadAntes - reservaLegal) * 0.25);
-            isr = Double.parseDouble(String.format("%.2f", d));
+            Double ventas = 0.00;
+            System.out.println(ventas);
+            Double utilidadAntes = getDato();
+
+            if (ventas < 1500000) {
+                Double d = (Double) ((utilidadAntes - reservaLegal) * 0.25);
+                isr = Double.parseDouble(String.format("%.2f", d));
+            } else {
+                Double d = (Double) ((utilidadAntes - reservaLegal) * 0.25);
+                isr = Double.parseDouble(String.format("%.2f", d));
+            }
+            return isr;
         }
-        return isr;
+
     }
 
     private Double getResultadoEjercicio() {
