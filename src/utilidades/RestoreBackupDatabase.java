@@ -29,6 +29,33 @@ public class RestoreBackupDatabase {
 
                         String mysqlPath = "C:/xampp/mysql/bin/mysql.exe";
 
+                        // Comando para eliminar la base de datos si existe
+                        String dropDbCommand = mysqlPath + " -uroot -e \"DROP DATABASE IF EXISTS sic\"";
+
+                        ProcessBuilder dropDbProcessBuilder = new ProcessBuilder("cmd", "/c", dropDbCommand);
+                        dropDbProcessBuilder.redirectErrorStream(true);
+
+                        Process dropDbProcess = dropDbProcessBuilder.start();
+
+                        BufferedReader dropDbReader = new BufferedReader(new InputStreamReader(dropDbProcess.getInputStream()));
+
+                        String dropDbLine;
+                        while ((dropDbLine = dropDbReader.readLine()) != null) {
+                            System.out.println(dropDbLine);
+                        }
+
+                        int dropDbExitCode = dropDbProcess.waitFor();
+
+                        if (dropDbExitCode == 0) {
+                            System.out.println("Base de datos 'sic' eliminada exitosamente.");
+                        } else {
+                            SwingUtilities.invokeLater(() -> {
+                                JOptionPane.showMessageDialog(null, "Error al eliminar la base de datos 'sic'.");
+                            });
+                            return;
+                        }
+
+                        // Comando para crear la base de datos
                         String createDbCommand = mysqlPath + " -uroot -e \"CREATE DATABASE IF NOT EXISTS sic\"";
 
                         ProcessBuilder createDbProcessBuilder = new ProcessBuilder("cmd", "/c", createDbCommand);
@@ -54,6 +81,7 @@ public class RestoreBackupDatabase {
                             return;
                         }
 
+                        // Comando para restaurar la base de datos desde el archivo .sql
                         String restoreCommand = mysqlPath + " -uroot sic -e \"source " + selectedFile.getAbsolutePath() + "\"";
 
                         ProcessBuilder restoreProcessBuilder = new ProcessBuilder("cmd", "/c", restoreCommand);
@@ -98,6 +126,3 @@ public class RestoreBackupDatabase {
         }).start();
     }
 }
-
-
-
