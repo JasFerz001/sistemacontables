@@ -184,7 +184,7 @@ public class VistaAcercaDe extends javax.swing.JDialog {
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel17.setText("VM22024");
+        jLabel17.setText("AA22088");
         PanelFondo.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, 80, 30));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
