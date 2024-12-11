@@ -42,6 +42,7 @@ public class ControladorLogin implements ActionListener {
         } else {
             if (userInput.equals(USUARIO_ADMIN) && claveInput.equals(CLAVE_ADMIN)) {
                 dashboard = new Dashboard();
+                dashboard.setLocationRelativeTo(login);
                 dashboard.setVisible(true);
                 login.dispose();
             } else {
