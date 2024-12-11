@@ -15,11 +15,7 @@ public class VistaLibroDiario extends javax.swing.JDialog {
 
     DefaultTableModel tb = new DefaultTableModel();
 
-    /**
-     * Creates new form LibroDiarioVista
-     * @param parent
-     * @param modal
-     */
+    
     public VistaLibroDiario(java.awt.Frame parent, boolean modal,
             String titulo) {
         super(parent, modal);
