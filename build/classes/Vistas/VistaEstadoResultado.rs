@@ -1,2 +1,0 @@
-vistas.VistaEstadoResultado$1
-vistas.VistaEstadoResultado
