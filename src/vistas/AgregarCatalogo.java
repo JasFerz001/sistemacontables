@@ -173,7 +173,7 @@ public class AgregarCatalogo extends javax.swing.JDialog {
             }
         });
 
-        editar.setBackground(new java.awt.Color(0, 153, 51));
+        editar.setBackground(new java.awt.Color(255, 153, 0));
         editar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         editar.setForeground(new java.awt.Color(255, 255, 255));
         editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lapiz.png"))); // NOI18N
@@ -186,7 +186,7 @@ public class AgregarCatalogo extends javax.swing.JDialog {
             }
         });
 
-        cancelar.setBackground(new java.awt.Color(0, 153, 51));
+        cancelar.setBackground(new java.awt.Color(153, 0, 0));
         cancelar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         cancelar.setForeground(new java.awt.Color(255, 255, 255));
         cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminar.png"))); // NOI18N
