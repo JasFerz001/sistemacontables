@@ -56,6 +56,7 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
         setUndecorated(true);
+        setPreferredSize(null);
         setResizable(false);
 
         background.setBackground(new java.awt.Color(255, 255, 255));
