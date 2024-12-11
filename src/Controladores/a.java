@@ -7,9 +7,11 @@ package Controladores;
 import daos.DaoEstadoResultado;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import modelos.AjusteIVA;
 import modelos.CierreContable;
 import modelos.PartidaCierre;
+import vistas.VistaEstadoResultado;
 
 /**
  *
@@ -18,11 +20,9 @@ import modelos.PartidaCierre;
 public class a {
 
     public static void main(String[] args) throws SQLException {
-        
-        DaoEstadoResultado dao = new DaoEstadoResultado();
-        String a = dao.select_inv_inicial();
-        System.out.println(a);
-        
+        VistaEstadoResultado v = new VistaEstadoResultado(new JFrame(), true);
+        ControladorEstadoResultado c = new ControladorEstadoResultado(v);
+        v.iniciar();
     }
 //        CierreContable c = new CierreContable();
 //        AjusteIVA ajuste = new AjusteIVA();
