@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import javax.swing.ButtonGroup;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.LibroDiario;
@@ -393,10 +394,12 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Desea agregar otra partida?", "Agregar Partida", JOptionPane.YES_NO_OPTION);
             if (respuesta == JOptionPane.NO_OPTION) {
                 // Si la respuesta es "No", redirigir a VistaMostrarLibroDiario
-                VistaMostrarLibroDiario vista = new VistaMostrarLibroDiario();
+                VistaMostrarLibroDiario vista = new VistaMostrarLibroDiario(new JFrame(), true, " ");
                 ControladorMostrarLibroDiario ctrl = new ControladorMostrarLibroDiario(vista);
                 vista.setVisible(true); // Método que muestra el contenido de la vista
+                
             }
+            this.frmLibro.setVisible(false);
             limpiarCampos();
             frmLibro.tfPartidaAnterior.setText(String.valueOf(numeroPartida));
             frmLibro.tfNumeroPartida.setText(String.valueOf(numeroPartida + 1));
@@ -405,6 +408,7 @@ public class ControladorLibroDiario extends MouseAdapter implements ActionListen
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al procesar las partidas: " + e.getMessage());
         }
+        //this.frmLibro.dispose();
     }
 
     public void limpiarCampos() {

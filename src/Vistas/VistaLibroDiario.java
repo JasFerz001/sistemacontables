@@ -97,7 +97,7 @@ public class VistaLibroDiario extends javax.swing.JDialog {
         lbIngresoLibroDiario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbIngresoLibroDiario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbIngresoLibroDiario.setText("Registro de Partidas");
-        PanelFondo.add(lbIngresoLibroDiario, new org.netbeans.lib.awtextra.AbsoluteConstraints(377, 0, 160, 30));
+        PanelFondo.add(lbIngresoLibroDiario, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 0, 960, 30));
 
         lbNumeroPartida.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbNumeroPartida.setText("N° de la Nueva Partida");

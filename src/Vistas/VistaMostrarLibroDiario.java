@@ -26,10 +26,6 @@ public class VistaMostrarLibroDiario extends javax.swing.JDialog {
         lbTitulo.setText(titulo);
     }
 
-    public VistaMostrarLibroDiario() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,7 +109,6 @@ public class VistaMostrarLibroDiario extends javax.swing.JDialog {
 
         PanelFondo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 1080, 420));
 
-        btnAnterior.setBackground(new java.awt.Color(255, 255, 255));
         btnAnterior.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnAnterior.setForeground(new java.awt.Color(153, 0, 0));
         btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/off_16.png"))); // NOI18N
@@ -122,7 +117,6 @@ public class VistaMostrarLibroDiario extends javax.swing.JDialog {
         btnAnterior.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         PanelFondo.add(btnAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 40, 170, 40));
 
-        btnSiguiente.setBackground(new java.awt.Color(255, 255, 255));
         btnSiguiente.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnSiguiente.setForeground(new java.awt.Color(153, 0, 0));
         btnSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/on_16.png"))); // NOI18N
@@ -138,13 +132,12 @@ public class VistaMostrarLibroDiario extends javax.swing.JDialog {
         tfBuscarPartida.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tfBuscarPartida.setForeground(new java.awt.Color(153, 0, 0));
         tfBuscarPartida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        PanelFondo.add(tfBuscarPartida, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 50, 30));
+        PanelFondo.add(tfBuscarPartida, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, 50, 30));
 
-        lbBuscar.setBackground(new java.awt.Color(255, 255, 255));
         lbBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar.png"))); // NOI18N
         lbBuscar.setBorder(null);
         lbBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        PanelFondo.add(lbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 30, 30));
+        PanelFondo.add(lbBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 30, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
