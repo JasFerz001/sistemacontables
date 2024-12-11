@@ -17,6 +17,7 @@ public class VistaLibroDiario extends javax.swing.JDialog {
 
     /**
      * Creates new form LibroDiarioVista
+     * 
      */
     public VistaLibroDiario(java.awt.Frame parent, boolean modal,
             String titulo) {
