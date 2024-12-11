@@ -65,6 +65,7 @@ public class Dashboard extends javax.swing.JFrame {
         config();
         ocultarMod(0);
         panels();
+        
 
     }
 
