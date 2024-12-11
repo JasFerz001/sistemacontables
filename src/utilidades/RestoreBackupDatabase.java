@@ -54,7 +54,7 @@ public class RestoreBackupDatabase {
                             return;
                         }
 
-                        String restoreCommand = mysqlPath + " -uroot sic -e \"source " + selectedFile.getAbsolutePath() + "\"";
+                        String restoreCommand = mysqlPath + " -uroot sic -e \"source " + selectedFile.getAbsolutePath().replace("\\", "/") + "\"";
 
                         ProcessBuilder restoreProcessBuilder = new ProcessBuilder("cmd", "/c", restoreCommand);
                         restoreProcessBuilder.redirectErrorStream(true);
