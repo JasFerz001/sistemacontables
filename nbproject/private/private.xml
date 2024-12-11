@@ -6,11 +6,10 @@
         <group/>
 =======
         <group>
-            <file>file:/C:/Users/luisa/OneDrive/Documentos/GitHub/sistemacontables/src/Utilidades/VistaAcercaDe.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documentos/GitHub/sistemacontables/src/Vistas/VistaBalanceGenerales.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documentos/GitHub/sistemacontables/src/Vistas/AgregarCatalogo.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documentos/GitHub/sistemacontables/src/Controladores/ControladorAgregarCatalogo.java</file>
-            <file>file:/C:/Users/luisa/OneDrive/Documentos/GitHub/sistemacontables/src/Controladores/Iniciar.java</file>
+            <file>file:/C:/Users/guill/OneDrive/Desktop/CICLO%20V/proyecto/contables-master/src/vistas/VistaEstadoResultado.java</file>
+            <file>file:/C:/Users/guill/OneDrive/Desktop/CICLO%20V/proyecto/contables-master/src/vistas/VistaLibroDiario.java</file>
+            <file>file:/C:/Users/guill/OneDrive/Desktop/CICLO%20V/proyecto/contables-master/src/daos/DaoEstadoResultado.java</file>
+            <file>file:/C:/Users/guill/OneDrive/Desktop/CICLO%20V/proyecto/contables-master/src/Controladores/ControladorEstadoResultado.java</file>
         </group>
 >>>>>>> main
     </open-files>
