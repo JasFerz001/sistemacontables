@@ -43,7 +43,7 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         this.ctrol = ctrol;
         this.frmCatalogo.registrar.addActionListener(this);
         this.frmCatalogo.cancelar.addActionListener(this);
-        this.frmCatalogo.salir.addActionListener(this);
+        //this.frmCatalogo.salir.addActionListener(this);
         this.frmCatalogo.editar.addActionListener(this);
         this.frmCatalogo.tablita.addMouseListener(this);
         this.frmCatalogo.editar.setEnabled(false);
@@ -55,7 +55,7 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         this.frmCatalogo = frmCatalogo;
         this.frmCatalogo.registrar.addActionListener(this);
         this.frmCatalogo.cancelar.addActionListener(this);
-        this.frmCatalogo.salir.addActionListener(this);
+        //this.frmCatalogo.salir.addActionListener(this);
         this.mayor = mayor;
         this.ctrol = ctrol;
         daoCatalogo = new DaoCatalogo();
@@ -92,10 +92,11 @@ public class ControladorAgregarCatalogo extends MouseAdapter implements ActionLi
         } else if (e.getSource() == this.frmCatalogo.cancelar) {
             limpiar();
             this.frmCatalogo.codigo.setEditable(true);
-        } else if (e.getSource() == this.frmCatalogo.salir) {
-            salir();
-            
-        }
+        } 
+//        else if (e.getSource() == this.frmCatalogo.salir) {
+//            salir();
+//            
+//        }
     }
 
     public void guardar() {
