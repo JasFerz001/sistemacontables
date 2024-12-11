@@ -65,6 +65,7 @@ public class DaoMayor {
               + " ld.monto AS monto,"
               + " ld.transaccion AS transaccion FROM cuentas_mayor cm INNER JOIN subcuentas sc ON cm.cod_mayor = sc.cod_mayor INNER JOIN libro_diario ld ON sc.cod_subcuenta = ld.cod_subcuenta ORDER BY cm.cod_mayor, sc.cod_subcuenta, ld.numero_partida;";
    
+      private static String DeleteTablas="Delete from like ?";
 
    public boolean insertar(LibroMayor obj){
     String sql ="INSERT INTO libromayor(\n"
@@ -79,6 +80,8 @@ public class DaoMayor {
             + "	VALUES (?, ?, ?, ?,  ?,?,?,?);";
     return insertarRegristroSub(sql,obj);
 }
+    
+    
     
     public DaoMayor() {
     this.conexion = new Conexion(); // Inicializa la conexión aquí.
@@ -274,6 +277,29 @@ public class DaoMayor {
         }
 
         return listaDetalles;
+    }
+        
+        public boolean eliminarTodos(String nombreTabla) {
+        String sql = "DELETE FROM " + nombreTabla;
+        
+        try {
+            this.accesoDB = this.conexion.getConexion();
+            PreparedStatement ps = this.accesoDB.prepareStatement(sql);
+            ps.executeUpdate();
+            this.conexion.cerrarConexiones();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (this.accesoDB != null) {
+                    this.accesoDB.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
       
       
