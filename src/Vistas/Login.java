@@ -63,17 +63,17 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ddd.png"))); // NOI18N
         jLabel3.setText("INICIAR SESIÓN");
         background.add(jLabel3);
-        jLabel3.setBounds(420, 230, 200, 29);
+        jLabel3.setBounds(420, 230, 200, 27);
 
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 1, 20)); // NOI18N
         jLabel4.setText("Usuario");
         background.add(jLabel4);
-        jLabel4.setBounds(310, 310, 80, 26);
+        jLabel4.setBounds(310, 310, 80, 24);
 
         jLabel5.setFont(new java.awt.Font("Roboto Medium", 1, 20)); // NOI18N
         jLabel5.setText("Contraseña");
         background.add(jLabel5);
-        jLabel5.setBounds(310, 420, 120, 26);
+        jLabel5.setBounds(310, 420, 120, 24);
 
         panelLateral.setBackground(new java.awt.Color(153, 0, 0));
 
@@ -97,7 +97,7 @@ public class Login extends javax.swing.JFrame {
         );
 
         background.add(panelLateral);
-        panelLateral.setBounds(1100, 0, 440, 1080);
+        panelLateral.setBounds(930, 0, 440, 1080);
 
         btnSalir.setBackground(new java.awt.Color(255, 255, 255));
         btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
